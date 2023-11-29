@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/model/note_model.dart';
-import 'package:note_application/utils/database.dart';
+import 'package:note_application/utils/color_constant/color_constant.dart';
 import 'package:note_application/view/home_screen/home_widgets/note_bottom_sheet.dart';
 import 'package:note_application/view/home_screen/home_widgets/note_tile.dart';
 import 'package:note_application/view/login_screen/login_screen.dart';
@@ -14,36 +14,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<NoteModel> noteList = [
-    NoteModel(
-      title: 'title',
-      content: 'content',
-      noteColor: Colors.purpleAccent.shade100,
-    ),
-  ];
+  List<NoteModel> noteList = [];
   final titleController = TextEditingController();
   final contentController = TextEditingController();
-  final noteColorList = DataBase.noteColors;
   int noteColorIndex = 0;
-  final childGap = SizedBox(
-    height: 15,
-    width: 15,
-  );
+  final separatorBox = SizedBox(height: 15, width: 15);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFD0D0D0),
+      backgroundColor: ColorConstant.bgColor,
       appBar: AppBar(
-        backgroundColor: Colors.greenAccent.shade200,
-        leading: Icon(
-          Icons.notes,
-          color: Colors.black,
-        ),
+        backgroundColor: ColorConstant.primaryColor.shade200,
         title: Text(
-          'Note App',
+          'Note',
           style: TextStyle(
-            color: Colors.black,
+            color: ColorConstant.secondaryColor,
           ),
         ),
         actions: [
@@ -52,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 50,
             child: IconButton(
               onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
+                SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.setBool('isLoggedIn', false);
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -64,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               icon: Icon(
                 Icons.logout,
-                color: Colors.black,
+                color: ColorConstant.secondaryColor,
               ),
             ),
           ),
@@ -105,7 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 NoteModel(
                   title: titleController.text.trim(),
                   content: contentController.text.trim(),
-                  noteColor: noteColorList[noteColorIndex]['background']!,
+                  noteColor: ColorConstant.noteColors[noteColorIndex]
+                      ['background']!,
                 ),
               );
               setState(() {});
@@ -113,10 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        backgroundColor: Colors.greenAccent.shade200,
+        backgroundColor: ColorConstant.primaryColor.shade200,
         child: Icon(
           Icons.add,
-          color: Colors.black,
+          color: ColorConstant.secondaryColor,
           size: 35,
         ),
       ),

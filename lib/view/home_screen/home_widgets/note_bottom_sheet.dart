@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/utils/database.dart';
+import 'package:note_application/utils/color_constant/color_constant.dart';
 
 class NoteBottomSheet extends StatefulWidget {
   NoteBottomSheet({
@@ -17,12 +17,8 @@ class NoteBottomSheet extends StatefulWidget {
 }
 
 class _NoteBottomSheetState extends State<NoteBottomSheet> {
-  final noteColorList = DataBase.noteColors;
   int noteColorIndex = 0;
-  final childGap = SizedBox(
-    height: 15,
-    width: 15,
-  );
+  final separatorBox = SizedBox(height: 15, width: 15);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +34,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          childGap,
+          separatorBox,
           TextField(
             decoration: InputDecoration(
               hintText: 'Title',
@@ -46,7 +42,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet> {
             ),
             controller: widget.titleController,
           ),
-          childGap,
+          separatorBox,
           Expanded(
             child: TextField(
               decoration: InputDecoration(
@@ -57,7 +53,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet> {
               maxLines: 10,
             ),
           ),
-          childGap,
+          separatorBox,
           Container(
             height: 50,
             child: ListView.separated(
@@ -68,24 +64,24 @@ class _NoteBottomSheetState extends State<NoteBottomSheet> {
                 child: Container(
                   width: 50,
                   decoration: BoxDecoration(
-                    color: noteColorList[index]['background'],
+                    color: ColorConstant.noteColors[index]['background'],
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: (noteColorIndex == index)
-                          ? noteColorList[index]['border']!
+                          ? ColorConstant.noteColors[index]['border']!
                           : Colors.transparent,
                       width: 2.5,
                     ),
                   ),
                 ),
               ),
-              separatorBuilder: (context, index) => childGap,
-              itemCount: noteColorList.length,
+              separatorBuilder: (context, index) => separatorBox,
+              itemCount: ColorConstant.noteColors.length,
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
             ),
           ),
-          childGap,
+          separatorBox,
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -110,7 +106,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet> {
                   ),
                 ),
               ),
-              childGap,
+              separatorBox,
               ElevatedButton(
                 onPressed: widget.onSaveClicked,
                 child: Text(

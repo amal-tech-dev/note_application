@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:note_application/utils/color_constant/color_constant.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
 import 'package:note_application/view/login_screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent.shade200,
+      backgroundColor: ColorConstant.primaryColor.shade200,
       body: Center(
         child: Icon(
           Icons.notes,
