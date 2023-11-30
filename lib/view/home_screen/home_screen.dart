@@ -70,7 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (context, index) => NoteTile(
             title: noteList[index].title,
             content: noteList[index].content,
-            noteColor: noteList[index].noteColor,
+            noteColor: ColorConstant.noteColors[noteList[index].colorIndex]
+                ['background']!,
+            noteBorderColor:
+                ColorConstant.noteColors[noteList[index].colorIndex]['border']!,
             onEditClicked: () {},
             onDeleteClicked: () {
               noteList.removeAt(index);
@@ -91,8 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 NoteModel(
                   title: titleController.text.trim(),
                   content: contentController.text.trim(),
-                  noteColor: ColorConstant.noteColors[noteColorIndex]
-                      ['background']!,
+                  colorIndex: noteColorIndex,
+                  dateTime: DateTime.now(),
                 ),
               );
               setState(() {});

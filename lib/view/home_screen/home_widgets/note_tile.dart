@@ -6,11 +6,12 @@ class NoteTile extends StatelessWidget {
     required this.title,
     required this.content,
     required this.noteColor,
+    required this.noteBorderColor,
     required this.onEditClicked,
     required this.onDeleteClicked,
   });
   String title, content;
-  Color noteColor;
+  Color noteColor, noteBorderColor;
   var onEditClicked, onDeleteClicked;
 
   @override
