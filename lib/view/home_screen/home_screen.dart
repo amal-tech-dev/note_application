@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/utils/color_constant/color_constant.dart';
-import 'package:note_application/view/home_screen/home_widgets/note_bottom_sheet.dart';
+import 'package:note_application/view/edit_screen/edit_screen.dart';
 import 'package:note_application/view/home_screen/home_widgets/note_tile.dart';
-import 'package:note_application/view/login_screen/login_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -14,11 +13,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<NoteModel> noteList = [];
-  final titleController = TextEditingController();
-  final contentController = TextEditingController();
-  int noteColorIndex = 0;
+  List<NoteModel> notesList = [];
   final separatorBox = SizedBox(height: 15, width: 15);
+
+  @override
+  void initState() {
+    initialiseHive();
+    super.initState();
+  }
+
+  Future<void> initialiseHive() async {
+    var box = await Hive.box<NoteModel>('noteBox');
+    notesList = box.values.toList();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,29 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
             color: ColorConstant.secondaryColor,
           ),
         ),
-        actions: [
-          SizedBox(
-            height: 50,
-            width: 50,
-            child: IconButton(
-              onPressed: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setBool('isLoggedIn', false);
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
-                  ),
-                  (route) => false,
-                );
-              },
-              icon: Icon(
-                Icons.logout,
-                color: ColorConstant.secondaryColor,
-              ),
-            ),
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -66,41 +51,30 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisCount: 2,
             crossAxisSpacing: 15,
             mainAxisSpacing: 15,
+            childAspectRatio: 0.7,
           ),
           itemBuilder: (context, index) => NoteTile(
-            title: noteList[index].title,
-            content: noteList[index].content,
-            noteColor: ColorConstant.noteColors[noteList[index].colorIndex]
-                ['background']!,
-            noteBorderColor:
-                ColorConstant.noteColors[noteList[index].colorIndex]['border']!,
-            onEditClicked: () {},
+            title: notesList[index].title,
+            content: notesList[index].content,
+            onEditClicked: () async {
+              var box = Hive.box<NoteModel>('noteBox');
+
+              setState(() {});
+            },
             onDeleteClicked: () {
-              noteList.removeAt(index);
               setState(() {});
             },
           ),
-          itemCount: noteList.length,
+          itemCount: notesList.length,
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showModalBottomSheet(
-          context: context,
-          builder: (context) => NoteBottomSheet(
-            titleController: titleController,
-            contentController: contentController,
-            onSaveClicked: () {
-              noteList.add(
-                NoteModel(
-                  title: titleController.text.trim(),
-                  content: contentController.text.trim(),
-                  colorIndex: noteColorIndex,
-                  dateTime: DateTime.now(),
-                ),
-              );
-              setState(() {});
-              Navigator.pop(context);
-            },
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditScreen(
+              appBarTitle: 'Add New Note',
+            ),
           ),
         ),
         backgroundColor: ColorConstant.primaryColor.shade200,

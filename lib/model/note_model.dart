@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 part 'note_model.g.dart';
@@ -8,7 +7,6 @@ class NoteModel {
   NoteModel({
     required this.title,
     required this.content,
-    required this.colorIndex,
     required this.dateTime,
   });
 
@@ -17,7 +15,5 @@ class NoteModel {
   @HiveField(1)
   String content;
   @HiveField(2)
-  int colorIndex;
-  @HiveField(3)
   DateTime dateTime;
 }
