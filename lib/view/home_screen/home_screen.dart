@@ -37,12 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: ColorConstant.bgColor,
       appBar: AppBar(
-        backgroundColor: ColorConstant.primaryColor.shade200,
+        backgroundColor: ColorConstant.primaryColor,
         title: Text(
           'Note',
           style: TextStyle(
-            color: ColorConstant.secondaryColor,
-          ),
+              color: ColorConstant.secondaryColor, fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
@@ -62,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context) => NoteViewScreen(
                     title: notesList[index].title,
                     content: notesList[index].content,
+                    dateTime: notesList[index].dateTime,
                     onEditPressed: () async {
                       var box = Hive.box<NoteModel>('noteBox');
                       Navigator.push(
@@ -116,21 +116,43 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => EditScreen(
-              appBarTitle: 'Add New Note',
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditScreen(
+                  appBarTitle: 'Add New Note',
+                ),
+              ),
+            ),
+            backgroundColor: ColorConstant.primaryColor,
+            child: Icon(
+              Icons.add,
+              color: ColorConstant.secondaryColor,
+              size: 35,
             ),
           ),
-        ),
-        backgroundColor: ColorConstant.primaryColor.shade200,
-        child: Icon(
-          Icons.add,
-          color: ColorConstant.secondaryColor,
-          size: 35,
-        ),
+          SizedBox(height: 15),
+          FloatingActionButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditScreen(
+                  appBarTitle: 'Add New Note',
+                ),
+              ),
+            ),
+            backgroundColor: ColorConstant.primaryColor,
+            child: Icon(
+              Icons.add,
+              color: ColorConstant.secondaryColor,
+              size: 35,
+            ),
+          ),
+        ],
       ),
     );
   }

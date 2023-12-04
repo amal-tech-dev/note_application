@@ -48,7 +48,7 @@ class _EditScreenState extends State<EditScreen> {
     return Scaffold(
       backgroundColor: ColorConstant.bgColor,
       appBar: AppBar(
-        backgroundColor: ColorConstant.primaryColor.shade200,
+        backgroundColor: ColorConstant.primaryColor,
         leading: BackButton(
           color: ColorConstant.secondaryColor,
         ),
@@ -112,17 +112,17 @@ class _EditScreenState extends State<EditScreen> {
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: ColorConstant.secondaryColor,
+                    color: ColorConstant.primaryColor,
                     width: 2,
                   ),
                 ),
                 labelText: 'Title',
                 labelStyle: TextStyle(
-                  color: ColorConstant.secondaryColor,
+                  color: ColorConstant.primaryColor,
                 ),
               ),
               controller: titleController,
-              cursorColor: ColorConstant.secondaryColor,
+              cursorColor: ColorConstant.primaryColor,
               autofocus: true,
             ),
             separatorBox,
@@ -132,18 +132,18 @@ class _EditScreenState extends State<EditScreen> {
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: ColorConstant.secondaryColor,
+                      color: ColorConstant.primaryColor,
                       width: 2,
                     ),
                   ),
                   labelText: 'Content',
                   labelStyle: TextStyle(
-                    color: ColorConstant.secondaryColor,
+                    color: ColorConstant.primaryColor,
                   ),
                   alignLabelWithHint: true,
                 ),
                 controller: contentController,
-                cursorColor: ColorConstant.secondaryColor,
+                cursorColor: ColorConstant.primaryColor,
                 maxLines: 50,
               ),
             ),
