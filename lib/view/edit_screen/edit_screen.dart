@@ -6,15 +6,15 @@ import 'package:note_application/view/home_screen/home_screen.dart';
 
 class EditScreen extends StatefulWidget {
   String appBarTitle;
-  String? title, content;
-  Color? color;
+  String title, content;
+  int? noteKey;
 
   EditScreen({
     super.key,
     required this.appBarTitle,
-    this.title,
-    this.content,
-    this.color,
+    this.title = '',
+    this.content = '',
+    this.noteKey,
   });
 
   @override
@@ -22,10 +22,26 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
-  int noteColorIndex = 0;
+  int counter = 0;
+  List keysList = [];
   final separatorBox = SizedBox(height: 15, width: 15);
-  final titleController = TextEditingController();
-  final contentController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
+
+  @override
+  void initState() {
+    initialiseHive();
+    super.initState();
+  }
+
+  Future<void> initialiseHive() async {
+    var box = await Hive.box<NoteModel>('noteBox');
+    keysList = box.keys.toList();
+    counter = keysList.last + 1 ?? 0;
+    titleController = TextEditingController(text: widget.title);
+    contentController = TextEditingController(text: widget.content);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +74,17 @@ class _EditScreenState extends State<EditScreen> {
                   ),
                 );
               } else {
-                await box.add(
+                await box.put(
+                  widget.noteKey == null ? counter : widget.noteKey,
                   NoteModel(
                     title: titleController.text.trim(),
                     content: contentController.text.trim(),
                     dateTime: DateTime.now(),
                   ),
                 );
+                keysList = box.keys.toList();
+                counter = keysList.length;
+                setState(() {});
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -83,7 +103,7 @@ class _EditScreenState extends State<EditScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

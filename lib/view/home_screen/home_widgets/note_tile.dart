@@ -18,10 +18,13 @@ class NoteTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final randomColor = randomColorController.randomNumber();
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(
+        left: 10,
+        bottom: 10,
+      ),
       decoration: BoxDecoration(
         color: randomColor['background'],
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(7.5),
         border: Border.all(
           color: randomColor['border'],
           width: 3,
