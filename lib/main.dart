@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:note_application/controller/floating_button_controller.dart';
 import 'package:note_application/model/list_model.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/model/task_model.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
 import 'package:note_application/view/notes_screen/notes_screen.dart';
 import 'package:note_application/view/splash_screen/splash_screen.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +28,12 @@ class NoteApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => FloatingButtonController(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: HomeScreen(),
+      ),
     );
   }
 }
