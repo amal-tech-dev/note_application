@@ -3,13 +3,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/utils/color_constant/color_constant.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
+import 'package:note_application/view/notes_screen/notes_screen.dart';
 
-class EditScreen extends StatefulWidget {
+class EditNoteScreen extends StatefulWidget {
   String appBarTitle;
   String title, content;
   int? noteKey;
 
-  EditScreen({
+  EditNoteScreen({
     super.key,
     required this.appBarTitle,
     this.title = '',
@@ -18,10 +19,10 @@ class EditScreen extends StatefulWidget {
   });
 
   @override
-  State<EditScreen> createState() => _EditScreenState();
+  State<EditNoteScreen> createState() => _EditNoteScreenState();
 }
 
-class _EditScreenState extends State<EditScreen> {
+class _EditNoteScreenState extends State<EditNoteScreen> {
   int counter = 0;
   List keysList = [];
   final separatorBox = SizedBox(height: 15, width: 15);
@@ -87,7 +88,9 @@ class _EditScreenState extends State<EditScreen> {
                 setState(() {});
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(),
+                  ),
                   (route) => false,
                 );
               }

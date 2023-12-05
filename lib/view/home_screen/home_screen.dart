@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/model/note_model.dart';
+import 'package:flutter/widgets.dart';
 import 'package:note_application/utils/color_constant/color_constant.dart';
-import 'package:note_application/view/edit_screen/edit_screen.dart';
-import 'package:note_application/view/home_screen/home_widgets/note_tile.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:note_application/view/note_view_screen/note_view_screen.dart';
+import 'package:note_application/view/checkbox_list_screen/checkbox_list_screen.dart';
+import 'package:note_application/view/edit_note_screen/edit_note_screen.dart';
+import 'package:note_application/view/notes_screen/notes_screen.dart';
+import 'package:note_application/view/task_screen/task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -15,144 +14,115 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<NoteModel> notesList = [];
-  List keysList = [];
+  bool isExpanded = false;
   final separatorBox = SizedBox(height: 15, width: 15);
 
   @override
-  void initState() {
-    initialiseHive();
-    super.initState();
-  }
-
-  Future<void> initialiseHive() async {
-    var box = await Hive.box<NoteModel>('noteBox');
-    notesList = box.values.toList();
-    keysList = box.keys.toList();
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorConstant.bgColor,
-      appBar: AppBar(
-        backgroundColor: ColorConstant.primaryColor,
-        title: Text(
-          'Note',
-          style: TextStyle(
-              color: ColorConstant.secondaryColor, fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(15),
-        child: MasonryGridView(
-          gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: ColorConstant.bgColor,
+        appBar: AppBar(
+          backgroundColor: ColorConstant.primaryColor,
+          title: Text(
+            'Notes',
+            style: TextStyle(
+              color: ColorConstant.secondaryColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          crossAxisSpacing: 15,
-          mainAxisSpacing: 15,
-          children: List.generate(
-            notesList.length,
-            (index) => InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NoteViewScreen(
-                    title: notesList[index].title,
-                    content: notesList[index].content,
-                    dateTime: notesList[index].dateTime,
-                    onEditPressed: () async {
-                      var box = Hive.box<NoteModel>('noteBox');
+          bottom: TabBar(
+            indicatorColor: ColorConstant.secondaryColor,
+            labelColor: ColorConstant.secondaryColor,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+            tabs: [
+              Tab(
+                text: 'Text',
+              ),
+              Tab(
+                text: 'List',
+              ),
+              Tab(
+                text: 'Task',
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(children: [
+          NotesScreen(),
+          CheckboxListScreen(),
+          TaskScreen(),
+        ]),
+        floatingActionButton: isExpanded
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () {
+                      isExpanded = false;
+                      setState(() {});
+                    },
+                    backgroundColor: ColorConstant.primaryColor,
+                    child: Icon(
+                      Icons.task_alt,
+                      color: ColorConstant.tertiaryColor,
+                      size: 20,
+                    ),
+                    mini: true,
+                  ),
+                  separatorBox,
+                  FloatingActionButton(
+                    onPressed: () {
+                      isExpanded = false;
+                      setState(() {});
+                    },
+                    backgroundColor: ColorConstant.primaryColor,
+                    child: Icon(
+                      Icons.check_box,
+                      color: ColorConstant.tertiaryColor,
+                      size: 20,
+                    ),
+                    mini: true,
+                  ),
+                  separatorBox,
+                  FloatingActionButton(
+                    onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditScreen(
-                            appBarTitle: 'Edit Note',
-                            title: box.get(keysList[index])!.title,
-                            content: box.get(keysList[index])!.content,
-                            noteKey: keysList[index],
+                          builder: (context) => EditNoteScreen(
+                            appBarTitle: 'Add New Note',
                           ),
                         ),
                       );
-                    },
-                    onDeletePressed: () async {
-                      var box = await Hive.box<NoteModel>('noteBox');
-                      box.delete(keysList[index]);
-                      notesList = box.values.toList();
-                      keysList = box.keys.toList();
-                      Navigator.pop(context);
+                      isExpanded = false;
                       setState(() {});
                     },
-                  ),
-                ),
-              ),
-              child: NoteTile(
-                title: notesList[index].title,
-                content: notesList[index].content,
-                onEditClicked: () async {
-                  var box = Hive.box<NoteModel>('noteBox');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditScreen(
-                        appBarTitle: 'Edit Note',
-                        title: box.get(keysList[index])!.title,
-                        content: box.get(keysList[index])!.content,
-                        noteKey: keysList[index],
-                      ),
+                    backgroundColor: ColorConstant.primaryColor,
+                    child: Icon(
+                      Icons.notes,
+                      color: ColorConstant.tertiaryColor,
+                      size: 30,
                     ),
-                  );
-                },
-                onDeleteClicked: () async {
-                  var box = await Hive.box<NoteModel>('noteBox');
-                  box.delete(keysList[index]);
-                  notesList = box.values.toList();
-                  keysList = box.keys.toList();
+                  ),
+                ],
+              )
+            : FloatingActionButton(
+                onPressed: () {
+                  isExpanded = true;
                   setState(() {});
                 },
-              ),
-            ),
-          ),
-        ),
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditScreen(
-                  appBarTitle: 'Add New Note',
+                backgroundColor: ColorConstant.primaryColor,
+                child: Icon(
+                  Icons.add,
+                  color: ColorConstant.tertiaryColor,
+                  size: 35,
                 ),
               ),
-            ),
-            backgroundColor: ColorConstant.primaryColor,
-            child: Icon(
-              Icons.add,
-              color: ColorConstant.secondaryColor,
-              size: 35,
-            ),
-          ),
-          SizedBox(height: 15),
-          FloatingActionButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditScreen(
-                  appBarTitle: 'Add New Note',
-                ),
-              ),
-            ),
-            backgroundColor: ColorConstant.primaryColor,
-            child: Icon(
-              Icons.add,
-              color: ColorConstant.secondaryColor,
-              size: 35,
-            ),
-          ),
-        ],
       ),
     );
   }

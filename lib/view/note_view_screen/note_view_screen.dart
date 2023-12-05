@@ -74,6 +74,7 @@ class NoteViewScreen extends StatelessWidget {
           child: Text(
             content,
             style: TextStyle(
+              color: ColorConstant.tertiaryColor,
               fontSize: 20,
             ),
             maxLines: 100,

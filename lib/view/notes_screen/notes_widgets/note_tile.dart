@@ -39,6 +39,7 @@ class NoteTile extends StatelessWidget {
                 child: Text(
                   title,
                   style: TextStyle(
+                    color: ColorConstant.tertiaryColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -63,6 +64,7 @@ class NoteTile extends StatelessWidget {
           Text(
             content,
             style: TextStyle(
+              color: ColorConstant.tertiaryColor,
               fontSize: 15,
               fontWeight: FontWeight.bold,
             ),
