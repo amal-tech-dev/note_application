@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/utils/color_constant/color_constant.dart';
+import 'package:note_application/utils/color_constant.dart';
 
 class EditListItem extends StatelessWidget {
   EditListItem({

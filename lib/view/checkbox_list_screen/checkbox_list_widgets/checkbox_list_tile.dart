@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/note_color_controller.dart';
-import 'package:note_application/utils/color_constant/color_constant.dart';
+import 'package:note_application/utils/color_constant.dart';
 
 class CheckboxListItemTile extends StatelessWidget {
   CheckboxListItemTile({

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:note_application/controller/floating_button_controller.dart';
-import 'package:note_application/utils/color_constant/color_constant.dart';
+import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/view/checkbox_list_screen/checkbox_list_screen.dart';
 import 'package:note_application/view/edit_list_screen/edit_list_screen.dart';
 import 'package:note_application/view/edit_note_screen/edit_note_screen.dart';

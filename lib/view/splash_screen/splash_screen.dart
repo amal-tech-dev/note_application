@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:note_application/utils/color_constant/color_constant.dart';
+import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/view/notes_screen/notes_screen.dart';
 
 class SplashScreen extends StatefulWidget {

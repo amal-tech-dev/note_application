@@ -60,6 +60,10 @@ class NoteColorController {
       'border': Colors.red,
       'background': Colors.redAccent.shade100,
     },
+    {
+      'border': Colors.green,
+      'background': Colors.greenAccent.shade200,
+    },
   ];
 
   Map randomNumber() {

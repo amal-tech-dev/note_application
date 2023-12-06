@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/model/note_model.dart';
-import 'package:note_application/utils/color_constant/color_constant.dart';
+import 'package:note_application/model/list_model.dart';
+import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/view/edit_list_screen/edit_list_widgets/edit_list_item.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
 import 'package:note_application/view/notes_screen/notes_screen.dart';

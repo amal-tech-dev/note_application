@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/date_time_format_controller.dart';
-import 'package:note_application/utils/color_constant/color_constant.dart';
+import 'package:note_application/utils/color_constant.dart';
 
 class NoteViewScreen extends StatelessWidget {
   String title, content;
