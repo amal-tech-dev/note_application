@@ -2,29 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/utils/color_constant/color_constant.dart';
+import 'package:note_application/view/edit_list_screen/edit_list_widgets/edit_list_item.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
 import 'package:note_application/view/notes_screen/notes_screen.dart';
 
-class EditNoteScreen extends StatefulWidget {
+class EditListScreen extends StatefulWidget {
   String appBarTitle;
-  String title, content;
+  String title;
+  List<String>? contentList;
   int? noteKey;
 
-  EditNoteScreen({
+  EditListScreen({
     super.key,
     required this.appBarTitle,
     this.title = '',
-    this.content = '',
+    this.contentList,
     this.noteKey,
   });
 
   @override
-  State<EditNoteScreen> createState() => _EditNoteScreenState();
+  State<EditListScreen> createState() => _EditListScreenState();
 }
 
-class _EditNoteScreenState extends State<EditNoteScreen> {
+class _EditListScreenState extends State<EditListScreen> {
   int counter = 0;
   List keysList = [];
+  List<String> checkList = [];
   final separatorBox = SizedBox(height: 15, width: 15);
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
@@ -36,11 +39,11 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
   }
 
   Future<void> initialiseHive() async {
-    var box = await Hive.box<NoteModel>('noteBox');
+    var box = await Hive.box<ListModel>('listBox');
     keysList = box.keys.toList();
     counter = keysList.last + 1 ?? 0;
     titleController = TextEditingController(text: widget.title);
-    contentController = TextEditingController(text: widget.content);
+    checkList = widget.contentList ?? [];
     setState(() {});
   }
 
@@ -63,29 +66,29 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              var box = Hive.box<NoteModel>('noteBox');
-              if (titleController.text.isEmpty ||
-                  contentController.text.isEmpty) {
+              var box = Hive.box<ListModel>('listBox');
+              if (titleController.text.isEmpty || checkList.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
                       titleController.text.isEmpty
                           ? 'Title is empty'
-                          : 'Content is empty',
+                          : 'Add atleast one item',
                     ),
                   ),
                 );
               } else {
                 await box.put(
                   widget.noteKey == null ? counter : widget.noteKey,
-                  NoteModel(
+                  ListModel(
                     title: titleController.text.trim(),
-                    content: contentController.text.trim(),
+                    contentList: checkList,
                     dateTime: DateTime.now(),
                   ),
                 );
                 keysList = box.keys.toList();
                 counter = keysList.length;
+                checkList = [];
                 setState(() {});
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -135,25 +138,62 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
               ),
               separatorBox,
               Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: ColorConstant.primaryColor,
-                        width: 2,
+                child: StatefulBuilder(
+                  builder: (context, setListState) {
+                    return ListView.builder(
+                      itemBuilder: (context, index) => EditListItem(
+                        itemName: checkList[index],
+                        onClearPressed: () {
+                          checkList.removeAt(index);
+                          setListState(() {});
+                        },
                       ),
+                      itemCount: checkList.length,
+                    );
+                  },
+                ),
+              ),
+              separatorBox,
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: ColorConstant.primaryColor,
+                      width: 2,
                     ),
-                    labelText: 'Content',
-                    labelStyle: TextStyle(
+                  ),
+                  labelText: 'Add to list',
+                  labelStyle: TextStyle(
+                    color: ColorConstant.primaryColor,
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      contentController.text == ''
+                          ? ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Empty item',
+                                ),
+                                duration: Duration(
+                                  milliseconds: 500,
+                                ),
+                              ),
+                            )
+                          : checkList.add(contentController.text.trim());
+                      contentController.clear();
+                      setState(() {});
+                    },
+                    icon: Icon(
+                      Icons.add_rounded,
+                      size: 30,
                       color: ColorConstant.primaryColor,
                     ),
-                    alignLabelWithHint: true,
                   ),
-                  controller: contentController,
-                  cursorColor: ColorConstant.primaryColor,
-                  maxLines: 50,
                 ),
+                controller: contentController,
+                cursorColor: ColorConstant.primaryColor,
+                autofocus: true,
               ),
             ],
           ),

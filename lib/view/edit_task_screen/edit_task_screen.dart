@@ -5,12 +5,12 @@ import 'package:note_application/utils/color_constant/color_constant.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
 import 'package:note_application/view/notes_screen/notes_screen.dart';
 
-class EditNoteScreen extends StatefulWidget {
+class EditTaskScreen extends StatefulWidget {
   String appBarTitle;
   String title, content;
   int? noteKey;
 
-  EditNoteScreen({
+  EditTaskScreen({
     super.key,
     required this.appBarTitle,
     this.title = '',
@@ -19,10 +19,10 @@ class EditNoteScreen extends StatefulWidget {
   });
 
   @override
-  State<EditNoteScreen> createState() => _EditNoteScreenState();
+  State<EditTaskScreen> createState() => _EditTaskScreenState();
 }
 
-class _EditNoteScreenState extends State<EditNoteScreen> {
+class _EditTaskScreenState extends State<EditTaskScreen> {
   int counter = 0;
   List keysList = [];
   final separatorBox = SizedBox(height: 15, width: 15);
