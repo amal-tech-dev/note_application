@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/model/note_model.dart';
+import 'package:note_application/model/note_model/note_model.dart';
 
 class TaskScreen extends StatefulWidget {
   TaskScreen({super.key});

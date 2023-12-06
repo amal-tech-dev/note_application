@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/note_color_controller.dart';
+import 'package:note_application/controller/color_controller.dart';
 import 'package:note_application/utils/color_constant.dart';
 
 class CheckboxListItemTile extends StatelessWidget {
@@ -15,11 +15,11 @@ class CheckboxListItemTile extends StatelessWidget {
   List<String> contentList;
   DateTime dateTime;
   VoidCallback onEditClicked, onDeleteClicked;
-  final randomColorController = NoteColorController();
+  final colorController = ColorController();
 
   @override
   Widget build(BuildContext context) {
-    final randomColor = randomColorController.randomNumber();
+    final randomColor = colorController.randomColor();
     return Container(
       height: 200,
       padding: EdgeInsets.only(

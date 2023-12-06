@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/note_color_controller.dart';
+import 'package:note_application/controller/color_controller.dart';
 import 'package:note_application/utils/color_constant.dart';
 
 class TaskTile extends StatelessWidget {
@@ -12,11 +12,11 @@ class TaskTile extends StatelessWidget {
   });
   String title, content;
   VoidCallback onEditClicked, onDeleteClicked;
-  final randomColorController = NoteColorController();
+  final randomColorController = ColorController();
 
   @override
   Widget build(BuildContext context) {
-    final randomColor = randomColorController.randomNumber();
+    final randomColor = randomColorController.randomColor();
     return Container(
       padding: EdgeInsets.only(
         left: 10,

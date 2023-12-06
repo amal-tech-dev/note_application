@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/model/list_model.dart';
+import 'package:note_application/model/list_model/list_model.dart';
 import 'package:note_application/view/checkbox_list_screen/checkbox_list_widgets/checkbox_list_tile.dart';
 import 'package:note_application/view/edit_list_screen/edit_list_screen.dart';
 
