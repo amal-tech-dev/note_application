@@ -25,8 +25,10 @@ class NoteApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => FloatingButtonController(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => FloatingButtonController()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: HomeScreen(),
