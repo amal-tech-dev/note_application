@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:note_application/utils/color_constant.dart';
-import 'package:note_application/view/notes_screen/notes_screen.dart';
+import 'package:note_application/view/home_screen/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => NotesScreen(),
+          builder: (context) => HomeScreen(),
         ),
       ),
     );

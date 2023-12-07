@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'list_model.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class ListModel {
   ListModel({
     required this.title,

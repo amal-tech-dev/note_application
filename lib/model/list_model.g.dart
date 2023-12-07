@@ -8,7 +8,7 @@ part of 'list_model.dart';
 
 class ListModelAdapter extends TypeAdapter<ListModel> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   ListModel read(BinaryReader reader) {

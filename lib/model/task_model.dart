@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'task_model.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 2)
 class TaskModel {
   TaskModel({
     required this.title,
