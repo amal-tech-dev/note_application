@@ -5,6 +5,7 @@ import 'package:note_application/model/list_model.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/model/task_model.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
+import 'package:note_application/view/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -32,7 +33,7 @@ class NoteApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        home: SplashScreen(),
       ),
     );
   }
