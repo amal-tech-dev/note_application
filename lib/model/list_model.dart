@@ -13,7 +13,20 @@ class ListModel {
   @HiveField(0)
   String title;
   @HiveField(1)
-  List<String> contentList;
+  List<ContentModel> contentList;
   @HiveField(2)
   DateTime dateTime;
+}
+
+@HiveType(typeId: 2)
+class ContentModel {
+  ContentModel({
+    required this.item,
+    required this.isMarked,
+  });
+
+  @HiveField(0)
+  String item;
+  @HiveField(1)
+  bool isMarked;
 }

@@ -8,7 +8,7 @@ import 'package:note_application/view/home_screen/home_screen.dart';
 class EditListScreen extends StatefulWidget {
   String appBarTitle;
   String title;
-  List<String>? contentList;
+  List<ContentModel>? contentList;
   int? noteKey;
 
   EditListScreen({
@@ -26,7 +26,7 @@ class EditListScreen extends StatefulWidget {
 class _EditListScreenState extends State<EditListScreen> {
   int counter = 0;
   List keysList = [];
-  List<String> checkList = [];
+  List<ContentModel> checkList = [];
   final separatorBox = SizedBox(height: 15, width: 15);
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
@@ -50,7 +50,6 @@ class _EditListScreenState extends State<EditListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.bgColor,
-      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: ColorConstant.primaryColor,
         leading: BackButton(
@@ -141,7 +140,7 @@ class _EditListScreenState extends State<EditListScreen> {
                   builder: (context, setListState) {
                     return ListView.builder(
                       itemBuilder: (context, index) => EditListItem(
-                        itemName: checkList[index],
+                        itemName: checkList[index].item,
                         onClearPressed: () {
                           checkList.removeAt(index);
                           setListState(() {});
@@ -179,7 +178,12 @@ class _EditListScreenState extends State<EditListScreen> {
                                 ),
                               ),
                             )
-                          : checkList.add(contentController.text.trim());
+                          : checkList.add(
+                              ContentModel(
+                                item: contentController.text.trim(),
+                                isMarked: false,
+                              ),
+                            );
                       contentController.clear();
                       setState(() {});
                     },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/color_controller.dart';
+import 'package:note_application/model/list_model.dart';
 import 'package:note_application/utils/color_constant.dart';
 
 class CheckboxListItemTile extends StatelessWidget {
@@ -12,7 +13,7 @@ class CheckboxListItemTile extends StatelessWidget {
     required this.onDeleteClicked,
   });
   String title;
-  List<String> contentList;
+  List<ContentModel> contentList;
   DateTime dateTime;
   VoidCallback onEditClicked, onDeleteClicked;
   final colorController = ColorController();

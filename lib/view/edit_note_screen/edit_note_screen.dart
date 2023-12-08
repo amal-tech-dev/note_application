@@ -47,7 +47,6 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.bgColor,
-      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: ColorConstant.primaryColor,
         leading: BackButton(
