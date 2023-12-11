@@ -3,17 +3,17 @@ import 'package:note_application/controller/color_controller.dart';
 import 'package:note_application/model/list_model.dart';
 import 'package:note_application/utils/color_constant.dart';
 
-class CheckboxListItemTile extends StatelessWidget {
-  CheckboxListItemTile({
+class CheckListItemTile extends StatelessWidget {
+  CheckListItemTile({
     super.key,
     required this.title,
-    required this.contentList,
+    required this.content,
     required this.dateTime,
     required this.onEditClicked,
     required this.onDeleteClicked,
   });
   String title;
-  List<ContentModel> contentList;
+  List<String> content;
   DateTime dateTime;
   VoidCallback onEditClicked, onDeleteClicked;
   final colorController = ColorController();
@@ -67,7 +67,7 @@ class CheckboxListItemTile extends StatelessWidget {
             ],
           ),
           Text(
-            contentList.join('\n'),
+            content.join('\n'),
             style: TextStyle(
               color: ColorConstant.tertiaryColor,
               fontSize: 15,

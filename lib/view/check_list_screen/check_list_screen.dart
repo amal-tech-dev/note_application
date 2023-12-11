@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/model/list_model.dart';
-import 'package:note_application/view/checkbox_list_screen/checkbox_list_widgets/checkbox_list_tile.dart';
+import 'package:note_application/view/check_list_screen/check_list_widgets/check_list_tile.dart';
 import 'package:note_application/view/edit_list_screen/edit_list_screen.dart';
 
-class CheckboxListScreen extends StatefulWidget {
-  CheckboxListScreen({super.key});
+class CheckListScreen extends StatefulWidget {
+  CheckListScreen({super.key});
 
   @override
-  State<CheckboxListScreen> createState() => _CheckboxListScreenState();
+  State<CheckListScreen> createState() => _CheckListScreenState();
 }
 
-class _CheckboxListScreenState extends State<CheckboxListScreen> {
+class _CheckListScreenState extends State<CheckListScreen> {
   List<ListModel> checkboxList = [];
   List keysList = [];
+
   final separatorBox = SizedBox(height: 15, width: 15);
 
   @override
@@ -26,7 +27,16 @@ class _CheckboxListScreenState extends State<CheckboxListScreen> {
     var box = await Hive.box<ListModel>('listBox');
     checkboxList = box.values.toList();
     keysList = box.keys.toList();
-    setState(() {});
+    setState(() {
+      box.clear();
+    });
+  }
+
+  List<String> getContent(int index) {
+    List<String> contentList = [];
+    for (int i = 0; i < keysList.length; i++)
+      contentList.add(checkboxList[index].contentList[i].item);
+    return contentList;
   }
 
   @override
@@ -35,9 +45,9 @@ class _CheckboxListScreenState extends State<CheckboxListScreen> {
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: ListView.separated(
-          itemBuilder: (context, index) => CheckboxListItemTile(
+          itemBuilder: (context, index) => CheckListItemTile(
             title: checkboxList[index].title,
-            contentList: checkboxList[index].contentList,
+            content: getContent(index),
             dateTime: checkboxList[index].dateTime,
             onEditClicked: () async {
               var box = Hive.box<ListModel>('listBox');

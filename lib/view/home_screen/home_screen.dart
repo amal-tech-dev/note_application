@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/floating_button_controller.dart';
 import 'package:note_application/utils/color_constant.dart';
-import 'package:note_application/view/checkbox_list_screen/checkbox_list_screen.dart';
+import 'package:note_application/view/check_list_screen/check_list_screen.dart';
 import 'package:note_application/view/edit_list_screen/edit_list_screen.dart';
 import 'package:note_application/view/edit_note_screen/edit_note_screen.dart';
 import 'package:note_application/view/edit_task_screen/edit_task_screen.dart';
@@ -52,7 +52,7 @@ class HomeScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             NotesScreen(),
-            CheckboxListScreen(),
+            CheckListScreen(),
             TaskScreen(),
           ],
         ),

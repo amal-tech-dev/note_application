@@ -76,7 +76,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 );
               } else {
                 await box.put(
-                  widget.noteKey == null ? counter : widget.noteKey,
+                  widget.noteKey ?? counter,
                   NoteModel(
                     title: titleController.text.trim(),
                     content: contentController.text.trim(),

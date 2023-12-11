@@ -35,7 +35,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
   }
 
   Future<void> initialiseHive() async {
-    var box = await Hive.box<NoteModel>('noteBox');
+    var box = Hive.box<NoteModel>('noteBox');
     keysList = box.keys.toList();
     counter = keysList.last + 1 ?? 0;
     titleController = TextEditingController(text: widget.title);
@@ -47,6 +47,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.bgColor,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: ColorConstant.primaryColor,
         leading: BackButton(
@@ -75,7 +76,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 );
               } else {
                 await box.put(
-                  widget.noteKey == null ? counter : widget.noteKey,
+                  widget.noteKey ?? counter,
                   NoteModel(
                     title: titleController.text.trim(),
                     content: contentController.text.trim(),
@@ -105,15 +106,31 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: ColorConstant.primaryColor,
+                    width: 2,
+                  ),
+                ),
+                labelText: 'Title',
+                labelStyle: TextStyle(
+                  color: ColorConstant.primaryColor,
+                ),
+              ),
+              controller: titleController,
+              cursorColor: ColorConstant.primaryColor,
+              autofocus: true,
+            ),
+            separatorBox,
+            Expanded(
+              child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
@@ -122,39 +139,18 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                       width: 2,
                     ),
                   ),
-                  labelText: 'Title',
+                  labelText: 'Content',
                   labelStyle: TextStyle(
                     color: ColorConstant.primaryColor,
                   ),
+                  alignLabelWithHint: true,
                 ),
-                controller: titleController,
+                controller: contentController,
                 cursorColor: ColorConstant.primaryColor,
-                autofocus: true,
+                maxLines: 50,
               ),
-              separatorBox,
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: ColorConstant.primaryColor,
-                        width: 2,
-                      ),
-                    ),
-                    labelText: 'Content',
-                    labelStyle: TextStyle(
-                      color: ColorConstant.primaryColor,
-                    ),
-                    alignLabelWithHint: true,
-                  ),
-                  controller: contentController,
-                  cursorColor: ColorConstant.primaryColor,
-                  maxLines: 50,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

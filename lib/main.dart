@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:note_application/controller/check_list_controller.dart';
 import 'package:note_application/controller/floating_button_controller.dart';
 import 'package:note_application/model/list_model.dart';
 import 'package:note_application/model/note_model.dart';
@@ -31,6 +32,7 @@ class NoteApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => FloatingButtonController()),
+        ChangeNotifierProvider(create: (context) => CheckListController()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
