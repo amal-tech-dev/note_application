@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/date_time_format_controller.dart';
 import 'package:note_application/utils/color_constant.dart';
+import 'package:note_application/utils/dimen_constant.dart';
 
 class NoteViewScreen extends StatelessWidget {
   String title, content;
@@ -41,7 +42,7 @@ class NoteViewScreen extends StatelessWidget {
               dateTimeFormater.formatDateTime(dateTime),
               style: TextStyle(
                 color: ColorConstant.secondaryColor,
-                fontSize: 12,
+                fontSize: DimenConstant.miniTextSize,
                 fontWeight: FontWeight.bold,
               ),
               overflow: TextOverflow.ellipsis,
@@ -63,19 +64,16 @@ class NoteViewScreen extends StatelessWidget {
             ],
             color: ColorConstant.bgColor,
           ),
-          SizedBox(
-            width: 5,
-          )
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(DimenConstant.edgePadding),
         child: Expanded(
           child: Text(
             content,
             style: TextStyle(
               color: ColorConstant.tertiaryColor,
-              fontSize: 20,
+              fontSize: DimenConstant.titleTextSize,
             ),
             maxLines: 100,
           ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/model/list_model.dart';
+import 'package:note_application/utils/dimen_constant.dart';
 import 'package:note_application/view/check_list_screen/check_list_widgets/check_list_tile.dart';
-import 'package:note_application/view/edit_list_screen/edit_list_screen.dart';
+import 'package:note_application/view/edit_check_list_screen/edit_check_list_screen.dart';
 
 class CheckListScreen extends StatefulWidget {
   CheckListScreen({super.key});
@@ -15,8 +16,6 @@ class _CheckListScreenState extends State<CheckListScreen> {
   List<ListModel> checkboxList = [];
   List keysList = [];
 
-  final separatorBox = SizedBox(height: 15, width: 15);
-
   @override
   void initState() {
     initialiseHive();
@@ -28,7 +27,6 @@ class _CheckListScreenState extends State<CheckListScreen> {
     checkboxList = box.values.toList();
     keysList = box.keys.toList();
     setState(() {
-      box.clear();
     });
   }
 
@@ -43,9 +41,9 @@ class _CheckListScreenState extends State<CheckListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(DimenConstant.edgePadding),
         child: ListView.separated(
-          itemBuilder: (context, index) => CheckListItemTile(
+          itemBuilder: (context, index) => CheckListTile(
             title: checkboxList[index].title,
             content: getContent(index),
             dateTime: checkboxList[index].dateTime,
@@ -71,7 +69,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
               setState(() {});
             },
           ),
-          separatorBuilder: (context, index) => separatorBox,
+          separatorBuilder: (context, index) => DimenConstant.separator,
           itemCount: keysList.length,
         ),
       ),

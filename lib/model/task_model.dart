@@ -7,7 +7,8 @@ class TaskModel {
   TaskModel({
     required this.title,
     required this.description,
-    required this.dateTime,
+    required this.dueDate,
+    required this.isOverDue,
     required this.isDone,
   });
 
@@ -16,7 +17,9 @@ class TaskModel {
   @HiveField(1)
   String description;
   @HiveField(2)
-  DateTime dateTime;
+  DateTime dueDate;
   @HiveField(3)
+  bool isOverDue;
+  @HiveField(4)
   bool isDone;
 }

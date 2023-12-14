@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/utils/color_constant.dart';
+import 'package:note_application/utils/dimen_constant.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
 
 class EditNoteScreen extends StatefulWidget {
@@ -24,7 +25,6 @@ class EditNoteScreen extends StatefulWidget {
 class _EditNoteScreenState extends State<EditNoteScreen> {
   int counter = 0;
   List keysList = [];
-  final separatorBox = SizedBox(height: 15, width: 15);
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
@@ -100,13 +100,10 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
               color: ColorConstant.secondaryColor,
             ),
           ),
-          SizedBox(
-            width: 10,
-          ),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(DimenConstant.edgePadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -116,7 +113,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: ColorConstant.primaryColor,
-                    width: 2,
+                    width: DimenConstant.borderWidth,
                   ),
                 ),
                 labelText: 'Title',
@@ -128,7 +125,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
               cursorColor: ColorConstant.primaryColor,
               autofocus: true,
             ),
-            separatorBox,
+            DimenConstant.separator,
             Expanded(
               child: TextField(
                 decoration: InputDecoration(
@@ -136,7 +133,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: ColorConstant.primaryColor,
-                      width: 2,
+                      width: DimenConstant.borderWidth,
                     ),
                   ),
                   labelText: 'Content',

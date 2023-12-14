@@ -3,7 +3,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/controller/check_list_controller.dart';
 import 'package:note_application/model/list_model.dart';
 import 'package:note_application/utils/color_constant.dart';
-import 'package:note_application/view/edit_list_screen/edit_list_widgets/edit_list_item.dart';
+import 'package:note_application/utils/dimen_constant.dart';
+import 'package:note_application/view/edit_check_list_screen/edit_check_list_widgets/edit_check_list_item.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -29,13 +30,16 @@ class _EditListScreenState extends State<EditListScreen> {
   int counter = 0;
   List keysList = [];
 
-  final separatorBox = SizedBox(height: 15, width: 15);
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
   @override
   void initState() {
     initialiseHive();
+    titleController = TextEditingController(text: widget.title);
+    Provider.of<CheckListController>(context, listen: false)
+        .intialCheckList(widget.contentList!);
+    setState(() {});
     super.initState();
   }
 
@@ -43,9 +47,6 @@ class _EditListScreenState extends State<EditListScreen> {
     var box = Hive.box<ListModel>('listBox');
     keysList = box.keys.toList();
     counter = keysList.last + 1 ?? 0;
-    titleController = TextEditingController(text: widget.title);
-    Provider.of<CheckListController>(context, listen: false)
-        .intialCheckList(widget.contentList!);
     setState(() {});
   }
 
@@ -111,13 +112,10 @@ class _EditListScreenState extends State<EditListScreen> {
               ),
             ),
           ),
-          SizedBox(
-            width: 10,
-          ),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(DimenConstant.edgePadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -127,7 +125,7 @@ class _EditListScreenState extends State<EditListScreen> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: ColorConstant.primaryColor,
-                    width: 2,
+                    width: DimenConstant.borderWidth,
                   ),
                 ),
                 labelText: 'Title',
@@ -139,7 +137,7 @@ class _EditListScreenState extends State<EditListScreen> {
               cursorColor: ColorConstant.primaryColor,
               autofocus: true,
             ),
-            separatorBox,
+            DimenConstant.separator,
             TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -182,12 +180,12 @@ class _EditListScreenState extends State<EditListScreen> {
               cursorColor: ColorConstant.primaryColor,
               autofocus: true,
             ),
-            separatorBox,
+            DimenConstant.separator,
             Expanded(
               child: StatefulBuilder(
                 builder: (context, setListState) => Consumer(
                   builder: (context, value, child) => ListView.builder(
-                    itemBuilder: (context, index) => EditListItem(
+                    itemBuilder: (context, index) => EditCheckListItem(
                       itemName: Provider.of<CheckListController>(
                         context,
                       ).checkList[index].item,

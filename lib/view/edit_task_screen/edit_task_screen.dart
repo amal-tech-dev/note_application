@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/model/note_model.dart';
+import 'package:intl/intl.dart';
+import 'package:note_application/model/task_model.dart';
 import 'package:note_application/utils/color_constant.dart';
+import 'package:note_application/utils/dimen_constant.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
 
 class EditTaskScreen extends StatefulWidget {
   String appBarTitle;
-  String title, content;
+  String title, description;
+  DateTime dueDate;
   int? noteKey;
 
   EditTaskScreen({
     super.key,
     required this.appBarTitle,
     this.title = '',
-    this.content = '',
+    this.description = '',
+    required this.dueDate,
     this.noteKey,
   });
 
@@ -24,27 +28,32 @@ class EditTaskScreen extends StatefulWidget {
 class _EditTaskScreenState extends State<EditTaskScreen> {
   int counter = 0;
   List keysList = [];
-  final separatorBox = SizedBox(height: 15, width: 15);
   TextEditingController titleController = TextEditingController();
-  TextEditingController contentController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  DateTime dueDate = DateTime.now();
 
   @override
   void initState() {
     initialiseHive();
+    titleController = TextEditingController(text: widget.title);
+    descriptionController = TextEditingController(text: widget.description);
+    dueDate = widget.dueDate;
+
+    setState(() {});
     super.initState();
   }
 
   Future<void> initialiseHive() async {
-    var box = await Hive.box<NoteModel>('noteBox');
+    var box = await Hive.box<TaskModel>('taskModel');
     keysList = box.keys.toList();
     counter = keysList.last + 1 ?? 0;
-    titleController = TextEditingController(text: widget.title);
-    contentController = TextEditingController(text: widget.content);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    String date = DateFormat('dd-MMM-yyyy').format(dueDate);
+    String time = DateFormat('hh:mm a').format(dueDate);
     return Scaffold(
       backgroundColor: ColorConstant.bgColor,
       resizeToAvoidBottomInset: true,
@@ -62,25 +71,26 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              var box = Hive.box<NoteModel>('noteBox');
-              if (titleController.text.isEmpty ||
-                  contentController.text.isEmpty) {
+              var box = Hive.box<TaskModel>('taskBox');
+              if (titleController.text.isEmpty || dueDate == DateTime.now()) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
                       titleController.text.isEmpty
                           ? 'Title is empty'
-                          : 'Content is empty',
+                          : 'Select a date for the task',
                     ),
                   ),
                 );
               } else {
                 await box.put(
                   widget.noteKey ?? counter,
-                  NoteModel(
+                  TaskModel(
                     title: titleController.text.trim(),
-                    content: contentController.text.trim(),
-                    dateTime: DateTime.now(),
+                    description: descriptionController.text.trim(),
+                    dueDate: dueDate,
+                    isOverDue: false,
+                    isDone: false,
                   ),
                 );
                 keysList = box.keys.toList();
@@ -100,62 +110,89 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
               color: ColorConstant.secondaryColor,
             ),
           ),
-          SizedBox(
-            width: 10,
-          ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
+        padding: const EdgeInsets.all(DimenConstant.edgePadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: ColorConstant.primaryColor,
+                    width: DimenConstant.borderWidth,
+                  ),
+                ),
+                labelText: 'Title',
+                labelStyle: TextStyle(
+                  color: ColorConstant.primaryColor,
+                ),
+              ),
+              controller: titleController,
+              cursorColor: ColorConstant.primaryColor,
+              autofocus: true,
+            ),
+            DimenConstant.separator,
+            Expanded(
+              child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: ColorConstant.primaryColor,
-                      width: 2,
+                      width: DimenConstant.borderWidth,
                     ),
                   ),
-                  labelText: 'Title',
+                  labelText: 'Description',
                   labelStyle: TextStyle(
                     color: ColorConstant.primaryColor,
                   ),
+                  alignLabelWithHint: true,
                 ),
-                controller: titleController,
+                controller: descriptionController,
                 cursorColor: ColorConstant.primaryColor,
-                autofocus: true,
+                maxLines: 50,
               ),
-              separatorBox,
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+            ),
+            DimenConstant.separator,
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () => showDatePicker(
+                      context: context,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(Duration(days: 3650)),
+                    ),
+                    child: Text(
+                      date,
+                      style: TextStyle(
                         color: ColorConstant.primaryColor,
-                        width: 2,
+                        fontSize: DimenConstant.subTitleTextSize,
                       ),
                     ),
-                    labelText: 'Content',
-                    labelStyle: TextStyle(
-                      color: ColorConstant.primaryColor,
-                    ),
-                    alignLabelWithHint: true,
                   ),
-                  controller: contentController,
-                  cursorColor: ColorConstant.primaryColor,
-                  maxLines: 50,
-                ),
+                  TextButton(
+                    onPressed: () => showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay(hour: 00, minute: 00),
+                    ),
+                    child: Text(
+                      time,
+                      style: TextStyle(
+                        color: ColorConstant.primaryColor,
+                        fontSize: DimenConstant.subTitleTextSize,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:note_application/controller/date_time_format_controller.dart';
 import 'package:note_application/utils/color_constant.dart';
 
-class ListViewScreen extends StatelessWidget {
+class CheckListViewScreen extends StatelessWidget {
   String title, content;
   DateTime dateTime;
   VoidCallback onEditPressed, onDeletePressed;
   final dateTimeFormater = DateTimeFormatController();
 
-  ListViewScreen({
+  CheckListViewScreen({
     super.key,
     required this.title,
     required this.content,

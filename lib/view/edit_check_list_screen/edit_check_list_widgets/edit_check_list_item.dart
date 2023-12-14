@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/utils/color_constant.dart';
+import 'package:note_application/utils/dimen_constant.dart';
 
-class EditListItem extends StatelessWidget {
-  EditListItem({
+class EditCheckListItem extends StatelessWidget {
+  EditCheckListItem({
     super.key,
     required this.itemName,
     required this.onClearPressed,
@@ -15,7 +16,7 @@ class EditListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-        left: 10,
+        left: DimenConstant.edgePadding,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,7 +27,7 @@ class EditListItem extends StatelessWidget {
               itemName,
               style: TextStyle(
                 color: ColorConstant.tertiaryColor,
-                fontSize: 20,
+                fontSize: DimenConstant.titleTextSize,
               ),
               maxLines: 3,
               overflow: TextOverflow.ellipsis,

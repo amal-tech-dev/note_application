@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/color_controller.dart';
-import 'package:note_application/model/list_model.dart';
 import 'package:note_application/utils/color_constant.dart';
+import 'package:note_application/utils/dimen_constant.dart';
 
-class CheckListItemTile extends StatelessWidget {
-  CheckListItemTile({
+class CheckListTile extends StatelessWidget {
+  CheckListTile({
     super.key,
     required this.title,
     required this.content,
@@ -12,6 +12,7 @@ class CheckListItemTile extends StatelessWidget {
     required this.onEditClicked,
     required this.onDeleteClicked,
   });
+
   String title;
   List<String> content;
   DateTime dateTime;
@@ -22,17 +23,16 @@ class CheckListItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final randomColor = colorController.randomColor();
     return Container(
-      height: 200,
       padding: EdgeInsets.only(
-        left: 10,
-        bottom: 10,
+        left: DimenConstant.edgePadding,
+        bottom: DimenConstant.edgePadding,
       ),
       decoration: BoxDecoration(
         color: randomColor['background'],
-        borderRadius: BorderRadius.circular(7.5),
+        borderRadius: BorderRadius.circular(DimenConstant.borderRadius),
         border: Border.all(
           color: randomColor['border'],
-          width: 3,
+          width: DimenConstant.borderWidth,
         ),
       ),
       child: Column(
@@ -45,7 +45,7 @@ class CheckListItemTile extends StatelessWidget {
                   title,
                   style: TextStyle(
                     color: ColorConstant.tertiaryColor,
-                    fontSize: 20,
+                    fontSize: DimenConstant.titleTextSize,
                     fontWeight: FontWeight.bold,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -70,7 +70,7 @@ class CheckListItemTile extends StatelessWidget {
             content.join('\n'),
             style: TextStyle(
               color: ColorConstant.tertiaryColor,
-              fontSize: 15,
+              fontSize: DimenConstant.subTitleTextSize,
               fontWeight: FontWeight.bold,
             ),
             overflow: TextOverflow.ellipsis,

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/utils/dimen_constant.dart';
 import 'package:note_application/view/edit_note_screen/edit_note_screen.dart';
-import 'package:note_application/view/notes_screen/notes_widgets/note_tile.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:note_application/view/note_screen/note_widgets/note_tile.dart';
 import 'package:note_application/view/note_view_screen/note_view_screen.dart';
 
-class NotesScreen extends StatefulWidget {
-  NotesScreen({super.key});
+class NoteScreen extends StatefulWidget {
+  NoteScreen({super.key});
 
   @override
-  State<NotesScreen> createState() => _NotesScreenState();
+  State<NoteScreen> createState() => _NoteScreenState();
 }
 
-class _NotesScreenState extends State<NotesScreen> {
+class _NoteScreenState extends State<NoteScreen> {
   List<NoteModel> notesList = [];
   List keysList = [];
 

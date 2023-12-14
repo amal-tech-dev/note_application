@@ -5,7 +5,7 @@ class CheckListController with ChangeNotifier {
   List<ContentModel> checkList = [];
 
   intialCheckList(List<ContentModel> list) {
-    checkList = list == [] ? [] : list;
+    checkList = (list == []) ? [] : list;
   }
 
   addContent(String itemName) {

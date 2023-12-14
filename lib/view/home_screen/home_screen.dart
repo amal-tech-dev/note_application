@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/floating_button_controller.dart';
 import 'package:note_application/utils/color_constant.dart';
+import 'package:note_application/utils/dimen_constant.dart';
 import 'package:note_application/view/check_list_screen/check_list_screen.dart';
-import 'package:note_application/view/edit_list_screen/edit_list_screen.dart';
+import 'package:note_application/view/edit_check_list_screen/edit_check_list_screen.dart';
 import 'package:note_application/view/edit_note_screen/edit_note_screen.dart';
 import 'package:note_application/view/edit_task_screen/edit_task_screen.dart';
-import 'package:note_application/view/notes_screen/notes_screen.dart';
+import 'package:note_application/view/note_screen/note_screen.dart';
 import 'package:note_application/view/task_screen/task_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-
-  final separatorBox = SizedBox(height: 15, width: 15);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class HomeScreen extends StatelessWidget {
             indicatorColor: ColorConstant.secondaryColor,
             labelColor: ColorConstant.secondaryColor,
             labelStyle: TextStyle(
-              fontSize: 20,
+              fontSize: DimenConstant.titleTextSize,
               fontWeight: FontWeight.bold,
             ),
             tabs: [
@@ -51,98 +50,89 @@ class HomeScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            NotesScreen(),
+            NoteScreen(),
             CheckListScreen(),
             TaskScreen(),
           ],
         ),
-        floatingActionButton: Consumer(
-          builder: (context, value, child) =>
-              Provider.of<FloatingButtonController>(context).isExpanded
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        FloatingActionButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditTaskScreen(
-                                  appBarTitle: 'Add New Task',
-                                ),
-                              ),
-                            );
-                            Provider.of<FloatingButtonController>(context,
-                                    listen: false)
-                                .shrink();
-                          },
-                          backgroundColor: ColorConstant.primaryColor,
-                          child: Icon(
-                            Icons.task_alt,
-                            color: ColorConstant.tertiaryColor,
-                            size: 20,
+        floatingActionButton: Consumer<FloatingButtonController>(
+          builder: (context, value, child) => value.isExpanded
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    FloatingActionButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditTaskScreen(
+                              appBarTitle: 'Add New Task',
+                              dueDate: DateTime.now(),
+                            ),
                           ),
-                          mini: true,
-                        ),
-                        separatorBox,
-                        FloatingActionButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditListScreen(
-                                  appBarTitle: 'Add New List',
-                                ),
-                              ),
-                            );
-                            Provider.of<FloatingButtonController>(context,
-                                    listen: false)
-                                .shrink();
-                          },
-                          backgroundColor: ColorConstant.primaryColor,
-                          child: Icon(
-                            Icons.check_box,
-                            color: ColorConstant.tertiaryColor,
-                            size: 20,
-                          ),
-                          mini: true,
-                        ),
-                        separatorBox,
-                        FloatingActionButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditNoteScreen(
-                                  appBarTitle: 'Add New Note',
-                                ),
-                              ),
-                            );
-                            Provider.of<FloatingButtonController>(context,
-                                    listen: false)
-                                .shrink();
-                          },
-                          backgroundColor: ColorConstant.primaryColor,
-                          child: Icon(
-                            Icons.notes,
-                            color: ColorConstant.tertiaryColor,
-                            size: 30,
-                          ),
-                        ),
-                      ],
-                    )
-                  : FloatingActionButton(
-                      onPressed: () => Provider.of<FloatingButtonController>(
-                              context,
-                              listen: false)
-                          .expand(),
+                        );
+                        value.shrink();
+                      },
                       backgroundColor: ColorConstant.primaryColor,
                       child: Icon(
-                        Icons.add,
+                        Icons.task_alt,
                         color: ColorConstant.tertiaryColor,
-                        size: 35,
+                        size: 20,
+                      ),
+                      mini: true,
+                    ),
+                    DimenConstant.separator,
+                    FloatingActionButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditListScreen(
+                              appBarTitle: 'Add New List',
+                            ),
+                          ),
+                        );
+                        value.shrink();
+                      },
+                      backgroundColor: ColorConstant.primaryColor,
+                      child: Icon(
+                        Icons.check_box,
+                        color: ColorConstant.tertiaryColor,
+                        size: 20,
+                      ),
+                      mini: true,
+                    ),
+                    DimenConstant.separator,
+                    FloatingActionButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditNoteScreen(
+                              appBarTitle: 'Add New Note',
+                            ),
+                          ),
+                        );
+                        value.shrink();
+                      },
+                      backgroundColor: ColorConstant.primaryColor,
+                      child: Icon(
+                        Icons.notes,
+                        color: ColorConstant.tertiaryColor,
+                        size: 30,
                       ),
                     ),
+                  ],
+                )
+              : FloatingActionButton(
+                  onPressed: () => value.expand(),
+                  backgroundColor: ColorConstant.primaryColor,
+                  child: Icon(
+                    Icons.add,
+                    color: ColorConstant.tertiaryColor,
+                    size: 35,
+                  ),
+                ),
         ),
       ),
     );

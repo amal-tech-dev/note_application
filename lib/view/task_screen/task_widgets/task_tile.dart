@@ -1,75 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/color_controller.dart';
-import 'package:note_application/utils/color_constant.dart';
+import 'package:note_application/utils/dimen_constant.dart';
 
 class TaskTile extends StatelessWidget {
+  String title, description;
+  DateTime dueDate;
+  bool isOverDue, isDone;
+
   TaskTile({
     super.key,
     required this.title,
-    required this.content,
-    required this.onEditClicked,
-    required this.onDeleteClicked,
+    required this.description,
+    required this.dueDate,
+    required this.isOverDue,
+    required this.isDone,
   });
-  String title, content;
-  VoidCallback onEditClicked, onDeleteClicked;
-  final randomColorController = ColorController();
 
   @override
   Widget build(BuildContext context) {
-    final randomColor = randomColorController.randomColor();
     return Container(
-      padding: EdgeInsets.only(
-        left: 10,
-        bottom: 10,
-      ),
       decoration: BoxDecoration(
-        color: randomColor['background'],
-        borderRadius: BorderRadius.circular(7.5),
+        color: isOverDue
+            ? Colors.red.shade50
+            : isDone
+                ? Colors.green.shade50
+                : Colors.blue.shade50,
         border: Border.all(
-          color: randomColor['border'],
-          width: 3,
+          color: isOverDue
+              ? Colors.red.shade500
+              : isDone
+                  ? Colors.green.shade500
+                  : Colors.blue.shade500,
+          width: DimenConstant.borderWidth,
         ),
+        borderRadius: BorderRadius.circular(DimenConstant.borderRadius),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ExpansionTile(
+        title: Text(
+          'Title',
+          style: TextStyle(
+            fontSize: DimenConstant.titleTextSize,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         children: [
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: DimenConstant.edgePadding,
+                ),
                 child: Text(
-                  title,
+                  'Description',
                   style: TextStyle(
-                    color: ColorConstant.tertiaryColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontSize: DimenConstant.subTitleTextSize,
                   ),
+                  maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              PopupMenuButton(
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    child: Text('Edit'),
-                    onTap: onEditClicked,
+              DimenConstant.separator,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: DimenConstant.edgePadding,
+                    ),
+                    child: Text(
+                      DateTime.now().toString(),
+                      style: TextStyle(
+                        fontSize: DimenConstant.miniTextSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  PopupMenuItem(
-                    child: Text('Delete'),
-                    onTap: onDeleteClicked,
+                  TextButton(
+                    onPressed: () {},
+                    child: Text('Mark as done'),
                   ),
                 ],
-                color: ColorConstant.bgColor,
               ),
             ],
-          ),
-          Text(
-            content,
-            style: TextStyle(
-              color: ColorConstant.tertiaryColor,
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-            ),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 5,
           ),
         ],
       ),
