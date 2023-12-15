@@ -21,17 +21,17 @@ class CheckListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final randomColor = colorController.randomColor();
+    final randomColor = colorController.randomColor(isNote: false);
     return Container(
       padding: EdgeInsets.only(
         left: DimenConstant.edgePadding,
         bottom: DimenConstant.edgePadding,
       ),
       decoration: BoxDecoration(
-        color: randomColor['background'],
+        color: randomColor['background']!,
         borderRadius: BorderRadius.circular(DimenConstant.borderRadius),
         border: Border.all(
-          color: randomColor['border'],
+          color: randomColor['border']!,
           width: DimenConstant.borderWidth,
         ),
       ),

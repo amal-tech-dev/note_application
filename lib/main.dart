@@ -5,8 +5,10 @@ import 'package:note_application/controller/floating_button_controller.dart';
 import 'package:note_application/model/list_model.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/model/task_model.dart';
-import 'package:note_application/view/task_screen/task_screen.dart';
+import 'package:note_application/view/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
+
+enum TaskState { overdue, completed, upcoming }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +38,7 @@ class NoteApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: TaskScreen(),
+        home: HomeScreen(),
       ),
     );
   }

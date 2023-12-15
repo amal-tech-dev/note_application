@@ -1,153 +1,172 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:note_application/utils/color_constant.dart';
 
 class ColorController {
-  List<Map> randomColors = [
+  List<Map<String, Color?>> noteColors = [
     {
-      'border': Colors.amber.shade900,
-      'background': Colors.amber.shade100,
+      'border': Colors.amber.shade500,
+      'background': Colors.amber.shade50,
     },
     {
-      'border': Colors.amberAccent.shade700,
-      'background': Colors.amberAccent.shade100,
+      'border': Colors.blue.shade500,
+      'background': Colors.blue.shade50,
     },
     {
-      'border': Colors.blue.shade900,
-      'background': Colors.blue.shade100,
+      'border': Colors.blueGrey.shade500,
+      'background': Colors.blueGrey.shade50,
     },
     {
-      'border': Colors.blueAccent.shade700,
-      'background': Colors.blueAccent.shade100,
+      'border': Colors.brown.shade500,
+      'background': Colors.brown.shade50,
     },
     {
-      'border': Colors.blueGrey.shade900,
-      'background': Colors.blueGrey.shade100,
+      'border': Colors.cyan.shade500,
+      'background': Colors.cyan.shade50,
     },
     {
-      'border': Colors.brown.shade900,
-      'background': Colors.brown.shade100,
+      'border': Colors.deepOrange.shade500,
+      'background': Colors.deepOrange.shade50,
     },
     {
-      'border': Colors.cyan.shade900,
-      'background': Colors.cyan.shade100,
+      'border': Colors.deepPurple.shade500,
+      'background': Colors.deepPurple.shade50,
     },
     {
-      'border': Colors.cyanAccent.shade700,
-      'background': Colors.cyanAccent.shade100,
+      'border': Colors.green.shade500,
+      'background': Colors.green.shade50,
     },
     {
-      'border': Colors.deepOrange.shade900,
-      'background': Colors.deepOrange.shade100,
+      'border': Colors.grey.shade500,
+      'background': Colors.grey.shade50,
     },
     {
-      'border': Colors.deepOrangeAccent.shade700,
-      'background': Colors.deepOrangeAccent.shade100,
-    },
-    {
-      'border': Colors.deepPurple.shade900,
-      'background': Colors.deepPurple.shade100,
-    },
-    {
-      'border': Colors.deepPurpleAccent.shade700,
-      'background': Colors.deepPurpleAccent.shade100,
-    },
-    {
-      'border': Colors.green.shade900,
-      'background': Colors.green.shade100,
-    },
-    {
-      'border': Colors.greenAccent.shade700,
-      'background': Colors.greenAccent.shade100,
-    },
-    {
-      'border': Colors.grey.shade900,
-      'background': Colors.grey.shade100,
-    },
-    {
-      'border': Colors.indigo.shade900,
+      'border': Colors.indigo.shade500,
       'background': Colors.indigo.shade100,
     },
     {
-      'border': Colors.indigoAccent.shade700,
+      'border': Colors.lightBlue.shade500,
+      'background': Colors.lightBlue.shade50,
+    },
+    {
+      'border': Colors.lightGreen.shade500,
+      'background': Colors.lightGreen.shade50,
+    },
+    {
+      'border': Colors.lime.shade500,
+      'background': Colors.lime.shade50,
+    },
+    {
+      'border': Colors.orange.shade500,
+      'background': Colors.orange.shade50,
+    },
+    {
+      'border': Colors.pink.shade500,
+      'background': Colors.pink.shade50,
+    },
+    {
+      'border': Colors.purple.shade500,
+      'background': Colors.purple.shade50,
+    },
+    {
+      'border': Colors.red.shade500,
+      'background': Colors.red.shade50,
+    },
+    {
+      'border': Colors.teal.shade500,
+      'background': Colors.teal.shade50,
+    },
+    {
+      'border': Colors.yellow.shade500,
+      'background': Colors.yellow.shade50,
+    },
+  ];
+
+  List<Map<String, Color?>> listColors = [
+    {
+      'border': Colors.amberAccent.shade400,
+      'background': Colors.amberAccent.shade100,
+    },
+    {
+      'border': Colors.blueAccent.shade400,
+      'background': Colors.blueAccent.shade100,
+    },
+    {
+      'border': Colors.cyanAccent.shade400,
+      'background': Colors.cyanAccent.shade100,
+    },
+    {
+      'border': Colors.deepOrangeAccent.shade400,
+      'background': Colors.deepOrangeAccent.shade100,
+    },
+    {
+      'border': Colors.deepPurpleAccent.shade400,
+      'background': Colors.deepPurpleAccent.shade100,
+    },
+    {
+      'border': Colors.greenAccent.shade400,
+      'background': Colors.greenAccent.shade100,
+    },
+    {
+      'border': Colors.indigoAccent.shade400,
       'background': Colors.indigoAccent.shade100,
     },
     {
-      'border': Colors.lightBlue.shade900,
-      'background': Colors.lightBlue.shade100,
-    },
-    {
-      'border': Colors.lightBlueAccent.shade700,
+      'border': Colors.lightBlueAccent.shade400,
       'background': Colors.lightBlueAccent.shade100,
     },
     {
-      'border': Colors.lightGreen.shade900,
-      'background': Colors.lightGreen.shade100,
-    },
-    {
-      'border': Colors.lightGreenAccent.shade700,
+      'border': Colors.lightGreenAccent.shade400,
       'background': Colors.lightGreenAccent.shade100,
     },
     {
-      'border': Colors.lime.shade900,
-      'background': Colors.lime.shade100,
-    },
-    {
-      'border': Colors.limeAccent.shade700,
+      'border': Colors.limeAccent.shade400,
       'background': Colors.limeAccent.shade100,
     },
     {
-      'border': Colors.orange.shade900,
-      'background': Colors.orange.shade100,
-    },
-    {
-      'border': Colors.orangeAccent.shade700,
+      'border': Colors.orangeAccent.shade400,
       'background': Colors.orangeAccent.shade100,
     },
     {
-      'border': Colors.pink.shade900,
-      'background': Colors.pink.shade100,
-    },
-    {
-      'border': Colors.pinkAccent.shade700,
+      'border': Colors.pinkAccent.shade400,
       'background': Colors.pinkAccent.shade100,
     },
     {
-      'border': Colors.purple.shade900,
-      'background': Colors.purple.shade100,
-    },
-    {
-      'border': Colors.purpleAccent.shade700,
+      'border': Colors.purpleAccent.shade400,
       'background': Colors.purpleAccent.shade100,
     },
     {
-      'border': Colors.red.shade900,
-      'background': Colors.red.shade100,
-    },
-    {
-      'border': Colors.redAccent.shade700,
+      'border': Colors.redAccent.shade400,
       'background': Colors.redAccent.shade100,
     },
     {
-      'border': Colors.teal.shade900,
-      'background': Colors.teal.shade100,
-    },
-    {
-      'border': Colors.tealAccent.shade700,
+      'border': Colors.tealAccent.shade400,
       'background': Colors.tealAccent.shade100,
     },
     {
-      'border': Colors.yellow.shade900,
-      'background': Colors.yellow.shade100,
-    },
-    {
-      'border': Colors.yellowAccent.shade700,
+      'border': Colors.yellowAccent.shade400,
       'background': Colors.yellowAccent.shade100,
     },
   ];
 
-  Map randomColor() {
-    int randomIndex = Random().nextInt(randomColors.length);
-    return randomColors[randomIndex];
+  Map<String, Map<String, Color?>> taskColors = {
+    'red': {
+      'border': Colors.red.shade500,
+      'background': Colors.red.shade50,
+    },
+    'green': {
+      'border': Colors.green.shade500,
+      'background': Colors.green.shade50,
+    },
+    'blue': {
+      'border': Colors.blue.shade500,
+      'background': Colors.blue.shade50,
+    },
+  };
+
+  Map<String, Color?> randomColor({required bool isNote}) {
+    int randomIndex =
+        Random().nextInt(isNote ? noteColors.length : listColors.length);
+    return isNote ? noteColors[randomIndex] : listColors[randomIndex];
   }
 }

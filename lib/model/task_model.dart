@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:note_application/main.dart';
 
 part 'task_model.g.dart';
 
@@ -6,20 +7,17 @@ part 'task_model.g.dart';
 class TaskModel {
   TaskModel({
     required this.title,
-    required this.description,
+    this.description,
     required this.dueDate,
-    required this.isOverDue,
-    required this.isDone,
+    required this.state,
   });
 
   @HiveField(0)
   String title;
   @HiveField(1)
-  String description;
+  String? description;
   @HiveField(2)
   DateTime dueDate;
   @HiveField(3)
-  bool isOverDue;
-  @HiveField(4)
-  bool isDone;
+  TaskState state;
 }

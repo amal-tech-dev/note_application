@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
+import 'package:note_application/main.dart';
 import 'package:note_application/model/task_model.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
@@ -38,22 +38,20 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     titleController = TextEditingController(text: widget.title);
     descriptionController = TextEditingController(text: widget.description);
     dueDate = widget.dueDate;
-
     setState(() {});
     super.initState();
   }
 
   Future<void> initialiseHive() async {
-    var box = await Hive.box<TaskModel>('taskModel');
+    var box = await Hive.box<TaskModel>('taskBox');
     keysList = box.keys.toList();
     counter = keysList.last + 1 ?? 0;
+    print(counter);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    String date = DateFormat('dd-MMM-yyyy').format(dueDate);
-    String time = DateFormat('hh:mm a').format(dueDate);
     return Scaffold(
       backgroundColor: ColorConstant.bgColor,
       resizeToAvoidBottomInset: true,
@@ -89,8 +87,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     title: titleController.text.trim(),
                     description: descriptionController.text.trim(),
                     dueDate: dueDate,
-                    isOverDue: false,
-                    isDone: false,
+                    state: TaskState.upcoming,
                   ),
                 );
                 keysList = box.keys.toList();
@@ -169,7 +166,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                       lastDate: DateTime.now().add(Duration(days: 3650)),
                     ),
                     child: Text(
-                      date,
+                      '${dueDate.day.toString()}-${dueDate.month.toString()}-${dueDate.year.toString()}',
                       style: TextStyle(
                         color: ColorConstant.primaryColor,
                         fontSize: DimenConstant.subTitleTextSize,
@@ -182,7 +179,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                       initialTime: TimeOfDay(hour: 00, minute: 00),
                     ),
                     child: Text(
-                      time,
+                      '${dueDate.hour..toString()}:${dueDate.minute.toString()}',
                       style: TextStyle(
                         color: ColorConstant.primaryColor,
                         fontSize: DimenConstant.subTitleTextSize,
