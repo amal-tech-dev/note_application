@@ -5,7 +5,7 @@ class DateTimeFormatController {
     String date = DateFormat('yy MMM').format(dateTime);
     String time = DateFormat('hh:mm a').format(dateTime);
 
-    if (dateTime.isBefore(DateTime.now().subtract(const Duration(days: 2))))
+    if (dateTime.isBefore(DateTime.now().subtract(Duration(days: 2))))
       return '$date $time';
     else if (dateTime
         .isBefore(DateTime.now().subtract(const Duration(days: 1))))

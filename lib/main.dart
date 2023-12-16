@@ -16,11 +16,12 @@ Future<void> main() async {
   await Hive.initFlutter();
 
   Hive.registerAdapter(NoteModelAdapter());
-  Hive.registerAdapter(ListModelAdapter());
+  Hive.registerAdapter(CheckListModelAdapter());
+  Hive.registerAdapter(ContentModelAdapter());
   Hive.registerAdapter(TaskModelAdapter());
 
   await Hive.openBox<NoteModel>('noteBox');
-  await Hive.openBox<ListModel>('listBox');
+  await Hive.openBox<CheckListModel>('checkListBox');
   await Hive.openBox<TaskModel>('taskBox');
 
   runApp(NoteApp());

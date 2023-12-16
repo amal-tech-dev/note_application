@@ -7,14 +7,14 @@ class CheckListTile extends StatelessWidget {
   CheckListTile({
     super.key,
     required this.title,
-    required this.content,
+    required this.contentList,
     required this.dateTime,
     required this.onEditClicked,
     required this.onDeleteClicked,
   });
 
   String title;
-  List<String> content;
+  List<String> contentList;
   DateTime dateTime;
   VoidCallback onEditClicked, onDeleteClicked;
   final colorController = ColorController();
@@ -67,7 +67,7 @@ class CheckListTile extends StatelessWidget {
             ],
           ),
           Text(
-            content.join('\n'),
+            contentList.join('\n'),
             style: TextStyle(
               color: ColorConstant.tertiaryColor,
               fontSize: DimenConstant.subTitleTextSize,

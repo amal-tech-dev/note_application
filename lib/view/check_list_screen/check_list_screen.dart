@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/model/list_model.dart';
 import 'package:note_application/utils/dimen_constant.dart';
 import 'package:note_application/view/check_list_screen/check_list_widgets/check_list_tile.dart';
+import 'package:note_application/view/check_list_view_screen/check_list_view_screen.dart';
 import 'package:note_application/view/edit_check_list_screen/edit_check_list_screen.dart';
 
 class CheckListScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class CheckListScreen extends StatefulWidget {
 }
 
 class _CheckListScreenState extends State<CheckListScreen> {
-  List<ListModel> checkboxList = [];
+  List<CheckListModel> checkboxList = [];
   List keysList = [];
 
   @override
@@ -23,18 +24,17 @@ class _CheckListScreenState extends State<CheckListScreen> {
   }
 
   Future<void> initialiseHive() async {
-    var box = await Hive.box<ListModel>('listBox');
+    var box = await Hive.box<CheckListModel>('checkListBox');
     checkboxList = box.values.toList();
     keysList = box.keys.toList();
-    setState(() {
-    });
+    setState(() {});
   }
 
   List<String> getContent(int index) {
-    List<String> contentList = [];
-    for (int i = 0; i < keysList.length; i++)
-      contentList.add(checkboxList[index].contentList[i].item);
-    return contentList;
+    List<String> list = [];
+    for (int i = 0; i < checkboxList[index].contentList.length; i++)
+      list.add(checkboxList[index].contentList[i].item);
+    return list;
   }
 
   @override
@@ -43,31 +43,64 @@ class _CheckListScreenState extends State<CheckListScreen> {
       body: Padding(
         padding: const EdgeInsets.all(DimenConstant.edgePadding),
         child: ListView.separated(
-          itemBuilder: (context, index) => CheckListTile(
-            title: checkboxList[index].title,
-            content: getContent(index),
-            dateTime: checkboxList[index].dateTime,
-            onEditClicked: () async {
-              var box = Hive.box<ListModel>('listBox');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditListScreen(
-                    appBarTitle: 'Edit List',
-                    title: box.get(keysList[index])!.title,
-                    contentList: box.get(keysList[index])!.contentList,
-                    noteKey: keysList[index],
-                  ),
+          itemBuilder: (context, index) => InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CheckListViewScreen(
+                  title: checkboxList[index].title,
+                  contentList: checkboxList[index].contentList,
+                  dateTime: checkboxList[index].dateTime,
+                  onEditPressed: () async {
+                    var box = Hive.box<CheckListModel>('checkListBox');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditCheckListScreen(
+                          appBarTitle: 'Edit List',
+                          title: box.get(keysList[index])!.title,
+                          contentList: box.get(keysList[index])!.contentList,
+                          noteKey: keysList[index],
+                        ),
+                      ),
+                    );
+                  },
+                  onDeletePressed: () async {
+                    var box = await Hive.box<CheckListModel>('checkListBox');
+                    box.delete(keysList[index]);
+                    checkboxList = box.values.toList();
+                    keysList = box.keys.toList();
+                    setState(() {});
+                  },
                 ),
-              );
-            },
-            onDeleteClicked: () async {
-              var box = await Hive.box<ListModel>('listBox');
-              box.delete(keysList[index]);
-              checkboxList = box.values.toList();
-              keysList = box.keys.toList();
-              setState(() {});
-            },
+              ),
+            ),
+            child: CheckListTile(
+              title: checkboxList[index].title,
+              contentList: getContent(index),
+              dateTime: checkboxList[index].dateTime,
+              onEditClicked: () async {
+                var box = Hive.box<CheckListModel>('checkListBox');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditCheckListScreen(
+                      appBarTitle: 'Edit List',
+                      title: box.get(keysList[index])!.title,
+                      contentList: box.get(keysList[index])!.contentList,
+                      noteKey: keysList[index],
+                    ),
+                  ),
+                );
+              },
+              onDeleteClicked: () async {
+                var box = await Hive.box<CheckListModel>('checkListBox');
+                box.delete(keysList[index]);
+                checkboxList = box.values.toList();
+                keysList = box.keys.toList();
+                setState(() {});
+              },
+            ),
           ),
           separatorBuilder: (context, index) => DimenConstant.separator,
           itemCount: keysList.length,

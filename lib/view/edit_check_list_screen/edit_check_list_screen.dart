@@ -8,13 +8,13 @@ import 'package:note_application/view/edit_check_list_screen/edit_check_list_wid
 import 'package:note_application/view/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 
-class EditListScreen extends StatefulWidget {
+class EditCheckListScreen extends StatefulWidget {
   String appBarTitle;
   String title;
   List<ContentModel>? contentList;
   int? noteKey;
 
-  EditListScreen({
+  EditCheckListScreen({
     super.key,
     required this.appBarTitle,
     this.title = '',
@@ -23,13 +23,12 @@ class EditListScreen extends StatefulWidget {
   });
 
   @override
-  State<EditListScreen> createState() => _EditListScreenState();
+  State<EditCheckListScreen> createState() => _EditCheckListScreenState();
 }
 
-class _EditListScreenState extends State<EditListScreen> {
+class _EditCheckListScreenState extends State<EditCheckListScreen> {
   int counter = 0;
   List keysList = [];
-
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
@@ -38,13 +37,13 @@ class _EditListScreenState extends State<EditListScreen> {
     initialiseHive();
     titleController = TextEditingController(text: widget.title);
     Provider.of<CheckListController>(context, listen: false)
-        .intialCheckList(widget.contentList!);
+        .intialCheckList(widget.contentList ?? []);
     setState(() {});
     super.initState();
   }
 
   Future<void> initialiseHive() async {
-    var box = Hive.box<ListModel>('listBox');
+    var box = Hive.box<CheckListModel>('checkListBox');
     keysList = box.keys.toList();
     counter = keysList.last + 1 ?? 0;
     setState(() {});
@@ -67,11 +66,11 @@ class _EditListScreenState extends State<EditListScreen> {
           ),
         ),
         actions: [
-          Consumer(
+          Consumer<CheckListController>(
             builder: (context, value, child) => IconButton(
               onPressed: () async {
-                var box = Hive.box<ListModel>('listBox');
-                List list = Provider.of<CheckListController>(context).checkList;
+                var box = Hive.box<CheckListModel>('checkListBox');
+                List<ContentModel> list = value.checkList;
                 if (titleController.text.isEmpty || list.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -83,19 +82,18 @@ class _EditListScreenState extends State<EditListScreen> {
                     ),
                   );
                 } else {
-                  // await box.put(
-                  //   widget.noteKey ?? counter,
-                  //   ListModel(
-                  //     title: titleController.text.trim(),
-                  //     contentList:
-                  //        list,
-                  //     dateTime: DateTime.now(),
-                  //   ),
-                  // );
+                  List<ContentModel> list = value.checkList;
+                  await box.put(
+                    widget.noteKey ?? counter,
+                    CheckListModel(
+                      title: titleController.text.trim(),
+                      contentList: list,
+                      dateTime: DateTime.now(),
+                    ),
+                  );
                   keysList = box.keys.toList();
                   counter = keysList.length;
-                  Provider.of<CheckListController>(context, listen: false)
-                      .clearContent();
+                  value.clearContent();
                   setState(() {});
                   Navigator.pushAndRemoveUntil(
                     context,
@@ -151,7 +149,7 @@ class _EditListScreenState extends State<EditListScreen> {
                 labelStyle: TextStyle(
                   color: ColorConstant.primaryColor,
                 ),
-                suffixIcon: Consumer(
+                suffixIcon: Consumer<CheckListController>(
                   builder: (context, value, child) => IconButton(
                     onPressed: () {
                       contentController.text == ''
@@ -162,9 +160,7 @@ class _EditListScreenState extends State<EditListScreen> {
                                 ),
                               ),
                             )
-                          : Provider.of<CheckListController>(context,
-                                  listen: false)
-                              .addContent(contentController.text.trim());
+                          : value.addContent(contentController.text.trim());
                       contentController.clear();
                       setState(() {});
                     },
@@ -183,21 +179,17 @@ class _EditListScreenState extends State<EditListScreen> {
             DimenConstant.separator,
             Expanded(
               child: StatefulBuilder(
-                builder: (context, setListState) => Consumer(
+                builder: (context, setListState) =>
+                    Consumer<CheckListController>(
                   builder: (context, value, child) => ListView.builder(
                     itemBuilder: (context, index) => EditCheckListItem(
-                      itemName: Provider.of<CheckListController>(
-                        context,
-                      ).checkList[index].item,
+                      itemName: value.checkList[index].item,
                       onClearPressed: () {
-                        Provider.of<CheckListController>(context, listen: false)
-                            .deleteContent(index);
+                        value.deleteContent(index);
                         setListState(() {});
                       },
                     ),
-                    itemCount: Provider.of<CheckListController>(context)
-                        .checkList
-                        .length,
+                    itemCount: value.checkList.length,
                   ),
                 ),
               ),

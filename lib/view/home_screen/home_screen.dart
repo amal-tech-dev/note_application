@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EditListScreen(
+                            builder: (context) => EditCheckListScreen(
                               appBarTitle: 'Add New List',
                             ),
                           ),

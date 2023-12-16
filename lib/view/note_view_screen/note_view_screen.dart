@@ -66,9 +66,9 @@ class NoteViewScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(DimenConstant.edgePadding),
-        child: Expanded(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(DimenConstant.edgePadding),
           child: Text(
             content,
             style: TextStyle(
