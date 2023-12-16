@@ -36,14 +36,14 @@ class _EditCheckListScreenState extends State<EditCheckListScreen> {
   void initState() {
     initialiseHive();
     titleController = TextEditingController(text: widget.title);
-    Provider.of<CheckListController>(context, listen: false)
+    Provider.of<ChecklistController>(context, listen: false)
         .intialCheckList(widget.contentList ?? []);
     setState(() {});
     super.initState();
   }
 
   Future<void> initialiseHive() async {
-    var box = Hive.box<CheckListModel>('checkListBox');
+    var box = Hive.box<ChecklistModel>('checkListBox');
     keysList = box.keys.toList();
     counter = keysList.last + 1 ?? 0;
     setState(() {});
@@ -66,10 +66,10 @@ class _EditCheckListScreenState extends State<EditCheckListScreen> {
           ),
         ),
         actions: [
-          Consumer<CheckListController>(
+          Consumer<ChecklistController>(
             builder: (context, value, child) => IconButton(
               onPressed: () async {
-                var box = Hive.box<CheckListModel>('checkListBox');
+                var box = Hive.box<ChecklistModel>('checkListBox');
                 List<ContentModel> list = value.checkList;
                 if (titleController.text.isEmpty || list.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -85,7 +85,7 @@ class _EditCheckListScreenState extends State<EditCheckListScreen> {
                   List<ContentModel> list = value.checkList;
                   await box.put(
                     widget.noteKey ?? counter,
-                    CheckListModel(
+                    ChecklistModel(
                       title: titleController.text.trim(),
                       contentList: list,
                       dateTime: DateTime.now(),
@@ -149,7 +149,7 @@ class _EditCheckListScreenState extends State<EditCheckListScreen> {
                 labelStyle: TextStyle(
                   color: ColorConstant.primaryColor,
                 ),
-                suffixIcon: Consumer<CheckListController>(
+                suffixIcon: Consumer<ChecklistController>(
                   builder: (context, value, child) => IconButton(
                     onPressed: () {
                       contentController.text == ''
@@ -180,7 +180,7 @@ class _EditCheckListScreenState extends State<EditCheckListScreen> {
             Expanded(
               child: StatefulBuilder(
                 builder: (context, setListState) =>
-                    Consumer<CheckListController>(
+                    Consumer<ChecklistController>(
                   builder: (context, value, child) => ListView.builder(
                     itemBuilder: (context, index) => EditCheckListItem(
                       itemName: value.checkList[index].item,

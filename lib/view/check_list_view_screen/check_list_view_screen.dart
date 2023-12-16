@@ -52,28 +52,26 @@ class CheckListViewScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          PopupMenuButton(
-            iconColor: ColorConstant.secondaryColor,
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Text('Edit'),
-                onTap: onEditPressed,
-              ),
-              PopupMenuItem(
-                child: Text('Delete'),
-                onTap: onDeletePressed,
-              ),
-            ],
-            color: ColorConstant.bgColor,
+          IconButton(
+            onPressed: onEditPressed,
+            icon: Icon(
+              Icons.edit_rounded,
+              color: ColorConstant.secondaryColor,
+            ),
           ),
-          SizedBox(
-            width: 5,
-          )
+          IconButton(
+            onPressed: onDeletePressed,
+            icon: Icon(
+              Icons.delete_rounded,
+              color: ColorConstant.secondaryColor,
+            ),
+          ),
         ],
       ),
       body: ListView.builder(
         itemBuilder: (context, index) => CheckListViewTile(
           item: contentList[index].item,
+          isCheck: contentList[index].isMarked,
           onCheckboxPressed: (value) {},
         ),
         itemCount: contentList.length,

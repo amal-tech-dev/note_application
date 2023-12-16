@@ -4,10 +4,12 @@ import 'package:note_application/utils/dimen_constant.dart';
 
 class CheckListViewTile extends StatelessWidget {
   String item;
+  bool isCheck;
   void Function(bool?)? onCheckboxPressed;
 
   CheckListViewTile({
     required this.item,
+    required this.isCheck,
     required this.onCheckboxPressed,
   });
 
@@ -21,7 +23,7 @@ class CheckListViewTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Checkbox(
-            value: true,
+            value: isCheck,
             onChanged: onCheckboxPressed,
           ),
           DimenConstant.separator,

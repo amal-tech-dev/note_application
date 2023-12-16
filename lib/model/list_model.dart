@@ -3,8 +3,8 @@ import 'package:hive/hive.dart';
 part 'list_model.g.dart';
 
 @HiveType(typeId: 1)
-class CheckListModel {
-  CheckListModel({
+class ChecklistModel {
+  ChecklistModel({
     required this.title,
     required this.contentList,
     required this.dateTime,

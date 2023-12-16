@@ -8,6 +8,8 @@ import 'package:note_application/model/task_model.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 
+enum NoteType { note, checklist, task }
+
 enum TaskState { overdue, completed, upcoming }
 
 Future<void> main() async {
@@ -16,12 +18,12 @@ Future<void> main() async {
   await Hive.initFlutter();
 
   Hive.registerAdapter(NoteModelAdapter());
-  Hive.registerAdapter(CheckListModelAdapter());
+  Hive.registerAdapter(ChecklistModelAdapter());
   Hive.registerAdapter(ContentModelAdapter());
   Hive.registerAdapter(TaskModelAdapter());
 
   await Hive.openBox<NoteModel>('noteBox');
-  await Hive.openBox<CheckListModel>('checkListBox');
+  await Hive.openBox<ChecklistModel>('checklistBox');
   await Hive.openBox<TaskModel>('taskBox');
 
   runApp(NoteApp());
@@ -35,7 +37,7 @@ class NoteApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => FloatingButtonController()),
-        ChangeNotifierProvider(create: (context) => CheckListController()),
+        ChangeNotifierProvider(create: (context) => ChecklistController()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

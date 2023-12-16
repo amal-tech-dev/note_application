@@ -50,19 +50,19 @@ class NoteViewScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          PopupMenuButton(
-            iconColor: ColorConstant.secondaryColor,
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Text('Edit'),
-                onTap: onEditPressed,
-              ),
-              PopupMenuItem(
-                child: Text('Delete'),
-                onTap: onDeletePressed,
-              ),
-            ],
-            color: ColorConstant.bgColor,
+          IconButton(
+            onPressed: onEditPressed,
+            icon: Icon(
+              Icons.edit_rounded,
+              color: ColorConstant.secondaryColor,
+            ),
+          ),
+          IconButton(
+            onPressed: onDeletePressed,
+            icon: Icon(
+              Icons.delete_rounded,
+              color: ColorConstant.secondaryColor,
+            ),
           ),
         ],
       ),

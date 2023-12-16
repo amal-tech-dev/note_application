@@ -6,17 +6,17 @@ part of 'list_model.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CheckListModelAdapter extends TypeAdapter<CheckListModel> {
+class ChecklistModelAdapter extends TypeAdapter<ChecklistModel> {
   @override
   final int typeId = 1;
 
   @override
-  CheckListModel read(BinaryReader reader) {
+  ChecklistModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CheckListModel(
+    return ChecklistModel(
       title: fields[0] as String,
       contentList: (fields[1] as List).cast<ContentModel>(),
       dateTime: fields[2] as DateTime,
@@ -24,7 +24,7 @@ class CheckListModelAdapter extends TypeAdapter<CheckListModel> {
   }
 
   @override
-  void write(BinaryWriter writer, CheckListModel obj) {
+  void write(BinaryWriter writer, ChecklistModel obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)
@@ -41,7 +41,7 @@ class CheckListModelAdapter extends TypeAdapter<CheckListModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CheckListModelAdapter &&
+      other is ChecklistModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

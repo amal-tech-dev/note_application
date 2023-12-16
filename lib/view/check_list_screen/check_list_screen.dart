@@ -14,7 +14,7 @@ class CheckListScreen extends StatefulWidget {
 }
 
 class _CheckListScreenState extends State<CheckListScreen> {
-  List<CheckListModel> checkboxList = [];
+  List<ChecklistModel> checkboxList = [];
   List keysList = [];
 
   @override
@@ -24,7 +24,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
   }
 
   Future<void> initialiseHive() async {
-    var box = await Hive.box<CheckListModel>('checkListBox');
+    var box = await Hive.box<ChecklistModel>('checkListBox');
     checkboxList = box.values.toList();
     keysList = box.keys.toList();
     setState(() {});
@@ -52,7 +52,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
                   contentList: checkboxList[index].contentList,
                   dateTime: checkboxList[index].dateTime,
                   onEditPressed: () async {
-                    var box = Hive.box<CheckListModel>('checkListBox');
+                    var box = Hive.box<ChecklistModel>('checkListBox');
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -66,7 +66,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
                     );
                   },
                   onDeletePressed: () async {
-                    var box = await Hive.box<CheckListModel>('checkListBox');
+                    var box = await Hive.box<ChecklistModel>('checkListBox');
                     box.delete(keysList[index]);
                     checkboxList = box.values.toList();
                     keysList = box.keys.toList();
@@ -80,7 +80,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
               contentList: getContent(index),
               dateTime: checkboxList[index].dateTime,
               onEditClicked: () async {
-                var box = Hive.box<CheckListModel>('checkListBox');
+                var box = Hive.box<ChecklistModel>('checkListBox');
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -94,7 +94,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
                 );
               },
               onDeleteClicked: () async {
-                var box = await Hive.box<CheckListModel>('checkListBox');
+                var box = await Hive.box<ChecklistModel>('checkListBox');
                 box.delete(keysList[index]);
                 checkboxList = box.values.toList();
                 keysList = box.keys.toList();

@@ -22,21 +22,11 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorController = ColorController().taskColors;
     return Container(
       decoration: BoxDecoration(
-        color: state == TaskState.overdue
-            ? colorController['red']!['background']
-            : state == TaskState.completed
-                ? colorController['green']!['background']
-                : colorController['blue']!['background'],
-        border: Border.all(
-          color: state == TaskState.overdue
-              ? colorController['red']!['border']!
-              : state == TaskState.completed
-                  ? colorController['green']!['border']!
-                  : colorController['blue']!['border']!,
-          width: DimenConstant.borderWidth,
+        color: ColorController().randomColor(
+          isTask: true,
+          taskState: state,
         ),
         borderRadius: BorderRadius.circular(DimenConstant.borderRadius),
       ),

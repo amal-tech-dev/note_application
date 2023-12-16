@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:note_application/controller/hive_controller.dart';
+import 'package:note_application/main.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
@@ -8,6 +9,7 @@ import 'package:note_application/view/home_screen/home_screen.dart';
 class EditNoteScreen extends StatefulWidget {
   String appBarTitle;
   String title, content;
+  DateTime? dateTime;
   int? noteKey;
 
   EditNoteScreen({
@@ -15,6 +17,7 @@ class EditNoteScreen extends StatefulWidget {
     required this.appBarTitle,
     this.title = '',
     this.content = '',
+    this.dateTime,
     this.noteKey,
   });
 
@@ -23,21 +26,18 @@ class EditNoteScreen extends StatefulWidget {
 }
 
 class _EditNoteScreenState extends State<EditNoteScreen> {
-  int counter = 0;
-  List keysList = [];
+  HiveController hiveController = HiveController();
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
   @override
   void initState() {
-    initialiseHive();
+    getData();
     super.initState();
   }
 
-  Future<void> initialiseHive() async {
-    var box = Hive.box<NoteModel>('noteBox');
-    keysList = box.keys.toList();
-    counter = keysList.last + 1 ?? 0;
+  Future<void> getData() async {
+    await hiveController.initializeHive(NoteType.note);
     titleController = TextEditingController(text: widget.title);
     contentController = TextEditingController(text: widget.content);
     setState(() {});
@@ -62,7 +62,6 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              var box = Hive.box<NoteModel>('noteBox');
               if (titleController.text.isEmpty ||
                   contentController.text.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -75,16 +74,14 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   ),
                 );
               } else {
-                await box.put(
-                  widget.noteKey ?? counter,
+                await hiveController.saveData(
+                  widget.noteKey ?? hiveController.counter,
                   NoteModel(
                     title: titleController.text.trim(),
                     content: contentController.text.trim(),
-                    dateTime: DateTime.now(),
+                    dateTime: widget.dateTime ?? DateTime.now(),
                   ),
                 );
-                keysList = box.keys.toList();
-                counter = keysList.length;
                 setState(() {});
                 Navigator.pushAndRemoveUntil(
                   context,

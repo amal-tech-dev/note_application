@@ -17,23 +17,17 @@ class CheckListTile extends StatelessWidget {
   List<String> contentList;
   DateTime dateTime;
   VoidCallback onEditClicked, onDeleteClicked;
-  final colorController = ColorController();
 
   @override
   Widget build(BuildContext context) {
-    final randomColor = colorController.randomColor(isNote: false);
     return Container(
       padding: EdgeInsets.only(
         left: DimenConstant.edgePadding,
         bottom: DimenConstant.edgePadding,
       ),
       decoration: BoxDecoration(
-        color: randomColor['background']!,
+        color: ColorController().randomColor(isTask: false),
         borderRadius: BorderRadius.circular(DimenConstant.borderRadius),
-        border: Border.all(
-          color: randomColor['border']!,
-          width: DimenConstant.borderWidth,
-        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
