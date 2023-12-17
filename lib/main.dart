@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/controller/check_list_controller.dart';
+import 'package:note_application/controller/checklist_controller.dart';
 import 'package:note_application/controller/floating_button_controller.dart';
-import 'package:note_application/model/list_model.dart';
+import 'package:note_application/model/checklist_model.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/model/task_model.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';

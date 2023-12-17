@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
 
-class CheckListViewTile extends StatelessWidget {
+class ChecklistViewTile extends StatelessWidget {
   String item;
   bool isCheck;
   void Function(bool?)? onCheckboxPressed;
 
-  CheckListViewTile({
+  ChecklistViewTile({
     required this.item,
     required this.isCheck,
     required this.onCheckboxPressed,

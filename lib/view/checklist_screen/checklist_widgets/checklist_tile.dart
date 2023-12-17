@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/color_controller.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
 
-class CheckListTile extends StatelessWidget {
-  CheckListTile({
+class ChecklistTile extends StatelessWidget {
+  ChecklistTile({
     super.key,
     required this.title,
     required this.contentList,
     required this.dateTime,
+    required this.colorIndex,
     required this.onEditClicked,
     required this.onDeleteClicked,
   });
@@ -16,6 +16,7 @@ class CheckListTile extends StatelessWidget {
   String title;
   List<String> contentList;
   DateTime dateTime;
+  int colorIndex;
   VoidCallback onEditClicked, onDeleteClicked;
 
   @override
@@ -26,7 +27,7 @@ class CheckListTile extends StatelessWidget {
         bottom: DimenConstant.edgePadding,
       ),
       decoration: BoxDecoration(
-        color: ColorController().randomColor(isTask: false),
+        color: ColorConstant.colorsList[colorIndex]!,
         borderRadius: BorderRadius.circular(DimenConstant.borderRadius),
       ),
       child: Column(

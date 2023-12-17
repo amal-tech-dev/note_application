@@ -3,18 +3,18 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:note_application/controller/hive_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/utils/dimen_constant.dart';
-import 'package:note_application/view/edit_note_screen/edit_note_screen.dart';
-import 'package:note_application/view/note_screen/note_widgets/note_tile.dart';
-import 'package:note_application/view/note_view_screen/note_view_screen.dart';
+import 'package:note_application/view/checklist_screen/checklist_widgets/checklist_tile.dart';
+import 'package:note_application/view/checklist_view_screen/checklist_view_screen.dart';
+import 'package:note_application/view/edit_checklist_screen/edit_checklist_screen.dart';
 
-class NoteScreen extends StatefulWidget {
-  NoteScreen({super.key});
+class ChecklistScreen extends StatefulWidget {
+  ChecklistScreen({super.key});
 
   @override
-  State<NoteScreen> createState() => _NoteScreenState();
+  State<ChecklistScreen> createState() => _ChecklistScreenState();
 }
 
-class _NoteScreenState extends State<NoteScreen> {
+class _ChecklistScreenState extends State<ChecklistScreen> {
   HiveController hiveController = HiveController();
 
   @override
@@ -24,8 +24,16 @@ class _NoteScreenState extends State<NoteScreen> {
   }
 
   Future<void> getData() async {
-    await hiveController.initializeHive(NoteType.note);
+    await hiveController.initializeHive(NoteType.checklist);
     setState(() {});
+  }
+
+  List<String> getContent(int index) {
+    List<String> list = [];
+    for (int i = 0;
+        i < hiveController.valuesList[index].contentList.length;
+        i++) list.add(hiveController.valuesList[index].contentList[i].item);
+    return list;
   }
 
   @override
@@ -43,20 +51,19 @@ class _NoteScreenState extends State<NoteScreen> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NoteViewScreen(
+                builder: (context) => ChecklistViewScreen(
                   title: hiveController.valuesList[index].title,
-                  content: hiveController.valuesList[index].content,
+                  contentList: hiveController.valuesList[index].contentList,
                   dateTime: hiveController.valuesList[index].dateTime,
-                  colorIndex: hiveController.valuesList[index].colorIndex,
                   onEditPressed: () async {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EditNoteScreen(
-                          appBarTitle: 'Edit Note',
+                        builder: (context) => EditChecklistScreen(
+                          appBarTitle: 'Edit List',
                           title: hiveController.valuesList[index].title,
-                          content: hiveController.valuesList[index].content,
-                          dateTime: hiveController.valuesList[index].dateTime,
+                          contentList:
+                              hiveController.valuesList[index].contentList,
                           noteKey: hiveController.keysList[index],
                         ),
                       ),
@@ -70,25 +77,26 @@ class _NoteScreenState extends State<NoteScreen> {
                 ),
               ),
             ),
-            child: NoteTile(
+            child: ChecklistTile(
               title: hiveController.valuesList[index].title,
-              content: hiveController.valuesList[index].content,
+              contentList: getContent(index),
+              dateTime: hiveController.valuesList[index].dateTime,
               colorIndex: hiveController.valuesList[index].colorIndex,
               onEditClicked: () async {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EditNoteScreen(
-                      appBarTitle: 'Edit Note',
+                    builder: (context) => EditChecklistScreen(
+                      appBarTitle: 'Edit List',
                       title: hiveController.valuesList[index].title,
-                      content: hiveController.valuesList[index].content,
+                      contentList: hiveController.valuesList[index].contentList,
                       noteKey: hiveController.keysList[index],
                     ),
                   ),
                 );
               },
               onDeleteClicked: () async {
-                await hiveController.deleteData(hiveController.keysList[index]);
+                hiveController.deleteData(hiveController.keysList[index]);
                 setState(() {});
               },
             ),

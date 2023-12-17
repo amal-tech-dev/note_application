@@ -8,6 +8,7 @@ class NoteModel {
     required this.title,
     required this.content,
     required this.dateTime,
+    required this.colorIndex,
   });
 
   @HiveField(0)
@@ -16,4 +17,6 @@ class NoteModel {
   String content;
   @HiveField(2)
   DateTime dateTime;
+  @HiveField(3)
+  int colorIndex;
 }

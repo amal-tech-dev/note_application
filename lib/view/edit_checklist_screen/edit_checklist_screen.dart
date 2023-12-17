@@ -1,40 +1,45 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/controller/check_list_controller.dart';
-import 'package:note_application/model/list_model.dart';
+import 'package:note_application/controller/checklist_controller.dart';
+import 'package:note_application/controller/hive_controller.dart';
+import 'package:note_application/main.dart';
+import 'package:note_application/model/checklist_model.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
-import 'package:note_application/view/edit_check_list_screen/edit_check_list_widgets/edit_check_list_item.dart';
+import 'package:note_application/view/edit_checklist_screen/edit_checklist_widgets/edit_checklist_item.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 
-class EditCheckListScreen extends StatefulWidget {
+class EditChecklistScreen extends StatefulWidget {
   String appBarTitle;
-  String title;
+  String? title;
   List<ContentModel>? contentList;
-  int? noteKey;
+  DateTime? dateTime;
+  int? colorIndex, noteKey;
 
-  EditCheckListScreen({
+  EditChecklistScreen({
     super.key,
     required this.appBarTitle,
-    this.title = '',
+    this.title,
     this.contentList,
+    this.dateTime,
+    this.colorIndex,
     this.noteKey,
   });
 
   @override
-  State<EditCheckListScreen> createState() => _EditCheckListScreenState();
+  State<EditChecklistScreen> createState() => _EditChecklistScreenState();
 }
 
-class _EditCheckListScreenState extends State<EditCheckListScreen> {
-  int counter = 0;
-  List keysList = [];
+class _EditChecklistScreenState extends State<EditChecklistScreen> {
+  HiveController hiveController = HiveController();
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
   @override
   void initState() {
-    initialiseHive();
+    getData();
     titleController = TextEditingController(text: widget.title);
     Provider.of<ChecklistController>(context, listen: false)
         .intialCheckList(widget.contentList ?? []);
@@ -42,10 +47,8 @@ class _EditCheckListScreenState extends State<EditCheckListScreen> {
     super.initState();
   }
 
-  Future<void> initialiseHive() async {
-    var box = Hive.box<ChecklistModel>('checkListBox');
-    keysList = box.keys.toList();
-    counter = keysList.last + 1 ?? 0;
+  Future<void> getData() async {
+    await hiveController.initializeHive(NoteType.checklist);
     setState(() {});
   }
 
@@ -69,7 +72,6 @@ class _EditCheckListScreenState extends State<EditCheckListScreen> {
           Consumer<ChecklistController>(
             builder: (context, value, child) => IconButton(
               onPressed: () async {
-                var box = Hive.box<ChecklistModel>('checkListBox');
                 List<ContentModel> list = value.checkList;
                 if (titleController.text.isEmpty || list.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -82,17 +84,16 @@ class _EditCheckListScreenState extends State<EditCheckListScreen> {
                     ),
                   );
                 } else {
-                  List<ContentModel> list = value.checkList;
-                  await box.put(
-                    widget.noteKey ?? counter,
+                  await hiveController.saveData(
+                    widget.noteKey ?? hiveController.counter,
                     ChecklistModel(
-                      title: titleController.text.trim(),
+                      title: widget.title ?? titleController.text.trim(),
                       contentList: list,
-                      dateTime: DateTime.now(),
+                      dateTime: widget.dateTime ?? DateTime.now(),
+                      colorIndex: widget.colorIndex ??
+                          Random().nextInt(ColorConstant.colorsList.length),
                     ),
                   );
-                  keysList = box.keys.toList();
-                  counter = keysList.length;
                   value.clearContent();
                   setState(() {});
                   Navigator.pushAndRemoveUntil(

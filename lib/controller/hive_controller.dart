@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/main.dart';
-import 'package:note_application/model/list_model.dart';
+import 'package:note_application/model/checklist_model.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/model/task_model.dart';
 
@@ -25,7 +25,7 @@ class HiveController {
     }
     keysList = box.keys.toList();
     valuesList = box.values.toList();
-    counter = keysList.last + 1 ?? 0;
+    counter = keysList.isEmpty ? 0 : keysList.last + 1;
   }
 
   // save data to Hive

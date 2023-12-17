@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/color_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
@@ -24,10 +23,11 @@ class TaskTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: ColorController().randomColor(
-          isTask: true,
-          taskState: state,
-        ),
+        color: state == TaskState.overdue
+            ? Colors.red.shade200
+            : state == TaskState.completed
+                ? Colors.green.shade200
+                : Colors.blue.shade200,
         borderRadius: BorderRadius.circular(DimenConstant.borderRadius),
       ),
       child: ExpansionTile(

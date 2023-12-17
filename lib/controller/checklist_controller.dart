@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/model/list_model.dart';
+import 'package:note_application/model/checklist_model.dart';
 
 class ChecklistController with ChangeNotifier {
   List<ContentModel> checkList = [];
@@ -12,7 +12,7 @@ class ChecklistController with ChangeNotifier {
     checkList.add(
       ContentModel(
         item: itemName,
-        isMarked: false,
+        check: false,
       ),
     );
     notifyListeners();

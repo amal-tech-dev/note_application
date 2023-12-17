@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/color_controller.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
 
@@ -8,10 +7,12 @@ class NoteTile extends StatelessWidget {
     super.key,
     required this.title,
     required this.content,
+    required this.colorIndex,
     required this.onEditClicked,
     required this.onDeleteClicked,
   });
   String title, content;
+  int colorIndex;
   VoidCallback onEditClicked, onDeleteClicked;
 
   @override
@@ -22,7 +23,7 @@ class NoteTile extends StatelessWidget {
         bottom: DimenConstant.edgePadding,
       ),
       decoration: BoxDecoration(
-        color: ColorController().randomColor(isTask: false),
+        color: ColorConstant.colorsList[colorIndex]!,
         borderRadius: BorderRadius.circular(DimenConstant.borderRadius),
       ),
       child: Column(
@@ -68,7 +69,7 @@ class NoteTile extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               overflow: TextOverflow.ellipsis,
-              maxLines: 5,
+              maxLines: 3,
             ),
           ),
         ],

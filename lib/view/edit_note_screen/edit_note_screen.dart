@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/hive_controller.dart';
 import 'package:note_application/main.dart';
@@ -8,15 +10,16 @@ import 'package:note_application/view/home_screen/home_screen.dart';
 
 class EditNoteScreen extends StatefulWidget {
   String appBarTitle;
-  String title, content;
+  String? title, content;
   DateTime? dateTime;
-  int? noteKey;
+  int? colorIndex, noteKey;
 
   EditNoteScreen({
     super.key,
     required this.appBarTitle,
-    this.title = '',
-    this.content = '',
+    this.title,
+    this.content,
+    this.colorIndex,
     this.dateTime,
     this.noteKey,
   });
@@ -77,9 +80,11 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 await hiveController.saveData(
                   widget.noteKey ?? hiveController.counter,
                   NoteModel(
-                    title: titleController.text.trim(),
-                    content: contentController.text.trim(),
+                    title: widget.title ?? titleController.text.trim(),
+                    content: widget.content ?? contentController.text.trim(),
                     dateTime: widget.dateTime ?? DateTime.now(),
+                    colorIndex: widget.colorIndex ??
+                        Random().nextInt(ColorConstant.colorsList.length),
                   ),
                 );
                 setState(() {});
