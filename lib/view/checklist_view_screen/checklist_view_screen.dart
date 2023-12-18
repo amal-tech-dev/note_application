@@ -9,16 +9,17 @@ import 'package:note_application/view/checklist_view_screen/checklist_view_widge
 class ChecklistViewScreen extends StatefulWidget {
   String title;
   List<ContentModel> contentList;
-  DateTime dateTime;
+  DateTime date;
+  TimeOfDay time;
   VoidCallback onEditPressed, onDeletePressed;
-
   int checklistKey, colorIndex;
 
   ChecklistViewScreen({
     super.key,
     required this.title,
     required this.contentList,
-    required this.dateTime,
+    required this.date,
+    required this.time,
     required this.onEditPressed,
     required this.onDeletePressed,
     required this.checklistKey,
@@ -75,7 +76,7 @@ class _ChecklistViewScreenState extends State<ChecklistViewScreen> {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              dateTimeFormater.formatDateTime(widget.dateTime),
+              dateTimeFormater.formatDateTime(widget.date),
               style: TextStyle(
                 color: ColorConstant.secondaryColor,
                 fontSize: 12,
@@ -112,7 +113,8 @@ class _ChecklistViewScreenState extends State<ChecklistViewScreen> {
               ChecklistModel(
                 title: widget.title,
                 contentList: addDataToList(index, value!),
-                dateTime: widget.dateTime,
+                date: widget.date,
+                time: widget.time,
                 colorIndex: widget.colorIndex,
               ),
             );

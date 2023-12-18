@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 part 'task_model.g.dart';
@@ -7,7 +8,8 @@ class TaskModel {
   TaskModel({
     required this.title,
     required this.description,
-    required this.dueDate,
+    required this.date,
+    required this.time,
     required this.state,
   });
 
@@ -16,8 +18,10 @@ class TaskModel {
   @HiveField(1)
   String description;
   @HiveField(2)
-  DateTime dueDate;
+  DateTime date;
   @HiveField(3)
+  TimeOfDay time;
+  @HiveField(4)
   TaskState state;
 }
 

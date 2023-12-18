@@ -7,7 +7,6 @@ class ChecklistTile extends StatelessWidget {
     super.key,
     required this.title,
     required this.contentList,
-    required this.dateTime,
     required this.colorIndex,
     required this.onEditClicked,
     required this.onDeleteClicked,
@@ -15,7 +14,7 @@ class ChecklistTile extends StatelessWidget {
 
   String title;
   List<String> contentList;
-  DateTime dateTime;
+
   int colorIndex;
   VoidCallback onEditClicked, onDeleteClicked;
 

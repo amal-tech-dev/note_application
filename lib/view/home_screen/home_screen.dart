@@ -67,7 +67,6 @@ class HomeScreen extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => EditTaskScreen(
                               appBarTitle: 'Add New Task',
-                              dueDate: DateTime.now(),
                             ),
                           ),
                         );

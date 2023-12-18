@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_application/controller/date_time_format_controller.dart';
 import 'package:note_application/model/task_model.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
@@ -7,7 +8,7 @@ class TaskTile extends StatelessWidget {
   String title, description;
   DateTime dueDate;
   TaskState state;
-  VoidCallback? onCompleted;
+  VoidCallback onCompleted, onEditPressed, onDeletePressed;
 
   TaskTile({
     super.key,
@@ -15,11 +16,14 @@ class TaskTile extends StatelessWidget {
     required this.description,
     required this.dueDate,
     required this.state,
-    this.onCompleted,
+    required this.onEditPressed,
+    required this.onDeletePressed,
+    required this.onCompleted,
   });
 
   @override
   Widget build(BuildContext context) {
+    DateTimeFormatController dateTimeFormat = DateTimeFormatController();
     return Container(
       decoration: BoxDecoration(
         color: state == TaskState.overdue
@@ -38,7 +42,7 @@ class TaskTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          dueDate.toString(),
+          dateTimeFormat.formatDateTime(dueDate),
           style: TextStyle(
             fontSize: DimenConstant.miniTextSize,
             fontWeight: FontWeight.bold,
@@ -46,6 +50,7 @@ class TaskTile extends StatelessWidget {
         ),
         iconColor: ColorConstant.tertiaryColor,
         collapsedBackgroundColor: Colors.transparent,
+        shape: Border(),
         children: [
           Padding(
             padding: const EdgeInsets.all(DimenConstant.edgePadding),
@@ -91,6 +96,19 @@ class TaskTile extends StatelessWidget {
                               ),
                             ),
                           ),
+                    PopupMenuButton(
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: Text('Edit'),
+                          onTap: onEditPressed,
+                        ),
+                        PopupMenuItem(
+                          child: Text('Delete'),
+                          onTap: onDeletePressed,
+                        ),
+                      ],
+                      color: ColorConstant.bgColor,
+                    ),
                   ],
                 ),
               ],

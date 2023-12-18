@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_application/controller/date_time_format_controller.dart';
 import 'package:note_application/controller/hive_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/model/task_model.dart';
@@ -9,7 +10,8 @@ import 'package:note_application/view/home_screen/home_screen.dart';
 class EditTaskScreen extends StatefulWidget {
   String appBarTitle;
   String? title, description;
-  DateTime dueDate;
+  DateTime? date;
+  TimeOfDay? time;
   int? noteKey;
 
   EditTaskScreen({
@@ -17,7 +19,8 @@ class EditTaskScreen extends StatefulWidget {
     required this.appBarTitle,
     this.title,
     this.description,
-    required this.dueDate,
+    this.date,
+    this.time,
     this.noteKey,
   });
 
@@ -29,7 +32,9 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   HiveController hiveController = HiveController();
-  DateTime dueDate = DateTime.now();
+  DateTimeFormatController dateTimeFormat = DateTimeFormatController();
+  late DateTime dueDate, date;
+  late TimeOfDay dueTime, time;
 
   @override
   void initState() {
@@ -37,11 +42,15 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     titleController = TextEditingController(text: widget.title ?? '');
     descriptionController =
         TextEditingController(text: widget.description ?? '');
-    dueDate = widget.dueDate;
+    dueDate = widget.date ?? DateTime.now();
+    dueTime = widget.time ?? TimeOfDay.now();
+    date = DateTime(dueDate.year, dueDate.month, dueDate.day);
+    time = TimeOfDay(hour: dueTime.hour, minute: dueTime.minute);
     setState(() {});
     super.initState();
   }
 
+  // initialize and get data from hive
   Future<void> getData() async {
     await hiveController.initializeHive(NoteType.task);
     setState(() {});
@@ -82,7 +91,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   TaskModel(
                     title: titleController.text.trim(),
                     description: descriptionController.text.trim(),
-                    dueDate: dueDate,
+                    date: date,
+                    time: time,
                     state: TaskState.upcoming,
                   ),
                 );
@@ -154,13 +164,17 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () => showDatePicker(
-                      context: context,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime.now().add(Duration(days: 3650)),
-                    ),
+                    onPressed: () async {
+                      DateTime? datePicked = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now().add(Duration(days: 3650)),
+                      );
+                      date = datePicked ?? DateTime.now();
+                      setState(() {});
+                    },
                     child: Text(
-                      '${dueDate.day.toString()}-${dueDate.month.toString()}-${dueDate.year.toString()}',
+                      dateTimeFormat.getDate(date),
                       style: TextStyle(
                         color: ColorConstant.primaryColor,
                         fontSize: DimenConstant.subTitleTextSize,
@@ -168,12 +182,16 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay(hour: 00, minute: 00),
-                    ),
+                    onPressed: () async {
+                      TimeOfDay? timePicked = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                      time = timePicked ?? TimeOfDay.now();
+                      setState(() {});
+                    },
                     child: Text(
-                      '${dueDate.hour..toString()}:${dueDate.minute.toString()}',
+                      dateTimeFormat.getTime(time),
                       style: TextStyle(
                         color: ColorConstant.primaryColor,
                         fontSize: DimenConstant.subTitleTextSize,

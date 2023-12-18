@@ -46,7 +46,8 @@ class _NoteScreenState extends State<NoteScreen> {
                 builder: (context) => NoteViewScreen(
                   title: hiveController.valuesList[index].title,
                   content: hiveController.valuesList[index].content,
-                  dateTime: hiveController.valuesList[index].dateTime,
+                  date: hiveController.valuesList[index].date,
+                  time: hiveController.valuesList[index].time,
                   colorIndex: hiveController.valuesList[index].colorIndex,
                   onEditPressed: () async {
                     Navigator.push(
@@ -56,7 +57,8 @@ class _NoteScreenState extends State<NoteScreen> {
                           appBarTitle: 'Edit Note',
                           title: hiveController.valuesList[index].title,
                           content: hiveController.valuesList[index].content,
-                          dateTime: hiveController.valuesList[index].dateTime,
+                          date: hiveController.valuesList[index].date,
+                          time: hiveController.valuesList[index].time,
                           noteKey: hiveController.keysList[index],
                         ),
                       ),
@@ -82,6 +84,8 @@ class _NoteScreenState extends State<NoteScreen> {
                       appBarTitle: 'Edit Note',
                       title: hiveController.valuesList[index].title,
                       content: hiveController.valuesList[index].content,
+                      date: hiveController.valuesList[index].date,
+                      time: hiveController.valuesList[index].time,
                       noteKey: hiveController.keysList[index],
                     ),
                   ),

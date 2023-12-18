@@ -3,6 +3,7 @@ import 'package:note_application/controller/hive_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/model/task_model.dart';
 import 'package:note_application/utils/dimen_constant.dart';
+import 'package:note_application/view/edit_task_screen/edit_task_screen.dart';
 import 'package:note_application/view/task_screen/task_widgets/task_tile.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -13,9 +14,6 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  List overdueList = [];
-  List completedList = [];
-  List upcomingList = [];
   HiveController hiveController = HiveController();
 
   @override
@@ -28,9 +26,6 @@ class _TaskScreenState extends State<TaskScreen> {
   Future<void> getData() async {
     await hiveController.initializeHive(NoteType.task);
     await checkDueDate();
-    overdueList = await getDataFromTaskList(TaskState.overdue);
-    completedList = await getDataFromTaskList(TaskState.completed);
-    upcomingList = await getDataFromTaskList(TaskState.upcoming);
     setState(() {});
   }
 
@@ -44,7 +39,8 @@ class _TaskScreenState extends State<TaskScreen> {
           TaskModel(
             title: hiveController.valuesList[i].title,
             description: hiveController.valuesList[i].description,
-            dueDate: hiveController.valuesList[i].dueDate,
+            date: hiveController.valuesList[i].date,
+            time: hiveController.valuesList[i].time,
             state: TaskState.overdue,
           ),
         );
@@ -68,40 +64,32 @@ class _TaskScreenState extends State<TaskScreen> {
       body: Padding(
         padding: const EdgeInsets.all(DimenConstant.edgePadding),
         child: ListView.separated(
-          itemBuilder: (context, index) {
-            if (index < upcomingList.length) {
-              return TaskTile(
-                title: upcomingList[index].title,
-                description: upcomingList[index].description,
-                dueDate: upcomingList[index].dueDate,
-                state: TaskState.upcoming,
-                onCompleted: () {},
+          itemBuilder: (context, index) => TaskTile(
+            title: hiveController.valuesList[index].title,
+            description: hiveController.valuesList[index].description,
+            dueDate: hiveController.valuesList[index].dueDate,
+            state: hiveController.valuesList[index].state,
+            onEditPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditTaskScreen(
+                    appBarTitle: 'Edit Task',
+                    title: hiveController.valuesList[index].title,
+                    description: hiveController.valuesList[index].description,
+                    date: hiveController.valuesList[index].date,
+                    time: hiveController.valuesList[index].time,
+                    noteKey: hiveController.keysList[index],
+                  ),
+                ),
               );
-            } else if (index < upcomingList.length + overdueList.length) {
-              return TaskTile(
-                title: overdueList[index - upcomingList.length].title,
-                description:
-                    overdueList[index - upcomingList.length].description,
-                dueDate: overdueList[index - upcomingList.length].dueDate,
-                state: TaskState.overdue,
-                onCompleted: () {},
-              );
-            } else {
-              return TaskTile(
-                title: completedList[
-                        index - upcomingList.length - overdueList.length]
-                    .title,
-                description: completedList[
-                        index - upcomingList.length - overdueList.length]
-                    .description,
-                dueDate: completedList[
-                        index - upcomingList.length - overdueList.length]
-                    .dueDate,
-                state: TaskState.completed,
-                onCompleted: () {},
-              );
-            }
-          },
+            },
+            onDeletePressed: () async {
+              await hiveController.deleteData(hiveController.keysList[index]);
+              setState(() {});
+            },
+            onCompleted: () async {},
+          ),
           separatorBuilder: (context, index) => DimenConstant.separator,
           itemCount: hiveController.keysList.length,
         ),

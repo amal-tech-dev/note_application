@@ -5,16 +5,18 @@ import 'package:note_application/utils/dimen_constant.dart';
 
 class NoteViewScreen extends StatelessWidget {
   String title, content;
-  DateTime dateTime;
+  DateTime date;
+  TimeOfDay time;
   int colorIndex;
   VoidCallback onEditPressed, onDeletePressed;
-  final dateTimeFormater = DateTimeFormatController();
+  DateTimeFormatController dateTimeFormater = DateTimeFormatController();
 
   NoteViewScreen({
     super.key,
     required this.title,
     required this.content,
-    required this.dateTime,
+    required this.date,
+    required this.time,
     required this.colorIndex,
     required this.onEditPressed,
     required this.onDeletePressed,
@@ -41,7 +43,7 @@ class NoteViewScreen extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              dateTimeFormater.formatDateTime(dateTime),
+              dateTimeFormater.formatDateTime(date),
               style: TextStyle(
                 color: ColorConstant.secondaryColor,
                 fontSize: DimenConstant.miniTextSize,
