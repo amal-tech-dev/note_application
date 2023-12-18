@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:note_application/controller/hive_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/model/task_model.dart';
 import 'package:note_application/utils/dimen_constant.dart';
@@ -13,41 +13,38 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  List<TaskModel> taskList = [];
-  List<TaskModel> overdueTaskList = [];
-  List<TaskModel> completedTaskList = [];
-  List<TaskModel> upcomingTaskList = [];
-  List keysList = [];
+  List overdueList = [];
+  List completedList = [];
+  List upcomingList = [];
+  HiveController hiveController = HiveController();
 
   @override
   void initState() {
-    initialiseHive();
+    getData();
     super.initState();
   }
 
-  // initialize Hive for TaskModel
-  Future<void> initialiseHive() async {
-    var box = await Hive.box<TaskModel>('taskBox');
+  // get Data from Hive
+  Future<void> getData() async {
+    await hiveController.initializeHive(NoteType.task);
     await checkDueDate();
-    taskList = box.values.toList();
-    keysList = box.keys.toList();
-    overdueTaskList = await getDataFromTaskList(TaskState.overdue);
-    completedTaskList = await getDataFromTaskList(TaskState.completed);
-    upcomingTaskList = await getDataFromTaskList(TaskState.upcoming);
+    overdueList = await getDataFromTaskList(TaskState.overdue);
+    completedList = await getDataFromTaskList(TaskState.completed);
+    upcomingList = await getDataFromTaskList(TaskState.upcoming);
     setState(() {});
   }
 
   // check date exceeds current date and time
   Future<void> checkDueDate() async {
-    var box = await Hive.box<TaskModel>('taskBox');
-    for (int i = 0; i < box.values.toList().length; i++) {
-      if (box.values.toList()[i].dueDate.isBefore(DateTime.now())) {
-        box.put(
-          box.keys.toList()[i],
+    List list = await hiveController.valuesList;
+    for (int i = 0; i < list.length; i++) {
+      if (list[i].dueDate.isBefore(DateTime.now())) {
+        hiveController.saveData(
+          hiveController.keysList[i],
           TaskModel(
-            title: box.values.toList()[i].title,
-            description: box.values.toList()[i].description,
-            dueDate: box.values.toList()[i].dueDate,
+            title: hiveController.valuesList[i].title,
+            description: hiveController.valuesList[i].description,
+            dueDate: hiveController.valuesList[i].dueDate,
             state: TaskState.overdue,
           ),
         );
@@ -56,10 +53,11 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   // get specific data from taskList
-  Future<List<TaskModel>> getDataFromTaskList(TaskState taskState) async {
-    List<TaskModel> updatedList = [];
-    for (int i = 0; i < taskList.length; i++) {
-      if (taskList[i].state == taskState) updatedList.add(taskList[i]);
+  Future<List> getDataFromTaskList(TaskState taskState) async {
+    List updatedList = [];
+    List list = hiveController.valuesList;
+    for (int i = 0; i < list.length; i++) {
+      if (list[i].state == taskState) updatedList.add(list[i]);
     }
     return updatedList;
   }
@@ -71,35 +69,41 @@ class _TaskScreenState extends State<TaskScreen> {
         padding: const EdgeInsets.all(DimenConstant.edgePadding),
         child: ListView.separated(
           itemBuilder: (context, index) {
-            if (index < upcomingTaskList.length) {
+            if (index < upcomingList.length) {
               return TaskTile(
-                title: upcomingTaskList[index].title,
-                description: upcomingTaskList[index].description,
-                dueDate: upcomingTaskList[index].dueDate,
+                title: upcomingList[index].title,
+                description: upcomingList[index].description,
+                dueDate: upcomingList[index].dueDate,
                 state: TaskState.upcoming,
                 onCompleted: () {},
               );
-            } else if (index <
-                upcomingTaskList.length + overdueTaskList.length) {
+            } else if (index < upcomingList.length + overdueList.length) {
               return TaskTile(
-                title: upcomingTaskList[index].title,
-                description: upcomingTaskList[index].description,
-                dueDate: upcomingTaskList[index].dueDate,
-                state: TaskState.upcoming,
+                title: overdueList[index - upcomingList.length].title,
+                description:
+                    overdueList[index - upcomingList.length].description,
+                dueDate: overdueList[index - upcomingList.length].dueDate,
+                state: TaskState.overdue,
                 onCompleted: () {},
               );
             } else {
               return TaskTile(
-                title: upcomingTaskList[index].title,
-                description: upcomingTaskList[index].description,
-                dueDate: upcomingTaskList[index].dueDate,
-                state: TaskState.upcoming,
+                title: completedList[
+                        index - upcomingList.length - overdueList.length]
+                    .title,
+                description: completedList[
+                        index - upcomingList.length - overdueList.length]
+                    .description,
+                dueDate: completedList[
+                        index - upcomingList.length - overdueList.length]
+                    .dueDate,
+                state: TaskState.completed,
                 onCompleted: () {},
               );
             }
           },
           separatorBuilder: (context, index) => DimenConstant.separator,
-          itemCount: taskList.length,
+          itemCount: hiveController.keysList.length,
         ),
       ),
     );

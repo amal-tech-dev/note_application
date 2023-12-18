@@ -11,8 +11,6 @@ import 'package:provider/provider.dart';
 
 enum NoteType { note, checklist, task }
 
-enum TaskState { overdue, completed, upcoming }
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -22,6 +20,7 @@ Future<void> main() async {
   Hive.registerAdapter(ChecklistModelAdapter());
   Hive.registerAdapter(ContentModelAdapter());
   Hive.registerAdapter(TaskModelAdapter());
+  Hive.registerAdapter(TaskStateAdapter());
 
   await Hive.openBox<NoteModel>('noteBox');
   await Hive.openBox<ChecklistModel>('checklistBox');

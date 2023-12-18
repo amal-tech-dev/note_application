@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/date_time_format_controller.dart';
+import 'package:note_application/controller/hive_controller.dart';
+import 'package:note_application/main.dart';
 import 'package:note_application/model/checklist_model.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/view/checklist_view_screen/checklist_view_widgets/checklist_view_tile.dart';
 
-class ChecklistViewScreen extends StatelessWidget {
+class ChecklistViewScreen extends StatefulWidget {
   String title;
   List<ContentModel> contentList;
   DateTime dateTime;
   VoidCallback onEditPressed, onDeletePressed;
-  void Function(bool?)? onCheckboxPressed;
-  DateTimeFormatController dateTimeFormater = DateTimeFormatController();
+
+  int checklistKey, colorIndex;
 
   ChecklistViewScreen({
     super.key,
@@ -19,8 +21,38 @@ class ChecklistViewScreen extends StatelessWidget {
     required this.dateTime,
     required this.onEditPressed,
     required this.onDeletePressed,
-    required this.onCheckboxPressed,
+    required this.checklistKey,
+    required this.colorIndex,
   });
+
+  @override
+  State<ChecklistViewScreen> createState() => _ChecklistViewScreenState();
+}
+
+class _ChecklistViewScreenState extends State<ChecklistViewScreen> {
+  DateTimeFormatController dateTimeFormater = DateTimeFormatController();
+  HiveController hiveController = HiveController();
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  // get data from Hive
+  Future<void> getData() async {
+    await hiveController.initializeHive(NoteType.checklist);
+    setState(() {});
+  }
+
+  // change check state
+  addDataToList(int index, bool value) {
+    List list = widget.contentList;
+    String item = list[index].item;
+    list.removeAt(index);
+    list.add(ContentModel(item: item, check: value));
+    return list;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +67,7 @@ class ChecklistViewScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              title,
+              widget.title,
               style: TextStyle(
                 color: ColorConstant.secondaryColor,
                 fontWeight: FontWeight.bold,
@@ -43,7 +75,7 @@ class ChecklistViewScreen extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              dateTimeFormater.formatDateTime(dateTime),
+              dateTimeFormater.formatDateTime(widget.dateTime),
               style: TextStyle(
                 color: ColorConstant.secondaryColor,
                 fontSize: 12,
@@ -55,14 +87,14 @@ class ChecklistViewScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: onEditPressed,
+            onPressed: widget.onEditPressed,
             icon: Icon(
               Icons.edit_rounded,
               color: ColorConstant.secondaryColor,
             ),
           ),
           IconButton(
-            onPressed: onDeletePressed,
+            onPressed: widget.onDeletePressed,
             icon: Icon(
               Icons.delete_rounded,
               color: ColorConstant.secondaryColor,
@@ -72,11 +104,22 @@ class ChecklistViewScreen extends StatelessWidget {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) => ChecklistViewTile(
-          item: contentList[index].item,
-          isCheck: contentList[index].check,
-          onCheckboxPressed: onCheckboxPressed,
+          item: widget.contentList[index].item,
+          isCheck: widget.contentList[index].check,
+          onCheckboxPressed: (value) async {
+            await hiveController.saveData(
+              widget.checklistKey,
+              ChecklistModel(
+                title: widget.title,
+                contentList: addDataToList(index, value!),
+                dateTime: widget.dateTime,
+                colorIndex: widget.colorIndex,
+              ),
+            );
+            setState(() {});
+          },
         ),
-        itemCount: contentList.length,
+        itemCount: widget.contentList.length,
       ),
     );
   }

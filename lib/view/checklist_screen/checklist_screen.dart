@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:note_application/controller/hive_controller.dart';
 import 'package:note_application/main.dart';
-import 'package:note_application/model/checklist_model.dart';
 import 'package:note_application/utils/dimen_constant.dart';
 import 'package:note_application/view/checklist_screen/checklist_widgets/checklist_tile.dart';
 import 'package:note_application/view/checklist_view_screen/checklist_view_screen.dart';
@@ -58,6 +57,8 @@ class _ChecklistScreenState extends State<ChecklistScreen> {
                   title: hiveController.valuesList[index].title,
                   contentList: hiveController.valuesList[index].contentList,
                   dateTime: hiveController.valuesList[index].dateTime,
+                  colorIndex: hiveController.valuesList[index].colorIndex,
+                  checklistKey: hiveController.keysList[index],
                   onEditPressed: () async {
                     Navigator.push(
                       context,
@@ -76,19 +77,7 @@ class _ChecklistScreenState extends State<ChecklistScreen> {
                     await hiveController
                         .deleteData(hiveController.keysList[index]);
                     setState(() {});
-                  },onCheckboxPressed: (value) async{
-                    getContent(index)
-               
-                  await hiveController.saveData(
-                    hiveController.keysList[index],
-                    ChecklistModel(
-                      title: hiveController.valuesList[index].title,
-                      contentList: list,
-                      dateTime:hiveController.valuesList[index].dateTime,
-                      colorIndex: hiveController.valuesList[index].colorIndex,
-                    ),
-                  );
-                },
+                  },
                 ),
               ),
             ),

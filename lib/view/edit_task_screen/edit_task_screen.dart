@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:note_application/controller/hive_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/model/task_model.dart';
 import 'package:note_application/utils/color_constant.dart';
@@ -8,15 +8,15 @@ import 'package:note_application/view/home_screen/home_screen.dart';
 
 class EditTaskScreen extends StatefulWidget {
   String appBarTitle;
-  String title, description;
+  String? title, description;
   DateTime dueDate;
   int? noteKey;
 
   EditTaskScreen({
     super.key,
     required this.appBarTitle,
-    this.title = '',
-    this.description = '',
+    this.title,
+    this.description,
     required this.dueDate,
     this.noteKey,
   });
@@ -26,27 +26,24 @@ class EditTaskScreen extends StatefulWidget {
 }
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
-  int counter = 0;
-  List keysList = [];
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  HiveController hiveController = HiveController();
   DateTime dueDate = DateTime.now();
 
   @override
   void initState() {
-    initialiseHive();
-    titleController = TextEditingController(text: widget.title);
-    descriptionController = TextEditingController(text: widget.description);
+    getData();
+    titleController = TextEditingController(text: widget.title ?? '');
+    descriptionController =
+        TextEditingController(text: widget.description ?? '');
     dueDate = widget.dueDate;
     setState(() {});
     super.initState();
   }
 
-  Future<void> initialiseHive() async {
-    var box = await Hive.box<TaskModel>('taskBox');
-    keysList = box.keys.toList();
-    counter = keysList.last + 1 ?? 0;
-    print(counter);
+  Future<void> getData() async {
+    await hiveController.initializeHive(NoteType.task);
     setState(() {});
   }
 
@@ -69,7 +66,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              var box = Hive.box<TaskModel>('taskBox');
               if (titleController.text.isEmpty || dueDate == DateTime.now()) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -81,8 +77,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   ),
                 );
               } else {
-                await box.put(
-                  widget.noteKey ?? counter,
+                await hiveController.saveData(
+                  widget.noteKey ?? hiveController.counter,
                   TaskModel(
                     title: titleController.text.trim(),
                     description: descriptionController.text.trim(),
@@ -90,8 +86,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     state: TaskState.upcoming,
                   ),
                 );
-                keysList = box.keys.toList();
-                counter = keysList.length;
                 setState(() {});
                 Navigator.pushAndRemoveUntil(
                   context,

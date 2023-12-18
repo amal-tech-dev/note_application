@@ -18,12 +18,6 @@ class ChecklistController with ChangeNotifier {
     notifyListeners();
   }
 
-  editContent(int index, bool value) {
-    addContent(itemName: checkList[index].item, check: value);
-    deleteContent(index);
-    notifyListeners();
-  }
-
   deleteContent(int index) {
     checkList.removeAt(index);
     notifyListeners();
