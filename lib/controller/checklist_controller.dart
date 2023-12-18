@@ -8,13 +8,19 @@ class ChecklistController with ChangeNotifier {
     checkList = (list == []) ? [] : list;
   }
 
-  addContent(String itemName) {
+  addContent({required String itemName, bool? check}) {
     checkList.add(
       ContentModel(
         item: itemName,
-        check: false,
+        check: check ?? false,
       ),
     );
+    notifyListeners();
+  }
+
+  editContent(int index, bool value) {
+    addContent(itemName: checkList[index].item, check: value);
+    deleteContent(index);
     notifyListeners();
   }
 

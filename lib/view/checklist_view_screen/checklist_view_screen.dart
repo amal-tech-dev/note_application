@@ -9,7 +9,8 @@ class ChecklistViewScreen extends StatelessWidget {
   List<ContentModel> contentList;
   DateTime dateTime;
   VoidCallback onEditPressed, onDeletePressed;
-  final dateTimeFormater = DateTimeFormatController();
+  void Function(bool?)? onCheckboxPressed;
+  DateTimeFormatController dateTimeFormater = DateTimeFormatController();
 
   ChecklistViewScreen({
     super.key,
@@ -18,6 +19,7 @@ class ChecklistViewScreen extends StatelessWidget {
     required this.dateTime,
     required this.onEditPressed,
     required this.onDeletePressed,
+    required this.onCheckboxPressed,
   });
 
   @override
@@ -72,7 +74,7 @@ class ChecklistViewScreen extends StatelessWidget {
         itemBuilder: (context, index) => ChecklistViewTile(
           item: contentList[index].item,
           isCheck: contentList[index].check,
-          onCheckboxPressed: (value) {},
+          onCheckboxPressed: onCheckboxPressed,
         ),
         itemCount: contentList.length,
       ),

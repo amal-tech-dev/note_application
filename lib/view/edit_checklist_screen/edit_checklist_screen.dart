@@ -161,7 +161,8 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
                                 ),
                               ),
                             )
-                          : value.addContent(contentController.text.trim());
+                          : value.addContent(
+                              itemName: contentController.text.trim());
                       contentController.clear();
                       setState(() {});
                     },
