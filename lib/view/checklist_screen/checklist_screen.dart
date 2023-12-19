@@ -23,11 +23,13 @@ class _ChecklistScreenState extends State<ChecklistScreen> {
     super.initState();
   }
 
+  // get data from hive
   Future<void> getData() async {
     await hiveController.initializeHive(NoteType.checklist);
     setState(() {});
   }
 
+  // get contents from hive and return as list
   List<String> getContent(int index) {
     List<String> list = [];
     for (int i = 0;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:note_application/controller/hive_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/model/task_model.dart';
@@ -62,7 +63,12 @@ class _TaskScreenState extends State<TaskScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(DimenConstant.edgePadding),
-        child: ListView.separated(
+        child: MasonryGridView.builder(
+          gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          crossAxisSpacing: DimenConstant.edgePadding,
+          mainAxisSpacing: DimenConstant.edgePadding,
           itemBuilder: (context, index) => TaskTile(
             title: hiveController.valuesList[index].title,
             description: hiveController.valuesList[index].description,
@@ -77,6 +83,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     title: hiveController.valuesList[index].title,
                     description: hiveController.valuesList[index].description,
                     date: hiveController.valuesList[index].date,
+                    state: hiveController.valuesList[index].state,
                     noteKey: hiveController.keysList[index],
                   ),
                 ),
@@ -86,9 +93,19 @@ class _TaskScreenState extends State<TaskScreen> {
               await hiveController.deleteData(hiveController.keysList[index]);
               setState(() {});
             },
-            onCompleted: () async {},
+            onCompleted: () async {
+              await hiveController.saveData(
+                hiveController.keysList[index],
+                TaskModel(
+                  title: hiveController.valuesList[index].title,
+                  description: hiveController.valuesList[index].description,
+                  date: hiveController.valuesList[index].date,
+                  state: TaskState.completed,
+                ),
+              );
+              setState(() {});
+            },
           ),
-          separatorBuilder: (context, index) => DimenConstant.separator,
           itemCount: hiveController.keysList.length,
         ),
       ),

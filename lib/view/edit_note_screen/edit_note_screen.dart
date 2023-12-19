@@ -2,11 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/hive_controller.dart';
+import 'package:note_application/controller/tab_index_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class EditNoteScreen extends StatefulWidget {
   String appBarTitle;
@@ -37,6 +39,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
     super.initState();
   }
 
+  // get data from hive
   Future<void> getData() async {
     await hiveController.initializeHive(NoteType.note);
     titleController = TextEditingController(text: widget.title);
@@ -78,12 +81,14 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 await hiveController.saveData(
                   widget.noteKey ?? hiveController.counter,
                   NoteModel(
-                    title: widget.title ?? titleController.text.trim(),
-                    content: widget.content ?? contentController.text.trim(),
+                    title: titleController.text.trim(),
+                    content: contentController.text.trim(),
                     colorIndex: widget.colorIndex ??
                         Random().nextInt(ColorConstant.colorsList.length),
                   ),
                 );
+                Provider.of<TabIndexController>(context, listen: false)
+                    .setIndex(NoteType.note);
                 setState(() {});
                 Navigator.pushAndRemoveUntil(
                   context,

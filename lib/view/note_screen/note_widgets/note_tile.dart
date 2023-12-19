@@ -11,6 +11,7 @@ class NoteTile extends StatelessWidget {
     required this.onEditClicked,
     required this.onDeleteClicked,
   });
+
   String title, content;
   int colorIndex;
   VoidCallback onEditClicked, onDeleteClicked;

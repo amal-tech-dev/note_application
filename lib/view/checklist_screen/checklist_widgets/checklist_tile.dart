@@ -14,7 +14,6 @@ class ChecklistTile extends StatelessWidget {
 
   String title;
   List<String> contentList;
-
   int colorIndex;
   VoidCallback onEditClicked, onDeleteClicked;
 

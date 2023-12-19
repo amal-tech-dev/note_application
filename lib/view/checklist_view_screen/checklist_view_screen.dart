@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/date_time_format_controller.dart';
+import 'package:note_application/controller/date_controller.dart';
 import 'package:note_application/controller/hive_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/model/checklist_model.dart';
@@ -27,7 +27,7 @@ class ChecklistViewScreen extends StatefulWidget {
 }
 
 class _ChecklistViewScreenState extends State<ChecklistViewScreen> {
-  DateTimeFormatController dateTimeFormater = DateTimeFormatController();
+  DateController dateTimeFormater = DateController();
   HiveController hiveController = HiveController();
 
   @override
@@ -47,7 +47,12 @@ class _ChecklistViewScreenState extends State<ChecklistViewScreen> {
     List list = widget.contentList;
     String item = list[index].item;
     list.removeAt(index);
-    list.add(ContentModel(item: item, check: value));
+    list.add(
+      ContentModel(
+        item: item,
+        check: value,
+      ),
+    );
     return list;
   }
 

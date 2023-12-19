@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/date_time_format_controller.dart';
+import 'package:note_application/controller/date_controller.dart';
 import 'package:note_application/controller/hive_controller.dart';
+import 'package:note_application/controller/tab_index_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/model/task_model.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
 import 'package:note_application/view/home_screen/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class EditTaskScreen extends StatefulWidget {
   String appBarTitle;
   String? title, description;
   DateTime? date;
+  TaskState? state;
   int? noteKey;
 
   EditTaskScreen({
@@ -19,6 +22,7 @@ class EditTaskScreen extends StatefulWidget {
     this.title,
     this.description,
     this.date,
+    this.state,
     this.noteKey,
   });
 
@@ -30,7 +34,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   HiveController hiveController = HiveController();
-  DateTimeFormatController dateTimeFormat = DateTimeFormatController();
+  DateController dateController = DateController();
 
   @override
   void initState() {
@@ -38,12 +42,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     titleController = TextEditingController(text: widget.title ?? '');
     descriptionController =
         TextEditingController(text: widget.description ?? '');
-
+    dateController.filterDate(widget.date ?? DateTime.now());
     setState(() {});
     super.initState();
   }
 
-  // initialize and get data from hive
+  // get data from hive
   Future<void> getData() async {
     await hiveController.initializeHive(NoteType.task);
     setState(() {});
@@ -68,9 +72,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              if (titleController.text.isEmpty
-                  // || date == DateTime.now()
-                  ) {
+              if (titleController.text.isEmpty ||
+                  dateController.date == dateController.now) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
@@ -86,12 +89,18 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   TaskModel(
                     title: titleController.text.trim(),
                     description: descriptionController.text.trim(),
-                    date:
-                        // date ??
-                        DateTime.now(),
-                    state: TaskState.upcoming,
+                    date: DateTime(
+                      dateController.date.year,
+                      dateController.date.month,
+                      dateController.date.day,
+                      dateController.time.hour,
+                      dateController.time.minute,
+                    ),
+                    state: widget.state ?? TaskState.upcoming,
                   ),
                 );
+                Provider.of<TabIndexController>(context, listen: false)
+                    .setIndex(NoteType.task);
                 setState(() {});
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -162,16 +171,22 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   TextButton(
                     onPressed: () async {
                       DateTime? datePicked = await showDatePicker(
-                        context: context,
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(Duration(days: 3650)),
-                      );
-                      // date = datePicked ?? DateTime.now();
+                            context: context,
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime.now().add(Duration(days: 3650)),
+                          ) ??
+                          dateController.date;
+                      dateController.setDate(DateTime(
+                        datePicked.year,
+                        datePicked.month,
+                        datePicked.day,
+                        dateController.time.hour,
+                        dateController.time.minute,
+                      ));
                       setState(() {});
                     },
                     child: Text(
-                      // dateTimeFormat.getDate(date)
-                      '',
+                      dateController.dateText,
                       style: TextStyle(
                         color: ColorConstant.primaryColor,
                         fontSize: DimenConstant.subTitleTextSize,
@@ -181,15 +196,21 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   TextButton(
                     onPressed: () async {
                       TimeOfDay? timePicked = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                      );
-                      // time = timePicked ?? TimeOfDay.now();
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ) ??
+                          dateController.time;
+                      dateController.setDate(DateTime(
+                        dateController.date.year,
+                        dateController.date.month,
+                        dateController.date.day,
+                        timePicked.hour,
+                        timePicked.minute,
+                      ));
                       setState(() {});
                     },
                     child: Text(
-                      // dateTimeFormat.getTime(time)
-                      '',
+                      dateController.timeText,
                       style: TextStyle(
                         color: ColorConstant.primaryColor,
                         fontSize: DimenConstant.subTitleTextSize,

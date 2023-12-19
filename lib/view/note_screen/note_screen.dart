@@ -23,6 +23,7 @@ class _NoteScreenState extends State<NoteScreen> {
     super.initState();
   }
 
+  // get data from hive
   Future<void> getData() async {
     await hiveController.initializeHive(NoteType.note);
     setState(() {});

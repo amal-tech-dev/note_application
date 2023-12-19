@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/floating_button_controller.dart';
+import 'package:note_application/controller/tab_index_controller.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
+import 'package:note_application/utils/string_constant.dart';
 import 'package:note_application/view/checklist_screen/checklist_screen.dart';
 import 'package:note_application/view/edit_checklist_screen/edit_checklist_screen.dart';
 import 'package:note_application/view/edit_note_screen/edit_note_screen.dart';
@@ -17,12 +19,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
+      initialIndex: Provider.of<TabIndexController>(context).defaultIndex,
       child: Scaffold(
         backgroundColor: ColorConstant.bgColor,
         appBar: AppBar(
           backgroundColor: ColorConstant.primaryColor,
           title: Text(
-            'Notes',
+            StringConstant.appName,
             style: TextStyle(
               color: ColorConstant.secondaryColor,
               fontWeight: FontWeight.bold,

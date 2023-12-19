@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/date_time_format_controller.dart';
+import 'package:note_application/controller/date_controller.dart';
 import 'package:note_application/model/task_model.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
@@ -23,28 +23,14 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTimeFormatController dateTimeFormat = DateTimeFormatController();
-
-    // fliter date and time from given date
-    getDateAndTime(DateTime dateTime) {
-      DateTime date = DateTime(dateTime.year, dateTime.month, dateTime.day);
-      TimeOfDay time = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
-      DateTime now = DateTime.now();
-      DateTime today = DateTime(now.year, now.month, now.day);
-      if (dateTime.isBefore(today)) {
-        return date.toString();
-      } else {
-        return time.toString();
-      }
-    }
-
+    DateController dateTimeFormat = DateController();
     return Container(
       decoration: BoxDecoration(
         color: state == TaskState.overdue
-            ? Colors.red.shade200
+            ? Colors.red.shade300
             : state == TaskState.completed
-                ? Colors.green.shade200
-                : Colors.blue.shade200,
+                ? Colors.green.shade300
+                : Colors.blue.shade300,
         borderRadius: BorderRadius.circular(DimenConstant.borderRadius),
       ),
       child: ExpansionTile(
@@ -56,7 +42,7 @@ class TaskTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          getDateAndTime(date),
+          dateTimeFormat.getTaskDate(date),
           style: TextStyle(
             fontSize: DimenConstant.miniTextSize,
             fontWeight: FontWeight.bold,
@@ -80,7 +66,7 @@ class TaskTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     state == TaskState.upcoming
                         ? InkWell(
@@ -102,7 +88,7 @@ class TaskTile extends StatelessWidget {
                                 const EdgeInsets.all(DimenConstant.edgePadding),
                             child: Text(
                               state == TaskState.overdue
-                                  ? 'Task date ended'
+                                  ? 'Task ended'
                                   : 'Completed',
                               style: TextStyle(
                                 fontSize: DimenConstant.miniTextSize,

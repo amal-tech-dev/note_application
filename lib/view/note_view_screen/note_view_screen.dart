@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/date_time_format_controller.dart';
+import 'package:note_application/controller/date_controller.dart';
 import 'package:note_application/utils/color_constant.dart';
 import 'package:note_application/utils/dimen_constant.dart';
 
@@ -7,7 +7,7 @@ class NoteViewScreen extends StatelessWidget {
   String title, content;
   int colorIndex;
   VoidCallback onEditPressed, onDeletePressed;
-  DateTimeFormatController dateTimeFormater = DateTimeFormatController();
+  DateController dateTimeFormater = DateController();
 
   NoteViewScreen({
     super.key,

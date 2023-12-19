@@ -3,6 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/controller/checklist_controller.dart';
 import 'package:note_application/controller/floating_button_controller.dart';
+import 'package:note_application/controller/tab_index_controller.dart';
 import 'package:note_application/model/checklist_model.dart';
 import 'package:note_application/model/note_model.dart';
 import 'package:note_application/model/task_model.dart';
@@ -38,6 +39,7 @@ class NoteApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => FloatingButtonController()),
         ChangeNotifierProvider(create: (context) => ChecklistController()),
+        ChangeNotifierProvider(create: (context) => TabIndexController()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

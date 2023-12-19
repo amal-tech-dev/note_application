@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:note_application/controller/checklist_controller.dart';
 import 'package:note_application/controller/hive_controller.dart';
+import 'package:note_application/controller/tab_index_controller.dart';
 import 'package:note_application/main.dart';
 import 'package:note_application/model/checklist_model.dart';
 import 'package:note_application/utils/color_constant.dart';
@@ -45,6 +46,7 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
     super.initState();
   }
 
+  // get data from hive
   Future<void> getData() async {
     await hiveController.initializeHive(NoteType.checklist);
     setState(() {});
@@ -85,13 +87,15 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
                   await hiveController.saveData(
                     widget.noteKey ?? hiveController.counter,
                     ChecklistModel(
-                      title: widget.title ?? titleController.text.trim(),
+                      title: titleController.text.trim(),
                       contentList: list,
                       colorIndex: widget.colorIndex ??
                           Random().nextInt(ColorConstant.colorsList.length),
                     ),
                   );
                   value.clearContent();
+                  Provider.of<TabIndexController>(context, listen: false)
+                      .setIndex(NoteType.checklist);
                   setState(() {});
                   Navigator.pushAndRemoveUntil(
                     context,
