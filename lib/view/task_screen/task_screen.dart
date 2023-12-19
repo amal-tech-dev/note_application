@@ -33,14 +33,13 @@ class _TaskScreenState extends State<TaskScreen> {
   Future<void> checkDueDate() async {
     List list = await hiveController.valuesList;
     for (int i = 0; i < list.length; i++) {
-      if (list[i].dueDate.isBefore(DateTime.now())) {
+      if (list[i].date.isBefore(DateTime.now())) {
         hiveController.saveData(
           hiveController.keysList[i],
           TaskModel(
             title: hiveController.valuesList[i].title,
             description: hiveController.valuesList[i].description,
             date: hiveController.valuesList[i].date,
-            time: hiveController.valuesList[i].time,
             state: TaskState.overdue,
           ),
         );
@@ -67,7 +66,7 @@ class _TaskScreenState extends State<TaskScreen> {
           itemBuilder: (context, index) => TaskTile(
             title: hiveController.valuesList[index].title,
             description: hiveController.valuesList[index].description,
-            dueDate: hiveController.valuesList[index].dueDate,
+            date: hiveController.valuesList[index].date,
             state: hiveController.valuesList[index].state,
             onEditPressed: () {
               Navigator.push(
@@ -78,7 +77,6 @@ class _TaskScreenState extends State<TaskScreen> {
                     title: hiveController.valuesList[index].title,
                     description: hiveController.valuesList[index].description,
                     date: hiveController.valuesList[index].date,
-                    time: hiveController.valuesList[index].time,
                     noteKey: hiveController.keysList[index],
                   ),
                 ),

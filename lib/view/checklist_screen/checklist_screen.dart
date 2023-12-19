@@ -56,8 +56,6 @@ class _ChecklistScreenState extends State<ChecklistScreen> {
                 builder: (context) => ChecklistViewScreen(
                   title: hiveController.valuesList[index].title,
                   contentList: hiveController.valuesList[index].contentList,
-                  date: hiveController.valuesList[index].date,
-                  time: hiveController.valuesList[index].time,
                   colorIndex: hiveController.valuesList[index].colorIndex,
                   checklistKey: hiveController.keysList[index],
                   onEditPressed: () async {
@@ -69,8 +67,6 @@ class _ChecklistScreenState extends State<ChecklistScreen> {
                           title: hiveController.valuesList[index].title,
                           contentList:
                               hiveController.valuesList[index].contentList,
-                          date: hiveController.valuesList[index].date,
-                          time: hiveController.valuesList[index].time,
                           noteKey: hiveController.keysList[index],
                         ),
                       ),
@@ -96,8 +92,6 @@ class _ChecklistScreenState extends State<ChecklistScreen> {
                       appBarTitle: 'Edit List',
                       title: hiveController.valuesList[index].title,
                       contentList: hiveController.valuesList[index].contentList,
-                      date: hiveController.valuesList[index].date,
-                      time: hiveController.valuesList[index].time,
                       noteKey: hiveController.keysList[index],
                     ),
                   ),

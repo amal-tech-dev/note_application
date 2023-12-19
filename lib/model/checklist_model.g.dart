@@ -19,25 +19,19 @@ class ChecklistModelAdapter extends TypeAdapter<ChecklistModel> {
     return ChecklistModel(
       title: fields[0] as String,
       contentList: (fields[1] as List).cast<ContentModel>(),
-      date: fields[2] as DateTime,
-      time: fields[3] as TimeOfDay,
-      colorIndex: fields[4] as int,
+      colorIndex: fields[2] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, ChecklistModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
       ..write(obj.contentList)
       ..writeByte(2)
-      ..write(obj.date)
-      ..writeByte(3)
-      ..write(obj.time)
-      ..writeByte(4)
       ..write(obj.colorIndex);
   }
 

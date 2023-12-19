@@ -15,8 +15,6 @@ class EditChecklistScreen extends StatefulWidget {
   String appBarTitle;
   String? title;
   List<ContentModel>? contentList;
-  DateTime? date;
-  TimeOfDay? time;
   int? colorIndex, noteKey;
 
   EditChecklistScreen({
@@ -24,8 +22,6 @@ class EditChecklistScreen extends StatefulWidget {
     required this.appBarTitle,
     this.title,
     this.contentList,
-    this.date,
-    this.time,
     this.colorIndex,
     this.noteKey,
   });
@@ -91,8 +87,6 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
                     ChecklistModel(
                       title: widget.title ?? titleController.text.trim(),
                       contentList: list,
-                      date: widget.date ?? DateTime.now(),
-                      time: widget.time ?? TimeOfDay.now(),
                       colorIndex: widget.colorIndex ??
                           Random().nextInt(ColorConstant.colorsList.length),
                     ),

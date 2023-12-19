@@ -11,7 +11,6 @@ class EditTaskScreen extends StatefulWidget {
   String appBarTitle;
   String? title, description;
   DateTime? date;
-  TimeOfDay? time;
   int? noteKey;
 
   EditTaskScreen({
@@ -20,7 +19,6 @@ class EditTaskScreen extends StatefulWidget {
     this.title,
     this.description,
     this.date,
-    this.time,
     this.noteKey,
   });
 
@@ -33,8 +31,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   TextEditingController descriptionController = TextEditingController();
   HiveController hiveController = HiveController();
   DateTimeFormatController dateTimeFormat = DateTimeFormatController();
-  late DateTime dueDate, date;
-  late TimeOfDay dueTime, time;
 
   @override
   void initState() {
@@ -42,10 +38,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     titleController = TextEditingController(text: widget.title ?? '');
     descriptionController =
         TextEditingController(text: widget.description ?? '');
-    dueDate = widget.date ?? DateTime.now();
-    dueTime = widget.time ?? TimeOfDay.now();
-    date = DateTime(dueDate.year, dueDate.month, dueDate.day);
-    time = TimeOfDay(hour: dueTime.hour, minute: dueTime.minute);
+
     setState(() {});
     super.initState();
   }
@@ -75,7 +68,9 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              if (titleController.text.isEmpty || dueDate == DateTime.now()) {
+              if (titleController.text.isEmpty
+                  // || date == DateTime.now()
+                  ) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
@@ -91,8 +86,9 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   TaskModel(
                     title: titleController.text.trim(),
                     description: descriptionController.text.trim(),
-                    date: date,
-                    time: time,
+                    date:
+                        // date ??
+                        DateTime.now(),
                     state: TaskState.upcoming,
                   ),
                 );
@@ -170,11 +166,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         firstDate: DateTime.now(),
                         lastDate: DateTime.now().add(Duration(days: 3650)),
                       );
-                      date = datePicked ?? DateTime.now();
+                      // date = datePicked ?? DateTime.now();
                       setState(() {});
                     },
                     child: Text(
-                      dateTimeFormat.getDate(date),
+                      // dateTimeFormat.getDate(date)
+                      '',
                       style: TextStyle(
                         color: ColorConstant.primaryColor,
                         fontSize: DimenConstant.subTitleTextSize,
@@ -187,11 +184,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         context: context,
                         initialTime: TimeOfDay.now(),
                       );
-                      time = timePicked ?? TimeOfDay.now();
+                      // time = timePicked ?? TimeOfDay.now();
                       setState(() {});
                     },
                     child: Text(
-                      dateTimeFormat.getTime(time),
+                      // dateTimeFormat.getTime(time)
+                      '',
                       style: TextStyle(
                         color: ColorConstant.primaryColor,
                         fontSize: DimenConstant.subTitleTextSize,

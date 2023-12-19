@@ -9,8 +9,6 @@ import 'package:note_application/view/checklist_view_screen/checklist_view_widge
 class ChecklistViewScreen extends StatefulWidget {
   String title;
   List<ContentModel> contentList;
-  DateTime date;
-  TimeOfDay time;
   VoidCallback onEditPressed, onDeletePressed;
   int checklistKey, colorIndex;
 
@@ -18,8 +16,6 @@ class ChecklistViewScreen extends StatefulWidget {
     super.key,
     required this.title,
     required this.contentList,
-    required this.date,
-    required this.time,
     required this.onEditPressed,
     required this.onDeletePressed,
     required this.checklistKey,
@@ -64,27 +60,13 @@ class _ChecklistViewScreenState extends State<ChecklistViewScreen> {
         leading: BackButton(
           color: ColorConstant.secondaryColor,
         ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.title,
-              style: TextStyle(
-                color: ColorConstant.secondaryColor,
-                fontWeight: FontWeight.bold,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-            Text(
-              dateTimeFormater.formatDateTime(widget.date),
-              style: TextStyle(
-                color: ColorConstant.secondaryColor,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+        title: Text(
+          widget.title,
+          style: TextStyle(
+            color: ColorConstant.secondaryColor,
+            fontWeight: FontWeight.bold,
+          ),
+          overflow: TextOverflow.ellipsis,
         ),
         actions: [
           IconButton(
@@ -113,8 +95,6 @@ class _ChecklistViewScreenState extends State<ChecklistViewScreen> {
               ChecklistModel(
                 title: widget.title,
                 contentList: addDataToList(index, value!),
-                date: widget.date,
-                time: widget.time,
                 colorIndex: widget.colorIndex,
               ),
             );

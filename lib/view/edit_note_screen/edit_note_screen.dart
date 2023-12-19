@@ -11,8 +11,6 @@ import 'package:note_application/view/home_screen/home_screen.dart';
 class EditNoteScreen extends StatefulWidget {
   String appBarTitle;
   String? title, content;
-  DateTime? date;
-  TimeOfDay? time;
   int? colorIndex, noteKey;
 
   EditNoteScreen({
@@ -21,8 +19,6 @@ class EditNoteScreen extends StatefulWidget {
     this.title,
     this.content,
     this.colorIndex,
-    this.date,
-    this.time,
     this.noteKey,
   });
 
@@ -84,8 +80,6 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   NoteModel(
                     title: widget.title ?? titleController.text.trim(),
                     content: widget.content ?? contentController.text.trim(),
-                    date: widget.date ?? DateTime.now(),
-                    time: widget.time ?? TimeOfDay.now(),
                     colorIndex: widget.colorIndex ??
                         Random().nextInt(ColorConstant.colorsList.length),
                   ),

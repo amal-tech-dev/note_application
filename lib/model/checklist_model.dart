@@ -8,8 +8,6 @@ class ChecklistModel {
   ChecklistModel({
     required this.title,
     required this.contentList,
-    required this.date,
-    required this.time,
     required this.colorIndex,
   });
 
@@ -18,10 +16,6 @@ class ChecklistModel {
   @HiveField(1)
   List<ContentModel> contentList;
   @HiveField(2)
-  DateTime date;
-  @HiveField(3)
-  TimeOfDay time;
-  @HiveField(4)
   int colorIndex;
 }
 

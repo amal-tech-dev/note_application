@@ -6,7 +6,7 @@ import 'package:note_application/utils/dimen_constant.dart';
 
 class TaskTile extends StatelessWidget {
   String title, description;
-  DateTime dueDate;
+  DateTime date;
   TaskState state;
   VoidCallback onCompleted, onEditPressed, onDeletePressed;
 
@@ -14,7 +14,7 @@ class TaskTile extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
-    required this.dueDate,
+    required this.date,
     required this.state,
     required this.onEditPressed,
     required this.onDeletePressed,
@@ -24,6 +24,20 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DateTimeFormatController dateTimeFormat = DateTimeFormatController();
+
+    // fliter date and time from given date
+    getDateAndTime(DateTime dateTime) {
+      DateTime date = DateTime(dateTime.year, dateTime.month, dateTime.day);
+      TimeOfDay time = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
+      DateTime now = DateTime.now();
+      DateTime today = DateTime(now.year, now.month, now.day);
+      if (dateTime.isBefore(today)) {
+        return date.toString();
+      } else {
+        return time.toString();
+      }
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: state == TaskState.overdue
@@ -42,7 +56,7 @@ class TaskTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          dateTimeFormat.formatDateTime(dueDate),
+          getDateAndTime(date),
           style: TextStyle(
             fontSize: DimenConstant.miniTextSize,
             fontWeight: FontWeight.bold,

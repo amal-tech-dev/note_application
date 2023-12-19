@@ -9,7 +9,6 @@ class TaskModel {
     required this.title,
     required this.description,
     required this.date,
-    required this.time,
     required this.state,
   });
 
@@ -20,8 +19,6 @@ class TaskModel {
   @HiveField(2)
   DateTime date;
   @HiveField(3)
-  TimeOfDay time;
-  @HiveField(4)
   TaskState state;
 }
 
