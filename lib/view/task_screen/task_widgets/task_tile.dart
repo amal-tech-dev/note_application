@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/date_controller.dart';
-import 'package:note_application/model/task_model.dart';
-import 'package:note_application/utils/color_constant.dart';
-import 'package:note_application/utils/dimen_constant.dart';
+import 'package:echo_note/controller/date_controller.dart';
+import 'package:echo_note/model/task_model.dart';
+import 'package:echo_note/utils/color_constant.dart';
+import 'package:echo_note/utils/dimen_constant.dart';
 
 class TaskTile extends StatelessWidget {
   String title, description;

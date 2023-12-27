@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/utils/color_constant.dart';
-import 'package:note_application/utils/dimen_constant.dart';
+import 'package:echo_note/utils/color_constant.dart';
+import 'package:echo_note/utils/dimen_constant.dart';
 
 class ChecklistTile extends StatelessWidget {
   ChecklistTile({

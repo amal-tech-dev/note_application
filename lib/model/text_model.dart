@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-part 'note_model.g.dart';
+part 'text_model.g.dart';
 
 @HiveType(typeId: 0)
-class NoteModel {
-  NoteModel({
+class TextModel {
+  TextModel({
     required this.title,
     required this.content,
     required this.colorIndex,

@@ -1,15 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/checklist_controller.dart';
-import 'package:note_application/controller/hive_controller.dart';
-import 'package:note_application/controller/tab_index_controller.dart';
-import 'package:note_application/main.dart';
-import 'package:note_application/model/checklist_model.dart';
-import 'package:note_application/utils/color_constant.dart';
-import 'package:note_application/utils/dimen_constant.dart';
-import 'package:note_application/view/edit_checklist_screen/edit_checklist_widgets/edit_checklist_item.dart';
-import 'package:note_application/view/home_screen/home_screen.dart';
+import 'package:echo_note/controller/checklist_controller.dart';
+import 'package:echo_note/controller/hive_controller.dart';
+import 'package:echo_note/controller/tab_index_controller.dart';
+import 'package:echo_note/main.dart';
+import 'package:echo_note/model/checklist_model.dart';
+import 'package:echo_note/utils/color_constant.dart';
+import 'package:echo_note/utils/dimen_constant.dart';
+import 'package:echo_note/view/edit_checklist_screen/edit_checklist_widgets/edit_checklist_item.dart';
+import 'package:echo_note/view/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class EditChecklistScreen extends StatefulWidget {

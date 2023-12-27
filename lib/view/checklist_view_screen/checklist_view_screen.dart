@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/date_controller.dart';
-import 'package:note_application/controller/hive_controller.dart';
-import 'package:note_application/main.dart';
-import 'package:note_application/model/checklist_model.dart';
-import 'package:note_application/utils/color_constant.dart';
-import 'package:note_application/view/checklist_view_screen/checklist_view_widgets/checklist_view_tile.dart';
+import 'package:echo_note/controller/date_controller.dart';
+import 'package:echo_note/controller/hive_controller.dart';
+import 'package:echo_note/main.dart';
+import 'package:echo_note/model/checklist_model.dart';
+import 'package:echo_note/utils/color_constant.dart';
+import 'package:echo_note/view/checklist_view_screen/checklist_view_widgets/checklist_view_tile.dart';
 
 class ChecklistViewScreen extends StatefulWidget {
   String title;

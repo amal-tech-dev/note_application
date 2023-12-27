@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:note_application/main.dart';
+import 'package:echo_note/main.dart';
 
 class TabIndexController with ChangeNotifier {
   int defaultIndex = 0;
@@ -7,7 +7,7 @@ class TabIndexController with ChangeNotifier {
   // set default index
   setIndex(NoteType type) {
     switch (type) {
-      case NoteType.note:
+      case NoteType.text:
         defaultIndex = 0;
         break;
       case NoteType.checklist:

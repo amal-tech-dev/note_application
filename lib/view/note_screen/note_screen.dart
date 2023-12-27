@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:note_application/controller/hive_controller.dart';
-import 'package:note_application/main.dart';
-import 'package:note_application/utils/dimen_constant.dart';
-import 'package:note_application/view/edit_note_screen/edit_note_screen.dart';
-import 'package:note_application/view/note_screen/note_widgets/note_tile.dart';
-import 'package:note_application/view/note_view_screen/note_view_screen.dart';
+import 'package:echo_note/controller/hive_controller.dart';
+import 'package:echo_note/main.dart';
+import 'package:echo_note/utils/dimen_constant.dart';
+import 'package:echo_note/view/edit_note_screen/edit_note_screen.dart';
+import 'package:echo_note/view/note_screen/note_widgets/note_tile.dart';
+import 'package:echo_note/view/note_view_screen/note_view_screen.dart';
 
 class NoteScreen extends StatefulWidget {
   NoteScreen({super.key});
@@ -25,7 +25,7 @@ class _NoteScreenState extends State<NoteScreen> {
 
   // get data from hive
   Future<void> getData() async {
-    await hiveController.initializeHive(NoteType.note);
+    await hiveController.initializeHive(NoteType.text);
     setState(() {});
   }
 

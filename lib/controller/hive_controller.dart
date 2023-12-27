@@ -1,8 +1,8 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/main.dart';
-import 'package:note_application/model/checklist_model.dart';
-import 'package:note_application/model/note_model.dart';
-import 'package:note_application/model/task_model.dart';
+import 'package:echo_note/main.dart';
+import 'package:echo_note/model/checklist_model.dart';
+import 'package:echo_note/model/text_model.dart';
+import 'package:echo_note/model/task_model.dart';
 
 class HiveController {
   var box;
@@ -13,8 +13,8 @@ class HiveController {
   // initializing Hive corresponding to NoteType
   Future<void> initializeHive(NoteType type) async {
     switch (type) {
-      case NoteType.note:
-        box = await Hive.box<NoteModel>('noteBox');
+      case NoteType.text:
+        box = await Hive.box<TextModel>('textBox');
         break;
       case NoteType.checklist:
         box = await Hive.box<ChecklistModel>('checklistBox');

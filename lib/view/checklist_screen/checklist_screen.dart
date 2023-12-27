@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:note_application/controller/hive_controller.dart';
-import 'package:note_application/main.dart';
-import 'package:note_application/utils/dimen_constant.dart';
-import 'package:note_application/view/checklist_screen/checklist_widgets/checklist_tile.dart';
-import 'package:note_application/view/checklist_view_screen/checklist_view_screen.dart';
-import 'package:note_application/view/edit_checklist_screen/edit_checklist_screen.dart';
+import 'package:echo_note/controller/hive_controller.dart';
+import 'package:echo_note/main.dart';
+import 'package:echo_note/utils/dimen_constant.dart';
+import 'package:echo_note/view/checklist_screen/checklist_widgets/checklist_tile.dart';
+import 'package:echo_note/view/checklist_view_screen/checklist_view_screen.dart';
+import 'package:echo_note/view/edit_checklist_screen/edit_checklist_screen.dart';
 
 class ChecklistScreen extends StatefulWidget {
   ChecklistScreen({super.key});

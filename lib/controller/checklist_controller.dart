@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/model/checklist_model.dart';
+import 'package:echo_note/model/checklist_model.dart';
 
 class ChecklistController with ChangeNotifier {
   List<ContentModel> checkList = [];

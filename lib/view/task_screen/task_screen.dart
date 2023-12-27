@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:note_application/controller/hive_controller.dart';
-import 'package:note_application/main.dart';
-import 'package:note_application/model/task_model.dart';
-import 'package:note_application/utils/dimen_constant.dart';
-import 'package:note_application/view/edit_task_screen/edit_task_screen.dart';
-import 'package:note_application/view/task_screen/task_widgets/task_tile.dart';
+import 'package:echo_note/controller/hive_controller.dart';
+import 'package:echo_note/main.dart';
+import 'package:echo_note/model/task_model.dart';
+import 'package:echo_note/utils/dimen_constant.dart';
+import 'package:echo_note/view/edit_task_screen/edit_task_screen.dart';
+import 'package:echo_note/view/task_screen/task_widgets/task_tile.dart';
 
 class TaskScreen extends StatefulWidget {
   TaskScreen({super.key});

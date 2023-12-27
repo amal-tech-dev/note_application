@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/controller/floating_button_controller.dart';
-import 'package:note_application/controller/tab_index_controller.dart';
-import 'package:note_application/utils/color_constant.dart';
-import 'package:note_application/utils/dimen_constant.dart';
-import 'package:note_application/utils/string_constant.dart';
-import 'package:note_application/view/checklist_screen/checklist_screen.dart';
-import 'package:note_application/view/edit_checklist_screen/edit_checklist_screen.dart';
-import 'package:note_application/view/edit_note_screen/edit_note_screen.dart';
-import 'package:note_application/view/edit_task_screen/edit_task_screen.dart';
-import 'package:note_application/view/note_screen/note_screen.dart';
-import 'package:note_application/view/task_screen/task_screen.dart';
+import 'package:echo_note/controller/floating_button_controller.dart';
+import 'package:echo_note/controller/tab_index_controller.dart';
+import 'package:echo_note/utils/color_constant.dart';
+import 'package:echo_note/utils/dimen_constant.dart';
+import 'package:echo_note/utils/string_constant.dart';
+import 'package:echo_note/view/checklist_screen/checklist_screen.dart';
+import 'package:echo_note/view/edit_checklist_screen/edit_checklist_screen.dart';
+import 'package:echo_note/view/edit_note_screen/edit_note_screen.dart';
+import 'package:echo_note/view/edit_task_screen/edit_task_screen.dart';
+import 'package:echo_note/view/note_screen/note_screen.dart';
+import 'package:echo_note/view/task_screen/task_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
