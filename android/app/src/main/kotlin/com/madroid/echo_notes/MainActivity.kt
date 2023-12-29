@@ -1,4 +1,4 @@
-package com.example.echo_note
+package com.madroid.echo_notes
 
 import io.flutter.embedding.android.FlutterActivity
 

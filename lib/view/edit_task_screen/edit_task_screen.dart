@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:echo_note/controller/date_controller.dart';
 import 'package:echo_note/controller/hive_controller.dart';
 import 'package:echo_note/controller/tab_index_controller.dart';
@@ -7,6 +6,7 @@ import 'package:echo_note/model/task_model.dart';
 import 'package:echo_note/utils/color_constant.dart';
 import 'package:echo_note/utils/dimen_constant.dart';
 import 'package:echo_note/view/home_screen/home_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditTaskScreen extends StatefulWidget {

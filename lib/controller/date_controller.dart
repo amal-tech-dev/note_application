@@ -4,7 +4,7 @@ class DateController {
   late DateTime date;
   late TimeOfDay time;
   late DateTime today;
-  late String year, month, day, hour, minute, dateText, timeText;
+  late String year, month, day, hour, minute, dateText, timeText, finalDate;
   DateTime now = DateTime.now();
 
   // fliter date and time from given date
@@ -41,16 +41,13 @@ class DateController {
 
     dateText = '$day-$month-$year';
     timeText = '$hour:$minute';
+    finalDate = '$day-$month-$year $hour:$minute';
   }
 
-  // check date is before today
+  // get date
   getTaskDate(DateTime dateTime) {
     filterDate(dateTime);
-    if (dateTime.isBefore(today)) {
-      return dateText;
-    } else {
-      return timeText;
-    }
+    return finalDate;
   }
 
   // set date
