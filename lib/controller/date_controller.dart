@@ -13,31 +13,11 @@ class DateController {
     time = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
     today = DateTime(now.year, now.month, now.day);
 
-    year = '${date.year}';
-
-    if (date.month < 10) {
-      month = '0${date.month}';
-    } else {
-      month = '${date.month}';
-    }
-
-    if (date.day < 10) {
-      day = '0${date.day}';
-    } else {
-      day = '${date.day}';
-    }
-
-    if (time.hour < 10) {
-      hour = '0${time.hour}';
-    } else {
-      hour = '${time.hour}';
-    }
-
-    if (time.minute < 10) {
-      minute = '0${time.minute}';
-    } else {
-      minute = '${time.minute}';
-    }
+    year = date.year.toString();
+    month = date.month.toString().padLeft(2, '0');
+    day = date.day.toString().padLeft(2, '0');
+    hour = time.hour.toString().padLeft(2, '0');
+    minute = time.minute.toString().padLeft(2, '0');
 
     dateText = '$day-$month-$year';
     timeText = '$hour:$minute';
