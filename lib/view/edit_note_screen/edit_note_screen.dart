@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:echo_note/controller/hive_controller.dart';
 import 'package:echo_note/controller/tab_index_controller.dart';
 import 'package:echo_note/main.dart';
@@ -8,6 +7,7 @@ import 'package:echo_note/model/text_model.dart';
 import 'package:echo_note/utils/color_constant.dart';
 import 'package:echo_note/utils/dimen_constant.dart';
 import 'package:echo_note/view/home_screen/home_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditNoteScreen extends StatefulWidget {
@@ -117,7 +117,6 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: ColorConstant.primaryColor,
-                    width: DimenConstant.borderWidth,
                   ),
                 ),
                 labelText: 'Title',
@@ -137,7 +136,6 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: ColorConstant.primaryColor,
-                      width: DimenConstant.borderWidth,
                     ),
                   ),
                   labelText: 'Content',

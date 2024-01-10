@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:echo_note/controller/checklist_controller.dart';
 import 'package:echo_note/controller/floating_button_controller.dart';
 import 'package:echo_note/controller/tab_index_controller.dart';
 import 'package:echo_note/model/checklist_model.dart';
-import 'package:echo_note/model/text_model.dart';
 import 'package:echo_note/model/task_model.dart';
-import 'package:echo_note/view/home_screen/home_screen.dart';
+import 'package:echo_note/model/text_model.dart';
+import 'package:echo_note/utils/color_constant.dart';
+import 'package:echo_note/view/splash_screen/splash_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 enum NoteType { text, checklist, task }
@@ -43,7 +44,10 @@ class NoteApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        theme: ThemeData(
+          scaffoldBackgroundColor: ColorConstant.bgColor,
+        ),
+        home: SplashScreen(),
       ),
     );
   }

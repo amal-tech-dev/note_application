@@ -129,7 +129,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: ColorConstant.primaryColor,
-                    width: DimenConstant.borderWidth,
                   ),
                 ),
                 labelText: 'Title',
@@ -149,7 +148,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: ColorConstant.primaryColor,
-                      width: DimenConstant.borderWidth,
                     ),
                   ),
                   labelText: 'Description',

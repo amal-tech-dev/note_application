@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:echo_note/utils/color_constant.dart';
 import 'package:echo_note/utils/dimen_constant.dart';
+import 'package:flutter/material.dart';
 
 class ChecklistViewTile extends StatelessWidget {
   String item;
@@ -31,7 +31,7 @@ class ChecklistViewTile extends StatelessWidget {
             child: Text(
               item,
               style: TextStyle(
-                color: ColorConstant.tertiaryColor,
+                color: ColorConstant.secondaryColor,
                 fontSize: DimenConstant.subTitleTextSize,
               ),
             ),

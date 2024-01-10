@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:echo_note/controller/date_controller.dart';
 import 'package:echo_note/utils/color_constant.dart';
 import 'package:echo_note/utils/dimen_constant.dart';
+import 'package:flutter/material.dart';
 
 class NoteViewScreen extends StatelessWidget {
   String title, content;
@@ -58,7 +58,7 @@ class NoteViewScreen extends StatelessWidget {
           child: Text(
             content,
             style: TextStyle(
-              color: ColorConstant.tertiaryColor,
+              color: ColorConstant.secondaryColor,
               fontSize: DimenConstant.titleTextSize,
             ),
             maxLines: 100,

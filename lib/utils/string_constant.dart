@@ -1,3 +1,3 @@
 class StringConstant {
-  static const String appName = 'Echo Note';
+  static const String appName = 'Echo Notes';
 }

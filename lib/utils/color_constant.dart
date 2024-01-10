@@ -1,46 +1,29 @@
 import 'package:flutter/material.dart';
 
 class ColorConstant {
-  static const Color primaryColor = Color(0xFF00C853);
-  static const Color secondaryColor = Color(0xFFFFFFFF);
-  static const Color tertiaryColor = Color(0xFF000000);
-  static const Color bgColor = Color(0xFFFFFFFF);
+  static const Color primaryColor = Color(0xFF181F32);
+  static const Color secondaryColor = Color(0xFFF8F8F8);
+  static const Color bgColor = Color(0xFFF8F8F8);
 
   static List<Color?> colorsList = [
-    Colors.grey.shade400,
-    Colors.amber.shade200,
-    Colors.blue.shade200,
-    Colors.blueGrey.shade200,
-    Colors.brown.shade200,
-    Colors.cyan.shade200,
-    Colors.deepOrange.shade200,
-    Colors.deepPurple.shade200,
-    Colors.green.shade200,
-    Colors.indigo.shade200,
-    Colors.lightBlue.shade200,
-    Colors.lightGreen.shade200,
-    Colors.lime.shade200,
-    Colors.orange.shade200,
-    Colors.pink.shade200,
-    Colors.purple.shade200,
-    Colors.red.shade200,
-    Colors.teal.shade200,
-    Colors.yellow.shade200,
-    Colors.amberAccent.shade100,
-    Colors.blueAccent.shade100,
-    Colors.cyanAccent.shade100,
-    Colors.deepOrangeAccent.shade100,
-    Colors.deepPurpleAccent.shade100,
-    Colors.greenAccent.shade100,
-    Colors.indigoAccent.shade100,
-    Colors.lightBlueAccent.shade100,
-    Colors.lightGreenAccent.shade100,
-    Colors.limeAccent.shade100,
-    Colors.orangeAccent.shade100,
-    Colors.pinkAccent.shade100,
-    Colors.purpleAccent.shade100,
-    Colors.redAccent.shade100,
-    Colors.tealAccent.shade100,
-    Colors.yellowAccent.shade100,
+    Colors.grey.shade100,
+    Colors.amber.shade100,
+    Colors.blue.shade100,
+    Colors.blueGrey.shade100,
+    Colors.brown.shade100,
+    Colors.cyan.shade100,
+    Colors.deepOrange.shade100,
+    Colors.deepPurple.shade100,
+    Colors.green.shade100,
+    Colors.indigo.shade100,
+    Colors.lightBlue.shade100,
+    Colors.lightGreen.shade100,
+    Colors.lime.shade100,
+    Colors.orange.shade100,
+    Colors.pink.shade100,
+    Colors.purple.shade100,
+    Colors.red.shade100,
+    Colors.teal.shade100,
+    Colors.yellow.shade100,
   ];
 }

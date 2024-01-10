@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:echo_note/utils/color_constant.dart';
 import 'package:echo_note/utils/dimen_constant.dart';
+import 'package:flutter/material.dart';
 
 class NoteTile extends StatelessWidget {
   NoteTile({
@@ -36,7 +36,7 @@ class NoteTile extends StatelessWidget {
                 child: Text(
                   title,
                   style: TextStyle(
-                    color: ColorConstant.tertiaryColor,
+                    color: ColorConstant.secondaryColor,
                     fontSize: DimenConstant.titleTextSize,
                     fontWeight: FontWeight.bold,
                   ),
@@ -65,7 +65,7 @@ class NoteTile extends StatelessWidget {
             child: Text(
               content,
               style: TextStyle(
-                color: ColorConstant.tertiaryColor,
+                color: ColorConstant.secondaryColor,
                 fontSize: DimenConstant.subTitleTextSize,
                 fontWeight: FontWeight.bold,
               ),

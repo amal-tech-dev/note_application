@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:echo_note/controller/checklist_controller.dart';
 import 'package:echo_note/controller/hive_controller.dart';
 import 'package:echo_note/controller/tab_index_controller.dart';
@@ -10,6 +9,7 @@ import 'package:echo_note/utils/color_constant.dart';
 import 'package:echo_note/utils/dimen_constant.dart';
 import 'package:echo_note/view/edit_checklist_screen/edit_checklist_widgets/edit_checklist_item.dart';
 import 'package:echo_note/view/home_screen/home_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditChecklistScreen extends StatefulWidget {
@@ -125,7 +125,6 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: ColorConstant.primaryColor,
-                    width: DimenConstant.borderWidth,
                   ),
                 ),
                 labelText: 'Title',

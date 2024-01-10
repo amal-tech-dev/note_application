@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:echo_note/controller/floating_button_controller.dart';
 import 'package:echo_note/controller/tab_index_controller.dart';
 import 'package:echo_note/utils/color_constant.dart';
@@ -10,6 +9,7 @@ import 'package:echo_note/view/edit_note_screen/edit_note_screen.dart';
 import 'package:echo_note/view/edit_task_screen/edit_task_screen.dart';
 import 'package:echo_note/view/note_screen/note_screen.dart';
 import 'package:echo_note/view/task_screen/task_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,17 +23,18 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: ColorConstant.bgColor,
         appBar: AppBar(
-          backgroundColor: ColorConstant.primaryColor,
+          backgroundColor: ColorConstant.bgColor,
           title: Text(
             StringConstant.appName,
             style: TextStyle(
-              color: ColorConstant.secondaryColor,
+              color: ColorConstant.primaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),
           bottom: TabBar(
-            indicatorColor: ColorConstant.secondaryColor,
-            labelColor: ColorConstant.secondaryColor,
+            dividerHeight: 0,
+            indicatorColor: ColorConstant.primaryColor,
+            labelColor: ColorConstant.primaryColor,
             labelStyle: TextStyle(
               fontSize: DimenConstant.titleTextSize,
               fontWeight: FontWeight.bold,
@@ -77,8 +78,8 @@ class HomeScreen extends StatelessWidget {
                       },
                       backgroundColor: ColorConstant.primaryColor,
                       child: Icon(
-                        Icons.task_alt,
-                        color: ColorConstant.tertiaryColor,
+                        Icons.task_alt_rounded,
+                        color: ColorConstant.secondaryColor,
                         size: 20,
                       ),
                       mini: true,
@@ -98,8 +99,8 @@ class HomeScreen extends StatelessWidget {
                       },
                       backgroundColor: ColorConstant.primaryColor,
                       child: Icon(
-                        Icons.check_box,
-                        color: ColorConstant.tertiaryColor,
+                        Icons.check_box_rounded,
+                        color: ColorConstant.secondaryColor,
                         size: 20,
                       ),
                       mini: true,
@@ -119,8 +120,8 @@ class HomeScreen extends StatelessWidget {
                       },
                       backgroundColor: ColorConstant.primaryColor,
                       child: Icon(
-                        Icons.notes,
-                        color: ColorConstant.tertiaryColor,
+                        Icons.notes_rounded,
+                        color: ColorConstant.secondaryColor,
                         size: 30,
                       ),
                     ),
@@ -130,8 +131,8 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () => value.expand(),
                   backgroundColor: ColorConstant.primaryColor,
                   child: Icon(
-                    Icons.add,
-                    color: ColorConstant.tertiaryColor,
+                    Icons.add_rounded,
+                    color: ColorConstant.secondaryColor,
                     size: 35,
                   ),
                 ),

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:echo_note/controller/date_controller.dart';
 import 'package:echo_note/model/task_model.dart';
 import 'package:echo_note/utils/color_constant.dart';
 import 'package:echo_note/utils/dimen_constant.dart';
+import 'package:flutter/material.dart';
 
 class TaskTile extends StatelessWidget {
   String title, description;
@@ -48,7 +48,7 @@ class TaskTile extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        iconColor: ColorConstant.tertiaryColor,
+        iconColor: ColorConstant.secondaryColor,
         collapsedBackgroundColor: Colors.transparent,
         shape: Border(),
         children: [

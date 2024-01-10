@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:echo_note/utils/color_constant.dart';
 import 'package:echo_note/utils/dimen_constant.dart';
+import 'package:flutter/material.dart';
 
 class EditCheckListItem extends StatelessWidget {
   EditCheckListItem({
@@ -26,7 +26,7 @@ class EditCheckListItem extends StatelessWidget {
             child: Text(
               itemName,
               style: TextStyle(
-                color: ColorConstant.tertiaryColor,
+                color: ColorConstant.secondaryColor,
                 fontSize: DimenConstant.titleTextSize,
               ),
               maxLines: 3,

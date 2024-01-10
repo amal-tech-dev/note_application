@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:echo_note/controller/hive_controller.dart';
 import 'package:echo_note/main.dart';
 import 'package:echo_note/utils/dimen_constant.dart';
 import 'package:echo_note/view/edit_note_screen/edit_note_screen.dart';
 import 'package:echo_note/view/note_screen/note_widgets/note_tile.dart';
 import 'package:echo_note/view/note_view_screen/note_view_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class NoteScreen extends StatefulWidget {
   NoteScreen({super.key});
@@ -33,7 +33,9 @@ class _NoteScreenState extends State<NoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(DimenConstant.edgePadding),
+        padding: const EdgeInsets.all(
+          DimenConstant.edgePadding,
+        ),
         child: MasonryGridView.builder(
           gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,

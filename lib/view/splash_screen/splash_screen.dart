@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:echo_note/utils/color_constant.dart';
 import 'package:echo_note/view/home_screen/home_screen.dart';
+import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Icon(
           Icons.notes,
-          color: ColorConstant.tertiaryColor,
+          color: ColorConstant.secondaryColor,
           size: MediaQuery.of(context).size.width / 2,
         ),
       ),
