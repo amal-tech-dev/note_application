@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class ColorConstant {
   static const Color primaryColor = Color(0xFF181F32);
   static const Color secondaryColor = Color(0xFFF8F8F8);
+  static const Color tertiaryColor = Color(0xFFE0E1F9);
   static const Color bgColor = Color(0xFFF8F8F8);
 
   static List<Color?> colorsList = [
-    Colors.grey.shade100,
+    Colors.grey.shade200,
     Colors.amber.shade100,
     Colors.blue.shade100,
     Colors.blueGrey.shade100,

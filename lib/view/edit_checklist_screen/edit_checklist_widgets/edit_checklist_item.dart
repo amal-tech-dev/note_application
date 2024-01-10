@@ -15,8 +15,14 @@ class EditCheckListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-        left: DimenConstant.edgePadding,
+      padding: EdgeInsets.all(
+        DimenConstant.edgePadding,
+      ),
+      decoration: BoxDecoration(
+        color: ColorConstant.tertiaryColor,
+        borderRadius: BorderRadius.circular(
+          DimenConstant.borderRadius,
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,18 +32,19 @@ class EditCheckListItem extends StatelessWidget {
             child: Text(
               itemName,
               style: TextStyle(
-                color: ColorConstant.secondaryColor,
+                color: ColorConstant.primaryColor,
                 fontSize: DimenConstant.titleTextSize,
               ),
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          IconButton(
-            onPressed: onClearPressed,
-            icon: Icon(
-              Icons.close_rounded,
+          InkWell(
+            onTap: onClearPressed,
+            child: Icon(
+              Icons.remove_rounded,
               size: 30,
+              color: ColorConstant.primaryColor,
             ),
           ),
         ],

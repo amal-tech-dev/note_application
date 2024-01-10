@@ -58,14 +58,15 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
       backgroundColor: ColorConstant.bgColor,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        backgroundColor: ColorConstant.primaryColor,
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: ColorConstant.bgColor,
         leading: BackButton(
-          color: ColorConstant.secondaryColor,
+          color: ColorConstant.primaryColor,
         ),
         title: Text(
           widget.appBarTitle,
           style: TextStyle(
-            color: ColorConstant.secondaryColor,
+            color: ColorConstant.primaryColor,
           ),
         ),
         actions: [
@@ -76,6 +77,16 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
                 if (titleController.text.isEmpty || list.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
+                      backgroundColor: ColorConstant.primaryColor,
+                      behavior: SnackBarBehavior.floating,
+                      padding: EdgeInsets.symmetric(
+                        vertical: DimenConstant.edgePadding * 1.5,
+                        horizontal: DimenConstant.edgePadding,
+                      ),
+                      margin: EdgeInsets.symmetric(
+                        vertical: DimenConstant.edgePadding * 2,
+                        horizontal: DimenConstant.edgePadding,
+                      ),
                       content: Text(
                         titleController.text.isEmpty
                             ? 'Title is empty'
@@ -108,7 +119,7 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
               },
               icon: Icon(
                 Icons.check_rounded,
-                color: ColorConstant.secondaryColor,
+                color: ColorConstant.primaryColor,
               ),
             ),
           ),
@@ -125,6 +136,7 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: ColorConstant.primaryColor,
+                    width: 2,
                   ),
                 ),
                 labelText: 'Title',
@@ -135,6 +147,26 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
               controller: titleController,
               cursorColor: ColorConstant.primaryColor,
               autofocus: true,
+            ),
+            DimenConstant.separator,
+            Expanded(
+              child: StatefulBuilder(
+                builder: (context, setListState) =>
+                    Consumer<ChecklistController>(
+                  builder: (context, value, child) => ListView.separated(
+                    itemBuilder: (context, index) => EditCheckListItem(
+                      itemName: value.checkList[index].item,
+                      onClearPressed: () {
+                        value.deleteContent(index);
+                        setListState(() {});
+                      },
+                    ),
+                    separatorBuilder: (context, index) =>
+                        DimenConstant.separator,
+                    itemCount: value.checkList.length,
+                  ),
+                ),
+              ),
             ),
             DimenConstant.separator,
             TextField(
@@ -150,12 +182,22 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
                 labelStyle: TextStyle(
                   color: ColorConstant.primaryColor,
                 ),
-                suffixIcon: Consumer<ChecklistController>(
-                  builder: (context, value, child) => IconButton(
-                    onPressed: () {
+                suffix: Consumer<ChecklistController>(
+                  builder: (context, value, child) => InkWell(
+                    onTap: () {
                       contentController.text == ''
                           ? ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
+                                backgroundColor: ColorConstant.primaryColor,
+                                behavior: SnackBarBehavior.floating,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: DimenConstant.edgePadding * 1.5,
+                                  horizontal: DimenConstant.edgePadding,
+                                ),
+                                margin: EdgeInsets.symmetric(
+                                  vertical: DimenConstant.edgePadding * 2,
+                                  horizontal: DimenConstant.edgePadding,
+                                ),
                                 content: Text(
                                   'Empty item',
                                 ),
@@ -166,10 +208,12 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
                       contentController.clear();
                       setState(() {});
                     },
-                    icon: Icon(
-                      Icons.add_rounded,
-                      size: 30,
-                      color: ColorConstant.primaryColor,
+                    child: Text(
+                      'Add',
+                      style: TextStyle(
+                        color: ColorConstant.primaryColor,
+                        fontSize: DimenConstant.titleTextSize,
+                      ),
                     ),
                   ),
                 ),
@@ -177,24 +221,6 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
               controller: contentController,
               cursorColor: ColorConstant.primaryColor,
               autofocus: true,
-            ),
-            DimenConstant.separator,
-            Expanded(
-              child: StatefulBuilder(
-                builder: (context, setListState) =>
-                    Consumer<ChecklistController>(
-                  builder: (context, value, child) => ListView.builder(
-                    itemBuilder: (context, index) => EditCheckListItem(
-                      itemName: value.checkList[index].item,
-                      onClearPressed: () {
-                        value.deleteContent(index);
-                        setListState(() {});
-                      },
-                    ),
-                    itemCount: value.checkList.length,
-                  ),
-                ),
-              ),
             ),
           ],
         ),

@@ -25,8 +25,10 @@ class ChecklistTile extends StatelessWidget {
         bottom: DimenConstant.edgePadding,
       ),
       decoration: BoxDecoration(
-        color: ColorConstant.colorsList[colorIndex]!,
-        borderRadius: BorderRadius.circular(DimenConstant.borderRadius),
+        color: ColorConstant.tertiaryColor,
+        borderRadius: BorderRadius.circular(
+          DimenConstant.borderRadius,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +73,7 @@ class ChecklistTile extends StatelessWidget {
           Text(
             contentList.join('\n'),
             style: TextStyle(
-              color: ColorConstant.secondaryColor,
+              color: ColorConstant.primaryColor,
               fontSize: DimenConstant.subTitleTextSize,
               fontWeight: FontWeight.bold,
             ),

@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:echo_note/controller/date_controller.dart';
 import 'package:echo_note/controller/hive_controller.dart';
 import 'package:echo_note/main.dart';
 import 'package:echo_note/model/checklist_model.dart';
 import 'package:echo_note/utils/color_constant.dart';
+import 'package:echo_note/utils/dimen_constant.dart';
 import 'package:echo_note/view/checklist_view_screen/checklist_view_widgets/checklist_view_tile.dart';
+import 'package:flutter/material.dart';
 
 class ChecklistViewScreen extends StatefulWidget {
   String title;
@@ -61,14 +62,15 @@ class _ChecklistViewScreenState extends State<ChecklistViewScreen> {
     return Scaffold(
       backgroundColor: ColorConstant.bgColor,
       appBar: AppBar(
-        backgroundColor: ColorConstant.primaryColor,
+        backgroundColor: ColorConstant.bgColor,
+        surfaceTintColor: Colors.transparent,
         leading: BackButton(
-          color: ColorConstant.secondaryColor,
+          color: ColorConstant.primaryColor,
         ),
         title: Text(
           widget.title,
           style: TextStyle(
-            color: ColorConstant.secondaryColor,
+            color: ColorConstant.primaryColor,
             fontWeight: FontWeight.bold,
           ),
           overflow: TextOverflow.ellipsis,
@@ -78,35 +80,41 @@ class _ChecklistViewScreenState extends State<ChecklistViewScreen> {
             onPressed: widget.onEditPressed,
             icon: Icon(
               Icons.edit_rounded,
-              color: ColorConstant.secondaryColor,
+              color: ColorConstant.primaryColor,
             ),
           ),
           IconButton(
             onPressed: widget.onDeletePressed,
             icon: Icon(
               Icons.delete_rounded,
-              color: ColorConstant.secondaryColor,
+              color: ColorConstant.primaryColor,
             ),
           ),
         ],
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) => ChecklistViewTile(
-          item: widget.contentList[index].item,
-          isCheck: widget.contentList[index].check,
-          onCheckboxPressed: (value) async {
-            await hiveController.saveData(
-              widget.checklistKey,
-              ChecklistModel(
-                title: widget.title,
-                contentList: addDataToList(index, value!),
-                colorIndex: widget.colorIndex,
-              ),
-            );
-            setState(() {});
-          },
+      body: Padding(
+        padding: const EdgeInsets.all(
+          DimenConstant.edgePadding,
         ),
-        itemCount: widget.contentList.length,
+        child: ListView.separated(
+          itemBuilder: (context, index) => ChecklistViewTile(
+            item: widget.contentList[index].item,
+            isCheck: widget.contentList[index].check,
+            onCheckboxPressed: (value) async {
+              await hiveController.saveData(
+                widget.checklistKey,
+                ChecklistModel(
+                  title: widget.title,
+                  contentList: addDataToList(index, value!),
+                  colorIndex: widget.colorIndex,
+                ),
+              );
+              setState(() {});
+            },
+          ),
+          separatorBuilder: (context, index) => DimenConstant.separator,
+          itemCount: widget.contentList.length,
+        ),
       ),
     );
   }

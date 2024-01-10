@@ -16,8 +16,11 @@ class ChecklistViewTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-        right: DimenConstant.edgePadding,
+      decoration: BoxDecoration(
+        color: ColorConstant.tertiaryColor,
+        borderRadius: BorderRadius.circular(
+          DimenConstant.borderRadius,
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,13 +28,13 @@ class ChecklistViewTile extends StatelessWidget {
           Checkbox(
             value: isCheck,
             onChanged: onCheckboxPressed,
+            activeColor: ColorConstant.primaryColor,
           ),
-          DimenConstant.separator,
           Expanded(
             child: Text(
               item,
               style: TextStyle(
-                color: ColorConstant.secondaryColor,
+                color: ColorConstant.primaryColor,
                 fontSize: DimenConstant.subTitleTextSize,
               ),
             ),
