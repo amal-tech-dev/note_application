@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                       },
                       backgroundColor: ColorConstant.primaryColor,
                       child: Icon(
-                        Icons.check_box_rounded,
+                        Icons.checklist_rounded,
                         color: ColorConstant.secondaryColor,
                         size: 20,
                       ),

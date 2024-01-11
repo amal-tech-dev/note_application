@@ -59,14 +59,14 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        backgroundColor: ColorConstant.bgColor,
+        backgroundColor: ColorConstant.primaryColor,
         leading: BackButton(
-          color: ColorConstant.primaryColor,
+          color: ColorConstant.secondaryColor,
         ),
         title: Text(
           widget.appBarTitle,
           style: TextStyle(
-            color: ColorConstant.primaryColor,
+            color: ColorConstant.secondaryColor,
           ),
         ),
         actions: [
@@ -119,34 +119,43 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
               },
               icon: Icon(
                 Icons.check_rounded,
-                color: ColorConstant.primaryColor,
+                color: ColorConstant.secondaryColor,
               ),
             ),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(DimenConstant.edgePadding),
+      body: Container(
+        color: ColorConstant.primaryColor,
+        padding: EdgeInsets.symmetric(
+          horizontal: DimenConstant.edgePadding,
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: ColorConstant.primaryColor,
-                    width: 2,
-                  ),
-                ),
-                labelText: 'Title',
-                labelStyle: TextStyle(
-                  color: ColorConstant.primaryColor,
+            Container(
+              decoration: BoxDecoration(
+                color: ColorConstant.bgColor,
+                borderRadius: BorderRadius.circular(
+                  DimenConstant.borderRadius,
                 ),
               ),
-              controller: titleController,
-              cursorColor: ColorConstant.primaryColor,
-              autofocus: true,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: DimenConstant.edgePadding,
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Title',
+                    labelStyle: TextStyle(
+                      color: ColorConstant.primaryColor,
+                    ),
+                  ),
+                  controller: titleController,
+                  cursorColor: ColorConstant.primaryColor,
+                  autofocus: true,
+                ),
+              ),
             ),
             DimenConstant.separator,
             Expanded(
@@ -169,20 +178,26 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
               ),
             ),
             DimenConstant.separator,
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: ColorConstant.primaryColor,
-                    width: 2,
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    style: TextStyle(
+                      color: ColorConstant.secondaryColor,
+                    ),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Add to List',
+                      hintStyle: TextStyle(
+                        color: ColorConstant.secondaryColor,
+                      ),
+                    ),
+                    controller: contentController,
+                    cursorColor: ColorConstant.secondaryColor,
+                    autofocus: true,
                   ),
                 ),
-                labelText: 'Add to list',
-                labelStyle: TextStyle(
-                  color: ColorConstant.primaryColor,
-                ),
-                suffix: Consumer<ChecklistController>(
+                Consumer<ChecklistController>(
                   builder: (context, value, child) => InkWell(
                     onTap: () {
                       contentController.text == ''
@@ -208,20 +223,18 @@ class _EditChecklistScreenState extends State<EditChecklistScreen> {
                       contentController.clear();
                       setState(() {});
                     },
-                    child: Text(
-                      'Add',
-                      style: TextStyle(
+                    child: CircleAvatar(
+                      backgroundColor: ColorConstant.tertiaryColor,
+                      child: Icon(
+                        Icons.add_rounded,
                         color: ColorConstant.primaryColor,
-                        fontSize: DimenConstant.titleTextSize,
                       ),
                     ),
                   ),
                 ),
-              ),
-              controller: contentController,
-              cursorColor: ColorConstant.primaryColor,
-              autofocus: true,
+              ],
             ),
+            DimenConstant.separator,
           ],
         ),
       ),

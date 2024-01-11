@@ -29,11 +29,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstant.primaryColor,
       body: Center(
         child: Icon(
-          Icons.notes,
-          color: ColorConstant.secondaryColor,
+          Icons.notes_rounded,
+          color: ColorConstant.primaryColor,
           size: MediaQuery.of(context).size.width / 2,
         ),
       ),
